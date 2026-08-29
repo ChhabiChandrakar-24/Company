@@ -1,0 +1,108 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper" style="padding: 24px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">Subscription Plans Management</h1>
+        <p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0;">Create, edit, toggle and archive subscription plans dynamically.</p>
+      </div>
+      <a href="{% url 'meeting-admin-plans-create' %}" class="oh-btn oh-btn--primary" style="padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+        ➕ Create New Plan
+      </a>
+    </div>
+
+    {% if messages %}
+    <div style="margin-bottom: 20px;">
+      {% for message in messages %}
+      <div style="padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; font-weight: 600; font-size: 14px; {% if message.tags == 'success' %}background:#d1fae5; color:#065f46; border:1px solid #10b981;{% else %}background:#fee2e2; color:#991b1b; border:1px solid #ef4444;{% endif %}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-size: 13px; font-weight: 600; color: #4b5563;">
+            <th style="padding: 16px 20px;">Plan Details</th>
+            <th style="padding: 16px 20px;">Type / Duration</th>
+            <th style="padding: 16px 20px;">Price (INR)</th>
+            <th style="padding: 16px 20px;">Limits (Participants / Rooms)</th>
+            <th style="padding: 16px 20px;">Features</th>
+            <th style="padding: 16px 20px;">Status</th>
+            <th style="padding: 16px 20px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody style="font-size: 14px; color: #374151;">
+          {% for plan in plans %}
+          <tr style="border-bottom: 1px solid #f3f4f6; {% if plan.is_archived %}background:#f9fafb; opacity:0.75;{% endif %}">
+            <td style="padding: 16px 20px;">
+              <div style="font-weight: 700; font-size: 15px; color: #111827;">{{ plan.name }}</div>
+              <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Code: <code style="background:#f3f4f6; padding:2px 4px; border-radius:4px;">{{ plan.code }}</code></div>
+              {% if plan.is_archived %}
+              <span style="font-size: 10px; font-weight: 700; background: #e5e7eb; color: #4b5563; padding: 2px 6px; border-radius: 10px; text-transform: uppercase;">Archived</span>
+              {% endif %}
+            </td>
+            <td style="padding: 16px 20px;">
+              <div>{{ plan.get_plan_type_display }}</div>
+              <div style="font-size:12px; color:#6b7280;">{{ plan.billing_cycle_days }} Days cycle</div>
+            </td>
+            <td style="padding: 16px 20px; font-weight: 700; color: #111827;">
+              ₹{{ plan.price_inr }}
+              {% if plan.per_seat_price_inr > 0 %}
+              <div style="font-size:11px; font-weight:normal; color:#6b7280;">+ ₹{{ plan.per_seat_price_inr }}/extra seat</div>
+              {% endif %}
+            </td>
+            <td style="padding: 16px 20px;">
+              <div>Max: {{ plan.max_participants }} users / room</div>
+              <div>Duration: {{ plan.max_duration_minutes }} mins</div>
+              <div style="font-size:12px; color:#6b7280;">Rooms: {{ plan.max_concurrent_rooms }} | API calls: {{ plan.max_api_calls_per_day }}</div>
+            </td>
+            <td style="padding: 16px 20px; font-size: 12px;">
+              <div>Recording: {% if plan.allow_cloud_recording %}<span style="color:#059669;">Yes</span>{% else %}<span style="color:#ef4444;">No</span>{% endif %}</div>
+              <div>API Access: {% if plan.allow_developer_api %}<span style="color:#059669;">Yes</span>{% else %}<span style="color:#ef4444;">No</span>{% endif %}</div>
+              <div>Screen Share: {% if plan.allow_screen_share %}<span style="color:#059669;">Yes</span>{% else %}<span style="color:#ef4444;">No</span>{% endif %}</div>
+            </td>
+            <td style="padding: 16px 20px;">
+              {% if plan.is_active %}
+              <span style="font-size: 12px; font-weight: 600; color: #065f46; background: #d1fae5; padding: 4px 10px; border-radius: 12px;">Active</span>
+              {% else %}
+              <span style="font-size: 12px; font-weight: 600; color: #991b1b; background: #fee2e2; padding: 4px 10px; border-radius: 12px;">Disabled</span>
+              {% endif %}
+            </td>
+            <td style="padding: 16px 20px;">
+              <div style="display: flex; gap: 8px;">
+                <a href="{% url 'meeting-admin-plans-edit' plan.id %}" class="oh-btn oh-btn--light-bkg" style="padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size:12px;">✏️ Edit</a>
+                
+                {% if not plan.is_archived %}
+                <form action="{% url 'meeting-admin-plans-toggle' plan.id %}" method="POST" style="margin: 0;">
+                  {% csrf_token %}
+                  <button type="submit" class="oh-btn" style="padding: 6px 12px; border-radius: 6px; font-size: 12px; background: #f3f4f6; border: 1px solid #d1d5db;">
+                    {% if plan.is_active %}🚫 Disable{% else %}✅ Enable{% endif %}
+                  </button>
+                </form>
+                
+                <form action="{% url 'meeting-admin-plans-archive' plan.id %}" method="POST" style="margin: 0;" onsubmit="return confirm('Are you sure you want to archive this plan? Historical subscriptions will not be deleted, but no new purchases will be allowed.');">
+                  {% csrf_token %}
+                  <button type="submit" class="oh-btn oh-btn--danger" style="padding: 6px 12px; border-radius: 6px; font-size: 12px; color:#fff;">📦 Archive</button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" style="padding: 32px; text-align: center; color: #6b7280;">No subscription plans configured yet. Click 'Create New Plan' to get started.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

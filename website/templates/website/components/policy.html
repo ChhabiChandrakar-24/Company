@@ -1,0 +1,29 @@
+<section class="cms-section policy-section">
+  <div class="container container-narrow">
+    <div class="policy-header text-center mb-5 reveal">
+      <h1 class="policy-title">{{ section.heading }}</h1>
+      {% if section.subheading %}<p class="policy-meta text-muted">{{ section.subheading }}</p>{% endif %}
+      {% if section.content %}
+        <div class="policy-intro text-muted mt-4 text-start">
+          {{ section.content|linebreaks }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.section_items.exists %}
+      <div class="policy-content reveal">
+        {% for item in section.section_items.all %}
+          {% if item.is_active %}
+            <div class="policy-clause mb-4">
+              <h2 class="h4 mb-3">{{ item.title }}</h2>
+              {% if item.subtitle %}<h3 class="h6 text-muted mb-2">{{ item.subtitle }}</h3>{% endif %}
+              <div class="clause-text text-muted">
+                {{ item.description|linebreaks }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,112 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{% trans "CRM & Client Pipeline" %}</h2>
+        <a href="{% url 'inquiry-create' %}" class="btn btn-primary">
+            <i class="fa fa-plus"></i> {% trans "Capture Inquiry/Lead" %}
+        </a>
+    </div>
+
+    <!-- Tab navigation for Pipeline Stages -->
+    <ul class="nav nav-pills mb-4 overflow-auto flex-nowrap" id="pipelineTabs" role="tablist">
+        {% for status_val, status_lbl in status_choices %}
+        <li class="nav-item" role="presentation">
+            <button class="nav-link {% if forloop.first %}active{% endif %} text-nowrap" id="tab-{{ status_val }}" data-bs-toggle="pill" data-bs-target="#content-{{ status_val }}" type="button" role="tab" aria-controls="content-{{ status_val }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                {{ status_lbl }}
+                <span class="badge bg-secondary ms-1">
+                    {% for s_val, items in status_groups.items %}
+                        {% if s_val == status_val %}{{ items|length }}{% endif %}
+                    {% endfor %}
+                </span>
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Tab contents -->
+    <div class="tab-content" id="pipelineTabContent">
+        {% for status_val, status_lbl in status_choices %}
+        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="content-{{ status_val }}" role="tabpanel" aria-labelledby="tab-{{ status_val }}">
+            <div class="card shadow-sm rounded-3">
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="px-4 py-3">{% trans "Client" %}</th>
+                                <th class="py-3">{% trans "Company" %}</th>
+                                <th class="py-3">{% trans "Interested Service" %}</th>
+                                <th class="py-3">{% trans "Assignee" %}</th>
+                                <th class="py-3">{% trans "Captured At" %}</th>
+                                <th class="px-4 py-3 text-end">{% trans "Actions" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inquiry in all_inquiries %}
+                                {% if inquiry.status == status_val %}
+                                <tr>
+                                    <td class="px-4 py-3 align-middle">
+                                        <div class="font-weight-bold">{{ inquiry.client.name }}</div>
+                                        <small class="text-muted">{{ inquiry.client.email }}</small>
+                                    </td>
+                                    <td class="py-3 align-middle">{{ inquiry.client.company_name|default:"-" }}</td>
+                                    <td class="py-3 align-middle font-weight-bold">{{ inquiry.interested_service|default:"General Inquiry" }}</td>
+                                    <td class="py-3 align-middle">{{ inquiry.assignee.get_full_name|default:"Unassigned" }}</td>
+                                    <td class="py-3 align-middle">{{ inquiry.created_at|date:"d M Y" }}</td>
+                                    <td class="px-4 py-3 text-end align-middle">
+                                        <!-- Timeline Link -->
+                                        <a href="{% url 'client-timeline' inquiry.client.id %}?inquiry={{ inquiry.id }}" class="btn btn-sm btn-outline-info me-2">
+                                            <i class="fa fa-history"></i> {% trans "Timeline" %}
+                                        </a>
+                                        <a href="{% url 'convert-to-deal' inquiry.id %}" class="btn btn-sm btn-outline-success me-2" onclick="return confirm('Convert this Lead to a Deal?');">
+                                            <i class="fa fa-briefcase"></i> {% trans "Convert" %}
+                                        </a>
+                                        <!-- Edit -->
+                                        <a href="{% url 'inquiry-edit' inquiry.id %}" class="btn btn-sm btn-outline-secondary me-2">
+                                            <i class="fa fa-edit"></i> {% trans "Edit" %}
+                                        </a>
+                                        <!-- Delete -->
+                                        <a href="{% url 'inquiry-delete' inquiry.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('{% trans "Are you sure you want to delete this inquiry?" %}');">
+                                            <i class="fa fa-trash"></i> {% trans "Delete" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <tr class="d-none empty-row-placeholder">
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="fa fa-users fa-2x mb-3 d-block"></i>
+                                    {% trans "No active leads in this stage." %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Basic helper to show empty rows if no leads exist under a specific status tab
+    const panes = document.querySelectorAll(".tab-pane");
+    panes.forEach(pane => {
+        const rows = pane.querySelectorAll("tbody tr");
+        // Count how many rows are visible (excluding the placeholder row)
+        let visibleCount = 0;
+        rows.forEach(row => {
+            if (!row.classList.contains("empty-row-placeholder")) {
+                visibleCount++;
+            }
+        });
+        if (visibleCount === 0) {
+            pane.querySelector(".empty-row-placeholder").classList.remove("d-none");
+        }
+    });
+});
+</script>
+{% endblock content %}

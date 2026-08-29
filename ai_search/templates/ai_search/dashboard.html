@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>AI Search Optimization Engine - Dashboard</h2>
+    <div class="row mt-4">
+        <div class="col-md-2"><div class="card p-3 bg-primary text-white"><h5>Overall</h5><h3>{{ avg_overall }}</h3></div></div>
+        <div class="col-md-2"><div class="card p-3"><h5>SEO</h5><h3>{{ avg_seo }}</h3></div></div>
+        <div class="col-md-2"><div class="card p-3"><h5>AEO</h5><h3>{{ avg_aeo }}</h3></div></div>
+        <div class="col-md-2"><div class="card p-3"><h5>GEO</h5><h3>{{ avg_geo }}</h3></div></div>
+        <div class="col-md-2"><div class="card p-3"><h5>LLMO</h5><h3>{{ avg_llmo }}</h3></div></div>
+        <div class="col-md-2"><div class="card p-3"><h5>E-E-A-T</h5><h3>{{ avg_eeat }}</h3></div></div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-3"><strong>Total Websites:</strong> {{ websites_count }}</div>
+        <div class="col-md-3"><strong>Total Scans:</strong> {{ scans_count }}</div>
+        <div class="col-md-3"><strong>Open Issues:</strong> {{ issues_count }} ({{ critical_issues }} Critical)</div>
+        <div class="col-md-3"><strong>Open Recs:</strong> {{ recs_count }}</div>
+    </div>
+    <div class="mt-4">
+        <a href="{% url 'ai_search:website_list' %}" class="btn btn-primary">Manage Websites</a>
+    </div>
+</div>
+{% endblock %}

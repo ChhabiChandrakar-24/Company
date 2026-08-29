@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title|default:"My Site" }}</title>
+    <meta name="description" content="{{ page.meta_description|default:'' }}">
+    <meta name="keywords" content="{{ page.meta_keywords|default:'' }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <meta name="robots" content="index, follow" />
+    <link rel="stylesheet" href="{% static 'website/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body>
+<header>
+    {% include "header.html" %}
+</header>
+<main>
+    {% block carousel %}{% endblock %}
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    {% include "footer.html" %}
+</footer>
+<script src="{% static 'js/header.js' %}"></script>
+<script src="{% static 'js/carousel.js' %}"></script>
+<script src="{% static 'js/map.js' %}"></script>
+</body>
+</html>

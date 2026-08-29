@@ -1,0 +1,25 @@
+:root {
+  --chhabi-navy: #030b34;
+  --chhabi-blue: #123b91;
+  --chhabi-cyan: #00c8f4;
+  --chhabi-magenta: #d000ff;
+  --chhabi-yellow: #ffe500;
+  --chhabi-surface: #f4f7ff;
+}
+
+body { background: var(--chhabi-surface); }
+.oh-sidebar { background: linear-gradient(180deg, var(--chhabi-navy), #091751 70%, #101e64) !important; box-shadow: 5px 0 24px rgba(3, 11, 52, .18); }
+.oh-sidebar__company { border-bottom: 1px solid rgba(0, 200, 244, .25); }
+.oh-sidebar__company-title, .oh-sidebar__company-link, .oh-sidebar__menu-link, .oh-sidebar__menu-link span { color: #fff !important; }
+.oh-sidebar__menu-link:hover, .oh-sidebar__menu-link--active { background: linear-gradient(90deg, rgba(0, 200, 244, .24), rgba(208, 0, 255, .14)) !important; border-left: 3px solid var(--chhabi-cyan); }
+.oh-sidebar__submenu-items_re li::before { color: var(--chhabi-yellow) !important; }
+.oh-navbar { background: #fff; border-bottom: 2px solid rgba(0, 200, 244, .25); box-shadow: 0 4px 18px rgba(3, 11, 52, .08); }
+.oh-btn--secondary { background: linear-gradient(135deg, #006fd6, var(--chhabi-cyan)) !important; border-color: #00a9dc !important; color: #fff !important; }
+.oh-btn--secondary:hover, .oh-btn--secondary:focus { background: linear-gradient(135deg, #8d00bd, var(--chhabi-magenta)) !important; border-color: var(--chhabi-magenta) !important; }
+.oh-link--secondary, a.oh-link--secondary { color: #007fbd !important; }
+.oh-card, .oh-auth-card, .oh-modal__dialog { border: 1px solid rgba(18, 59, 145, .12); box-shadow: 0 12px 34px rgba(3, 11, 52, .08); }
+.oh-input:focus, .oh-select:focus { border-color: var(--chhabi-cyan) !important; box-shadow: 0 0 0 3px rgba(0, 200, 244, .16) !important; }
+.oh-auth { background: radial-gradient(circle at 15% 10%, rgba(208, 0, 255, .16), transparent 32%), radial-gradient(circle at 90% 85%, rgba(0, 200, 244, .22), transparent 38%), linear-gradient(145deg, #f8f9ff, #eef7ff); }
+.chhabi-brand-logo { width: 190px; height: 190px; object-fit: contain; border-radius: 50%; filter: drop-shadow(0 12px 22px rgba(3, 11, 52, .22)); }
+.oh-main__titlebar-title { color: var(--chhabi-navy); }
+::selection { background: var(--chhabi-cyan); color: var(--chhabi-navy); }

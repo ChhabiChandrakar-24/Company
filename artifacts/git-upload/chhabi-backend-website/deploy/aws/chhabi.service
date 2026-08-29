@@ -1,0 +1,20 @@
+[Unit]
+Description=Chhabi Django application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=chhabi
+Group=www-data
+WorkingDirectory=/opt/chhabi/app
+EnvironmentFile=/opt/chhabi/shared/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/chhabi/venv/bin/gunicorn chhabi.wsgi:application --bind 127.0.0.1:8000 --workers 3 --timeout 120 --access-logfile - --error-logfile -
+Restart=always
+RestartSec=5
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

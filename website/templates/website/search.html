@@ -1,0 +1,52 @@
+{% extends "website/dynamic_base.html" %}
+
+{% block content %}
+<section class="cms-section">
+  <div class="container container-narrow">
+    <header class="section-head">
+      <span class="section-kicker">Search</span>
+      <h2>Search the website</h2>
+      <p>Find pages, services, products and portfolio projects.</p>
+    </header>
+
+    <form class="search-form cms-card" action="{% url 'website-search' %}" method="get" role="search">
+      <label class="sr-only" for="search-input">Search query</label>
+      <input id="search-input" type="search" name="q" value="{{ query }}" maxlength="120" placeholder="e.g. web development, ERP, cloud..." autofocus>
+      <button class="site-btn" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Search</button>
+    </form>
+
+    {% if query %}
+      <h3 class="search-count">
+        {% if results %}
+          {{ results|length }} result{{ results|length|pluralize }} for “{{ query }}”
+        {% else %}
+          No results found for “{{ query }}”
+        {% endif %}
+      </h3>
+
+      {% if results %}
+        <div class="search-results">
+          {% for result in results %}
+            <article class="cms-card search-result reveal">
+              <span class="card-tag">{{ result.type }}</span>
+              <h3><a href="{{ result.url }}">{{ result.title }}</a></h3>
+              {% if result.description %}<p>{{ result.description|truncatechars:160 }}</p>{% endif %}
+              <a href="{{ result.url }}" class="result-link">Open <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="cms-card empty-state">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <p>Try a different keyword or <a href="/">browse the homepage</a>.</p>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="cms-card empty-state">
+        <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+        <p>Type at least two characters above to search our public content.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

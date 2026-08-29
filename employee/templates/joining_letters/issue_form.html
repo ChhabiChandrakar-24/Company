@@ -1,0 +1,107 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card rounded-3 shadow-sm max-w-lg mx-auto">
+        <div class="card-body p-4">
+            <h2 class="mb-4">{% trans "Issue Joining Letter" %}</h2>
+            <form method="POST" id="issueForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Target Employee" %}</label>
+                    {{ form.employee }}
+                    {% if form.employee.errors %}
+                        <div class="text-danger mt-1">{{ form.employee.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Template" %}</label>
+                    {{ form.template }}
+                    {% if form.template.errors %}
+                        <div class="text-danger mt-1">{{ form.template.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Letter Title" %}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger mt-1">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Status" %}</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <div class="text-danger mt-1">{{ form.status.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Issue Date" %}</label>
+                    {{ form.issued_date }}
+                    {% if form.issued_date.errors %}
+                        <div class="text-danger mt-1">{{ form.issued_date.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label font-weight-bold mb-0">{% trans "Letter Body (Generated/Customized)" %}</label>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="btnPreview">
+                            <i class="fa fa-refresh"></i> {% trans "Generate Preview" %}
+                        </button>
+                    </div>
+                    {{ form.body }}
+                    {% if form.body.errors %}
+                        <div class="text-danger mt-1">{{ form.body.errors }}</div>
+                    {% endif %}
+                    <div class="form-text text-muted mt-2">
+                        {% trans "Click 'Generate Preview' after selecting the Employee and Template to populate this field dynamically from the database." %}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">{% trans "Issue Letter" %}</button>
+                    <a href="{% url 'issued-joining-letter-list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnPreview = document.getElementById("btnPreview");
+    const employeeSelect = document.getElementById("id_employee");
+    const templateSelect = document.getElementById("id_template");
+    const bodyTextarea = document.getElementById("id_body");
+    const titleInput = document.getElementById("id_title");
+
+    btnPreview.addEventListener("click", function() {
+        const empId = employeeSelect.value;
+        const tempId = templateSelect.value;
+        if (!empId || !tempId) {
+            alert("{% trans 'Please select both an employee and a template first.' %}");
+            return;
+        }
+
+        // Set default title if empty
+        const tempText = templateSelect.options[templateSelect.selectedIndex].text;
+        if (!titleInput.value) {
+            titleInput.value = tempText;
+        }
+
+        fetch(`/employee/joining-letters/preview/?template_id=${tempId}&employee_id=${empId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.body) {
+                    bodyTextarea.value = data.body;
+                } else {
+                    alert("{% trans 'Error generating preview. Please ensure employee details are complete.' %}");
+                }
+            })
+            .catch(err => {
+                console.error("Preview failed:", err);
+                alert("{% trans 'Error contacting server for preview.' %}");
+            });
+    });
+});
+</script>
+{% endblock content %}

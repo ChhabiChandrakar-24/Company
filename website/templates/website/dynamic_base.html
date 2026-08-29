@@ -1,0 +1,82 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    /* Apply persisted/system theme before first paint (no flash) */
+    try {
+      var t = localStorage.getItem('gft_theme') || 'system';
+      document.documentElement.dataset.theme = t === 'system'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : t;
+    } catch (e) {}
+  </script>
+
+  <title>{{ seo_title|default:page.title|default:site_settings.company_name }}</title>
+  <meta name="description" content="{{ page.meta_description|default:site_settings.default_meta_description }}">
+  <meta name="keywords" content="{% if page.focus_keyword %}{{ page.focus_keyword }}{% endif %}{% if page.focus_keyword and page.additional_keywords %}, {% endif %}{{ page.additional_keywords|default:page.meta_keywords|default:site_settings.default_meta_keywords }}">
+  <link rel="canonical" href="{{ page.canonical_url|default:request.build_absolute_uri }}">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b1224">
+
+  {% if site_settings.company_name %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ site_settings.company_name|escapejs }}",
+    {% if site_settings.tagline %}"description": "{{ site_settings.tagline|escapejs }}",{% endif %}
+    {% if site_settings.email %}"email": "{{ site_settings.email|escapejs }}",{% endif %}
+    {% if site_settings.phone %}"telephone": "{{ site_settings.phone|escapejs }}",{% endif %}
+    "url": "{{ request.build_absolute_uri|escapejs }}"
+  }
+  </script>
+  {% endif %}
+
+  <meta property="og:title" content="{{ page.social_title|default:seo_title }}">
+  <meta property="og:description" content="{{ page.social_description|default:page.meta_description|default:site_settings.default_meta_description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  {% if page.social_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.social_image.url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.social_title|default:seo_title }}">
+  <meta name="twitter:description" content="{{ page.social_description|default:page.meta_description|default:site_settings.default_meta_description }}">
+
+  {% if site_settings.favicon %}<link rel="icon" href="{{ site_settings.favicon.url }}">{% endif %}
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'website/css/cms-site.css' %}">
+  <link rel="stylesheet" href="{% static 'website/css/cms-premium.css' %}">
+
+  {% if theme_settings %}
+    <style>
+      :root {
+        --brand: {{ theme_settings.primary_color }};
+        --brand-2: {{ theme_settings.secondary_color }};
+        --font-sans: {{ theme_settings.font_family|default:'Inter, sans-serif' }};
+        --font-display: {{ theme_settings.font_family|default:'Space Grotesk, sans-serif' }};
+      }
+    </style>
+  {% endif %}
+  <style>
+    @media (max-width:600px){html,body{max-width:100%;overflow-x:hidden}.site-header .site-nav-wrap{width:100%;padding-inline:16px}.site-header .site-brand{max-width:calc(100% - 58px);overflow:hidden}.site-header .brand-name{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-header .nav-toggle{display:inline-grid!important;position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:130}.carousel-slide .container{width:100%;padding-inline:16px}.carousel-slide h1{max-width:100%;font-size:clamp(2rem,10vw,2.65rem);overflow-wrap:anywhere}.carousel-slide p{max-width:100%;overflow-wrap:anywhere}.carousel-slide .btn-row,.carousel-slide .site-btn{max-width:100%}}
+  </style>
+
+  <script defer src="{% static 'js/theme-manager.js' %}"></script>
+  <script defer src="{% static 'js/website-main.js' %}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {% include 'website/components/header.html' %}
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+  {% include 'website/components/footer.html' %}
+</body>
+</html>

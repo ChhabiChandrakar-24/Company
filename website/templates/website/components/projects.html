@@ -1,0 +1,29 @@
+<section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Featured Work</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-3">
+      {% for project in portfolio_projects %}
+        <article class="cms-card project-card reveal">
+          <div class="project-cover">
+            {% if project.image %}
+              <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy">
+            {% else %}
+              <div style="aspect-ratio:16/10;background:var(--gradient-soft);display:grid;place-items:center;color:var(--brand)"><i class="fa-solid fa-diagram-project fa-2x" aria-hidden="true"></i></div>
+            {% endif %}
+            <span class="project-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+          <div class="project-body">
+            <h3>{{ project.title }}</h3>
+            {% if project.short_description %}<p>{{ project.short_description|truncatechars:110 }}</p>{% endif %}
+          </div>
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Portfolio projects will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

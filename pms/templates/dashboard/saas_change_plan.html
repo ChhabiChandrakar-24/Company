@@ -1,0 +1,130 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block content %}
+<style>
+  .saas-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+  .saas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 16px;
+  }
+  .saas-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .plan-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .plan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    border-color: #3b82f6;
+  }
+  .plan-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+  .plan-price {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2563eb;
+    margin-bottom: 20px;
+  }
+  .plan-price span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+  }
+  .plan-features li {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plan-features li::before {
+    content: "✓";
+    color: #10b981;
+    font-weight: 700;
+  }
+</style>
+
+<div class="saas-container">
+  <div class="saas-header">
+    <div>
+      <h1 class="saas-title">{% trans "Choose Subscription Plan" %} - {{ org.name }}</h1>
+    </div>
+    <a href="{% url 'saas-dashboard' %}" class="saas-btn saas-btn-secondary" style="text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; border: 1px solid #d1d5db; background: #fff; color: #374151;">
+      {% trans "Back to Dashboard" %}
+    </a>
+  </div>
+
+  <div class="plan-grid">
+    {% for plan in plans %}
+      <div class="plan-card">
+        <div>
+          <div class="plan-name">{{ plan.name }}</div>
+          <div class="plan-price">₹{{ plan.price_inr }} <span>/ {{ plan.billing_cycle_days }} {% trans "days" %}</span></div>
+          
+          <ul class="plan-features">
+            <li>{% trans "Max Participants" %}: {{ plan.max_participants }}</li>
+            <li>{% trans "Max Duration" %}: {{ plan.max_duration_minutes }} {% trans "mins" %}</li>
+            <li>{% trans "Storage limit" %}: {{ plan.storage_limit_mb }} MB</li>
+            <li>{% trans "API limit" %}: {{ plan.max_api_calls_per_day }} / {% trans "day" %}</li>
+            <li>{% trans "Rooms limit" %}: {{ plan.max_concurrent_rooms }} / {% trans "day" %}</li>
+            {% if plan.allow_cloud_recording %}
+              <li>{% trans "Cloud recording enabled" %}</li>
+            {% endif %}
+            {% if plan.allow_developer_api %}
+              <li>{% trans "Developer API access" %}</li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="plan_id" value="{{ plan.id }}">
+          <button type="submit" class="saas-btn saas-btn-primary" style="width: 100%; border: 0; padding: 12px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; background: #2563eb; color: #fff;">
+            {% if plan.price_inr == 0 %}
+              {% trans "Select Free Plan" %}
+            {% else %}
+              {% trans "Subscribe & Pay" %}
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<section class="cms-section">
+  <div class="container container-narrow">
+    <header class="section-head">
+      <span class="section-kicker">FAQ</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="faq-list">
+      {% for faq in faqs %}
+        <details class="faq-item reveal" {% if forloop.first %}open{% endif %}>
+          <summary>
+            <span>{{ faq.question }}</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <p>{{ faq.answer|linebreaksbr }}</p>
+        </details>
+      {% empty %}
+        <div class="cms-card"><p>FAQs will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

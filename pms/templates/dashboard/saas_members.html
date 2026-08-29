@@ -1,0 +1,147 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block content %}
+<style>
+  .saas-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+  .saas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 16px;
+  }
+  .saas-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+  }
+  .saas-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .saas-section {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  }
+  .saas-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+  }
+  .saas-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .saas-table th {
+    background: #f9fafb;
+    color: #374151;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .saas-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #4b5563;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .saas-table tr:hover {
+    background: #f9fafb;
+  }
+  .oh-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+</style>
+
+<div class="saas-container">
+  <div class="saas-header">
+    <div>
+      <h1 class="saas-title">{% trans "Manage Members" %} - {{ org.name }}</h1>
+    </div>
+    <a href="{% url 'saas-dashboard' %}" class="saas-btn saas-btn-secondary" style="text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; border: 1px solid #d1d5db; background: #fff; color: #374151;">
+      {% trans "Back to Dashboard" %}
+    </a>
+  </div>
+
+  {% if role == "owner" or role == "admin" %}
+    <div class="saas-section">
+      <div class="saas-section-title">{% trans "Add / Invite User" %}</div>
+      <form action="{% url 'saas-add-member' %}" method="POST" style="max-width: 500px;">
+        {% csrf_token %}
+        <div style="margin-bottom: 16px;">
+          <label for="username" style="display: block; font-weight: 600; margin-bottom: 8px; color: #374151;">{% trans "Select System User" %}</label>
+          <select id="username" name="username" class="oh-input" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff;">
+            <option value="">-- {% trans "Select User" %} --</option>
+            {% for user in inviteable_users %}
+              <option value="{{ user.username }}">{{ user.username }} ({{ user.email }})</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label for="role" style="display: block; font-weight: 600; margin-bottom: 8px; color: #374151;">{% trans "Role" %}</label>
+          <select id="role" name="role" class="oh-input" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff;">
+            <option value="member">{% trans "Member" %}</option>
+            <option value="admin">{% trans "Admin" %}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="saas-btn saas-btn-primary" style="background: #2563eb; color: white; border: 0; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+          {% trans "Add Member" %}
+        </button>
+      </form>
+    </div>
+  {% endif %}
+
+  <div class="saas-section">
+    <div class="saas-section-title">{% trans "Active Members" %}</div>
+    <div style="overflow-x: auto;">
+      <table class="saas-table">
+        <thead>
+          <tr>
+            <th>{% trans "Username" %}</th>
+            <th>{% trans "Email" %}</th>
+            <th>{% trans "Role" %}</th>
+            <th>{% trans "Joined Date" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for member in members %}
+            <tr>
+              <td style="font-weight: 600; color: #111827;">{{ member.user.username }}</td>
+              <td>{{ member.user.email }}</td>
+              <td>
+                <span class="saas-badge" style="background: {% if member.role == 'owner' %}#fef3c7; color: #d97706;{% elif member.role == 'admin' %}#dcfce7; color: #15803d;{% else %}#f3f4f6; color: #374151;{% endif %};">
+                  {{ member.role }}
+                </span>
+              </td>
+              <td>{{ member.joined_at|date:"d M Y" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

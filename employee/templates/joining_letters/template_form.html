@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card rounded-3 shadow-sm max-w-lg mx-auto">
+        <div class="card-body p-4">
+            <h2 class="mb-4">{{ title }}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Template Title" %}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger mt-1">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Company" %}</label>
+                    {{ form.company }}
+                    {% if form.company.errors %}
+                        <div class="text-danger mt-1">{{ form.company.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">{% trans "Template Body" %}</label>
+                    {{ form.body }}
+                    {% if form.body.errors %}
+                        <div class="text-danger mt-1">{{ form.body.errors }}</div>
+                    {% endif %}
+                    <div class="form-text text-muted mt-2">
+                        {% trans "You can use the following placeholder variables: " %}
+                        <code>{employee_name}</code>, <code>{designation}</code>, <code>{department}</code>, <code>{salary}</code>, <code>{joining_date}</code>, <code>{company_name}</code>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">{% trans "Save Template" %}</button>
+                    <a href="{% url 'joining-letter-template-list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

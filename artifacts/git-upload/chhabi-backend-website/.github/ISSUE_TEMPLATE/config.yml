@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Chhabi Community Support
+    url: https://github.com/chhabi-opensource/chhabi/discussions
+    about: Ask questions or discuss features here
+  - name: Documentation
+    url: https://chhabi-opensource.github.io/chhabi-docs/
+    about: Check the official Chhabi documentation

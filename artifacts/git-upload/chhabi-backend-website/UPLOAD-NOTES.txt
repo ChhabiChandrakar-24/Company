@@ -1,0 +1,6 @@
+﻿Generated from Git-tracked files only.
+
+Before deployment:
+1. Copy .env.dist to .env and fill production secrets locally.
+2. Run migrations and collectstatic on the server.
+3. Restore user-uploaded media from private storage/backup, never from public Git.

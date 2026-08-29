@@ -1,0 +1,191 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper" style="padding: 24px;">
+    
+    <div style="margin-bottom: 24px;">
+      <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">SaaS Client Billing & Pricing Control</h1>
+      <p style="font-size: 14px; color: #6b7280; margin: 4px 0 0 0;">Assign custom organization offers, grant manual complimentary access, view active subscriptions & audit trails.</p>
+    </div>
+
+    {% if messages %}
+    <div style="margin-bottom: 20px;">
+      {% for message in messages %}
+      <div style="padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; font-weight: 600; font-size: 14px; {% if message.tags == 'success' %}background:#d1fae5; color:#065f46; border:1px solid #10b981;{% else %}background:#fee2e2; color:#991b1b; border:1px solid #ef4444;{% endif %}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Forms Row -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+      
+      <!-- Custom Offer Form -->
+      <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">💼 Assign Custom Client Offer</h2>
+        <form action="{% url 'meeting-admin-custom-offer' %}" method="POST">
+          {% csrf_token %}
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Target Organization *</label>
+            <select name="organization_id" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+              {% for org in organizations %}
+              <option value="{{ org.id }}">{{ org.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Target Plan *</label>
+            <select name="plan_id" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+              {% for plan in plans %}
+              <option value="{{ plan.id }}">{{ plan.name }} (₹{{ plan.price_inr }})</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Override Price (INR) *</label>
+            <input type="number" step="0.01" name="price_override" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Reason / Internal Notes</label>
+            <textarea name="reason" rows="2" required placeholder="Describe why this organization gets custom pricing..." style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family:inherit;"></textarea>
+          </div>
+          <button type="submit" class="oh-btn oh-btn--primary" style="width: 100%; padding: 11px; border-radius: 8px; font-weight: 600;">Save Custom Offer</button>
+        </form>
+      </div>
+
+      <!-- Manual Access Grant Form -->
+      <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+        <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 16px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">🔑 Grant Manual / Complimentary Access</h2>
+        <form action="{% url 'meeting-admin-manual-grant' %}" method="POST">
+          {% csrf_token %}
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Target Organization *</label>
+            <select name="organization_id" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+              {% for org in organizations %}
+              <option value="{{ org.id }}">{{ org.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Target Username *</label>
+            <input type="text" name="username" required placeholder="User to own the subscription" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+              <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Complimentary Plan *</label>
+              <select name="plan_id" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+                {% for plan in plans %}
+                <option value="{{ plan.id }}">{{ plan.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Duration (Days) *</label>
+              <input type="number" name="duration_days" value="30" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+            </div>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Access Reason / Reference *</label>
+            <textarea name="reason" rows="2" required placeholder="Promotional trial, partner sponsorship, debug support..." style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family:inherit;"></textarea>
+          </div>
+          <button type="submit" class="oh-btn oh-btn--primary" style="width: 100%; padding: 11px; border-radius: 8px; font-weight: 600; background: #059669; border-color: #059669;">Grant Free Access</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Active Subscriptions List -->
+    <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 32px;">
+      <div style="padding: 16px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+        <h3 style="font-size: 16px; font-weight: 700; color: #111827; margin: 0;">Active Subscriptions</h3>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="background: #fff; border-bottom: 1px solid #e5e7eb; font-size: 13px; font-weight: 600; color: #4b5563;">
+            <th style="padding: 12px 20px;">Organization</th>
+            <th style="padding: 12px 20px;">Owner</th>
+            <th style="padding: 12px 20px;">Plan Assigned</th>
+            <th style="padding: 12px 20px;">Source Gateway</th>
+            <th style="padding: 12px 20px;">Expiry / End Date</th>
+            <th style="padding: 12px 20px;">Status</th>
+          </tr>
+        </thead>
+        <tbody style="font-size: 14px; color: #374151;">
+          {% for sub in subscriptions %}
+          <tr style="border-bottom: 1px solid #f3f4f6; {% if sub.status != 'active' %}opacity: 0.65;{% endif %}">
+            <td style="padding: 12px 20px; font-weight: 600;">
+              {{ sub.organization.name|default:"Individual Account" }}
+            </td>
+            <td style="padding: 12px 20px;">
+              {{ sub.user.username }}
+            </td>
+            <td style="padding: 12px 20px; font-weight: 600;">
+              {{ sub.plan.name }}
+            </td>
+            <td style="padding: 12px 20px; text-transform: capitalize;">
+              {{ sub.payment_gateway }}
+            </td>
+            <td style="padding: 12px 20px;">
+              {{ sub.end_date|date:"d M Y H:i"|default:"Lifetime" }}
+            </td>
+            <td style="padding: 12px 20px;">
+              {% if sub.status == 'active' %}
+              <span style="font-size: 11px; font-weight: 700; background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 10px;">Active</span>
+              {% else %}
+              <span style="font-size: 11px; font-weight: 700; background: #f3f4f6; color: #4b5563; padding: 2px 8px; border-radius: 10px;">{{ sub.status }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" style="padding: 24px; text-align: center; color: #6b7280;">No active subscriptions found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Billing Audit Trail -->
+    <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+      <div style="padding: 16px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+        <h3 style="font-size: 16px; font-weight: 700; color: #111827; margin: 0;">🔐 Billing Security & Audit Log</h3>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="background: #fff; border-bottom: 1px solid #e5e7eb; font-size: 13px; font-weight: 600; color: #4b5563;">
+            <th style="padding: 12px 20px;">Timestamp</th>
+            <th style="padding: 12px 20px;">Event Type</th>
+            <th style="padding: 12px 20px;">Logged Description</th>
+            <th style="padding: 12px 20px;">Performed By</th>
+          </tr>
+        </thead>
+        <tbody style="font-size: 13px; color: #4b5563; font-family: monospace;">
+          {% for log in audit_logs %}
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 12px 20px; white-space: nowrap;">
+              {{ log.timestamp|date:"Y-m-d H:i:s" }}
+            </td>
+            <td style="padding: 12px 20px; font-weight: 700; text-transform: uppercase;">
+              {{ log.event_type }}
+            </td>
+            <td style="padding: 12px 20px; font-family: inherit;">
+              {{ log.description }}
+            </td>
+            <td style="padding: 12px 20px; font-family: inherit;">
+              {{ log.performed_by.username|default:"System / Webhook" }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" style="padding: 24px; text-align: center; color: #6b7280; font-family: inherit;">No security audit events logged yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card rounded-3 shadow-sm max-w-lg mx-auto">
+        <div class="card-body p-4">
+            <h2 class="mb-4">{% trans "Schedule Client Meeting" %}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Meeting Title" %}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger mt-1">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Start Date & Time" %}</label>
+                        {{ form.date }}
+                        {% if form.date.errors %}
+                            <div class="text-danger mt-1">{{ form.date.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "End Date & Time" %}</label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                            <div class="text-danger mt-1">{{ form.end_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Meeting Description" %}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger mt-1">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Meeting Type" %}</label>
+                        {{ form.meeting_type }}
+                        {% if form.meeting_type.errors %}
+                            <div class="text-danger mt-1">{{ form.meeting_type.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Provider" %}</label>
+                        {{ form.provider }}
+                        {% if form.provider.errors %}
+                            <div class="text-danger mt-1">{{ form.provider.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">{% trans "Internal Attendees" %}</label>
+                    {{ form.employee_id }}
+                    {% if form.employee_id.errors %}
+                        <div class="text-danger mt-1">{{ form.employee_id.errors }}</div>
+                    {% endif %}
+                    <div class="form-text text-muted">{% trans "Select internal staff members required for the call. The client is automatically included." %}</div>
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <button type="submit" class="btn btn-primary">{% trans "Schedule Meeting" %}</button>
+                    <a href="{% url 'client-timeline' inquiry.client.id %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

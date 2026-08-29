@@ -1,0 +1,26 @@
+<section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Products &amp; Solutions</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-2">
+      {% for product in products %}
+        <article class="cms-card reveal">
+          {% if product.image %}
+            <div class="card-media"><img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy"></div>
+          {% elif product.icon %}
+            <div class="cms-card-icon"><i class="fa-solid {{ product.icon }}" aria-hidden="true"></i></div>
+          {% endif %}
+          <span class="card-tag">{{ product.get_item_type_display }}</span>
+          <h3>{{ product.name }}</h3>
+          {% if product.short_description %}<p>{{ product.short_description }}</p>{% endif %}
+          {% if product.button_text %}<a href="{{ product.button_url }}">{{ product.button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Products and solutions will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

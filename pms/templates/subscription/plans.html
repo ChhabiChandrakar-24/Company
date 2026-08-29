@@ -1,0 +1,407 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<style>
+  .pricing-header {
+    text-align: center;
+    padding: 30px 15px 20px;
+  }
+  .pricing-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+  .pricing-header p {
+    font-size: 15px;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin: 20px 0 40px;
+  }
+  .pricing-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  }
+  .pricing-card.popular {
+    border-color: #2563eb;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.12);
+  }
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .plan-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+  .plan-desc {
+    font-size: 13px;
+    color: #6b7280;
+    min-height: 40px;
+    margin-bottom: 16px;
+  }
+  .plan-price-box {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .plan-currency {
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+  }
+  .plan-price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111827;
+  }
+  .plan-period {
+    font-size: 13px;
+    color: #9ca3af;
+  }
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #374151;
+  }
+  .feature-item.disabled {
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+  .feature-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .seats-box {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .seats-input {
+    width: 60px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .pay-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .btn-pay {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s;
+  }
+  .btn-razorpay {
+    background: #0c2340;
+    color: #fff;
+  }
+  .btn-razorpay:hover { background: #1a3a60; }
+  .btn-phonepe {
+    background: #5f259f;
+    color: #fff;
+  }
+  .btn-phonepe:hover { background: #7334bc; }
+  .btn-free {
+    background: #2563eb;
+    color: #fff;
+  }
+  .btn-free:hover { background: #1d4ed8; }
+  .btn-current {
+    background: #10b981;
+    color: #fff;
+    cursor: default;
+  }
+
+  .active-sub-banner {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #fff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .active-sub-left h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .active-sub-left p {
+    font-size: 13px;
+    opacity: 0.9;
+  }
+</style>
+
+<!-- Razorpay Standard Checkout JS -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper">
+
+    <!-- Active Subscription Status Banner -->
+    {% if active_subscription and active_subscription.is_currently_active %}
+    <div class="active-sub-banner">
+      <div class="active-sub-left">
+        <h3>Current Plan: {{ active_subscription.plan.name }}</h3>
+        <p>
+          Status: <b>Active</b> · Renews/Expires on: <b>{{ active_subscription.end_date|date:"d M Y" }}</b> ·
+          Max Participants: <b>{{ active_subscription.plan.max_participants }}</b> ·
+          Recording: <b>{% if active_subscription.plan.allow_cloud_recording %}Enabled{% else %}Disabled{% endif %}</b>
+        </p>
+      </div>
+      <div>
+        <a href="{% url 'developer-portal' %}" class="oh-btn oh-btn--light-bkg oh-btn--shadow">
+          🔑 View Developer API Keys
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="pricing-header">
+      <h1>Choose Your Video Call & Developer API Plan</h1>
+      <p>Instant peer-to-peer calls, commercial conference rooms, and Zoom-like Developer REST APIs for external integration.</p>
+    </div>
+
+    <!-- Pricing Grid -->
+    <div class="pricing-grid">
+      {% for item in plans_data %}
+      <div class="pricing-card {% if item.plan.is_popular %}popular{% endif %}">
+        {% if item.plan.badge_text %}
+        <span class="pricing-badge">{{ item.plan.badge_text }}</span>
+        {% elif item.is_custom_offer %}
+        <span class="pricing-badge" style="background:#059669;">Special Offer</span>
+        {% endif %}
+
+        <div class="plan-name">{{ item.plan.name }}</div>
+        <div class="plan-desc">{{ item.plan.description }}</div>
+
+        <div class="plan-price-box">
+          <span class="plan-currency">₹</span>
+          <span class="plan-price" id="price-display-{{ item.plan.id }}">{{ item.display_price|floatformat:0 }}</span>
+          <span class="plan-period">/ {% if item.plan.billing_cycle_days >= 360 %}yr{% else %}mo{% endif %}</span>
+        </div>
+
+        {% if item.plan.plan_type == 'p2p_monthly' %}
+        <div class="seats-box">
+          <span style="font-size:12px; font-weight:600; color:#4b5563;">P2P Host Seats:</span>
+          <input type="number" id="seats-{{ item.plan.id }}" class="seats-input" value="1" min="1" max="50" onchange="recalculateP2P({{ item.plan.id }}, {{ item.display_price }}, {{ item.plan.per_seat_price_inr }})">
+        </div>
+        {% endif %}
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-icon">👥</span>
+            <span>Up to <b>{{ item.plan.max_participants }} Participants</b> per room</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">⏱️</span>
+            <span><b>{{ item.plan.max_duration_minutes }} Minutes</b> call duration</span>
+          </li>
+          <li class="feature-item {% if not item.plan.allow_cloud_recording %}disabled{% endif %}">
+            <span class="feature-icon">⏺️</span>
+            <span>Cloud & Local Recording</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">💬</span>
+            <span>Live Chat & Closed Captions (CC)</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🖥️</span>
+            <span>Screen Sharing & HD Video Quality</span>
+          </li>
+          <li class="feature-item {% if not item.plan.allow_developer_api %}disabled{% endif %}">
+            <span class="feature-icon">⚡</span>
+            <span><b>Developer REST API</b> (Zoom SDK equivalent)</span>
+          </li>
+          {% if item.plan.allow_developer_api %}
+          <li class="feature-item">
+            <span class="feature-icon">🔑</span>
+            <span><b>{{ item.plan.max_api_calls_per_day }}</b> API requests / day</span>
+          </li>
+          {% endif %}
+        </ul>
+
+        <div class="pay-btn-group">
+          {% if active_subscription and active_subscription.plan_id == item.plan.id and active_subscription.is_currently_active %}
+            <button class="btn-pay btn-current" disabled>✓ Current Active Plan</button>
+          {% elif item.display_price <= 0 %}
+            <button class="btn-pay btn-free" onclick="checkoutPlan({{ item.plan.id }}, 'free')">Activate Free Plan</button>
+          {% else %}
+            {% for gateway in active_gateways %}
+              {% if gateway.name == 'razorpay' %}
+                <button class="btn-pay btn-razorpay" onclick="checkoutPlan({{ item.plan.id }}, 'razorpay')">
+                  <span>💳 Pay with {{ gateway.display_name }}</span>
+                </button>
+              {% elif gateway.name == 'phonepe' %}
+                <button class="btn-pay btn-phonepe" onclick="checkoutPlan({{ item.plan.id }}, 'phonepe')">
+                  <span>📱 Pay with {{ gateway.display_name }}</span>
+                </button>
+              {% endif %}
+            {% empty %}
+              <div style="font-size:12px; color:#ef4444; text-align:center; font-weight:600;">No payment gateways active.</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</main>
+
+<script>
+const CSRF = "{{ csrf_token }}";
+
+function recalculateP2P(planId, basePrice, perSeatPrice) {
+  const seatsInput = document.getElementById('seats-' + planId);
+  const seats = Math.max(1, parseInt(seatsInput.value || 1, 10));
+  const total = basePrice + ((seats - 1) * perSeatPrice);
+  document.getElementById('price-display-' + planId).textContent = Math.round(total);
+}
+
+async function checkoutPlan(planId, gateway) {
+  let peerSeats = 1;
+  const seatsEl = document.getElementById('seats-' + planId);
+  if (seatsEl) peerSeats = parseInt(seatsEl.value, 10) || 1;
+
+  try {
+    const resp = await fetch("{% url 'meeting-subscription-order' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": CSRF,
+      },
+      body: JSON.stringify({
+        plan_id: planId,
+        gateway: gateway,
+        peer_seats: peerSeats
+      })
+    });
+
+    const data = await resp.json();
+    if (!resp.ok || data.status !== "success") {
+      alert("Checkout error: " + (data.error || "Could not initiate payment."));
+      return;
+    }
+
+    if (data.is_free) {
+      alert(data.message);
+      location.reload();
+      return;
+    }
+
+    if (gateway === "razorpay") {
+      const options = {
+        key: data.key_id,
+        amount: data.amount_paise,
+        currency: data.currency,
+        name: "Horilla Video Meetings",
+        description: data.plan_name + " Subscription",
+        order_id: data.order_id,
+        handler: async function (response) {
+          const verifyResp = await fetch("{% url 'meeting-razorpay-verify' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": CSRF,
+            },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            })
+          });
+          const verifyData = await verifyResp.json();
+          if (verifyResp.ok && verifyData.status === "success") {
+            alert(verifyData.message);
+            location.reload();
+          } else {
+            alert("Payment verification error: " + (verifyData.error || "Please contact support."));
+          }
+        },
+        prefill: {
+          name: data.user_name,
+          email: data.user_email,
+        },
+        theme: { color: "#2563eb" }
+      };
+      const rzp = new Razorpay(options);
+      rzp.open();
+    } else if (gateway === "phonepe") {
+      if (data.pay_url) {
+        location.href = data.pay_url;
+      } else {
+        alert("PhonePe pay URL not available.");
+      }
+    }
+  } catch (err) {
+    console.error("Payment error:", err);
+    alert("Connection error occurred while starting payment.");
+  }
+}
+</script>
+{% endblock content %}

@@ -1,0 +1,20 @@
+<section class="cms-section alt">
+  <div class="container">
+    <div class="split-grid reveal">
+      {% if section.image %}
+        <figure class="split-media">
+          <img src="{{ section.image.url }}" alt="{{ section.heading }}" loading="lazy">
+        </figure>
+      {% endif %}
+      <div class="split-body">
+        {% if section.subheading %}<span class="section-kicker">{{ section.subheading }}</span>{% endif %}
+        <h2>{{ section.heading }}</h2>
+        {% if section.content %}<div class="prose">{{ section.content|linebreaks }}</div>{% endif %}
+        <div class="btn-row">
+          {% if section.primary_button_text %}<a class="site-btn" href="{{ section.primary_button_url }}">{{ section.primary_button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+          {% if section.secondary_button_text %}<a class="site-btn ghost" href="{{ section.secondary_button_url }}">{{ section.secondary_button_text }}</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

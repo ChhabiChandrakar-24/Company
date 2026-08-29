@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Scan #{{ scan.id }} for {{ scan.website.name }}</h2>
+    <p>Status: {{ scan.status }}</p>
+    {% if scan.status == 'completed' %}
+        <div class="row">
+            <div class="col-md-2">Overall: {{ scan.overall_score }}</div>
+            <div class="col-md-2">SEO: {{ scan.seo_score }}</div>
+            <div class="col-md-2">AEO: {{ scan.aeo_score }}</div>
+            <div class="col-md-2">GEO: {{ scan.geo_score }}</div>
+            <div class="col-md-2">LLMO: {{ scan.llmo_score }}</div>
+            <div class="col-md-2">E-E-A-T: {{ scan.eeat_score }}</div>
+        </div>
+        <h4 class="mt-4">Issues Detected</h4>
+        <ul class="list-group">
+        {% for issue in issues %}
+            <li class="list-group-item">
+                <strong>[{{ issue.severity|upper }}] [{{ issue.category|upper }}]</strong> {{ issue.title }}<br>
+                <small>{{ issue.description }}</small>
+                {% for rec in issue.recommendations.all %}
+                    <br><span class="text-success">Recommendation: {{ rec.description }}</span>
+                {% endfor %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

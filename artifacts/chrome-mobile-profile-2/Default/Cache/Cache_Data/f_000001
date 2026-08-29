@@ -1,0 +1,1090 @@
+
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    /* Apply persisted/system theme before first paint (no flash) */
+    try {
+      var t = localStorage.getItem('gft_theme') || 'system';
+      document.documentElement.dataset.theme = t === 'system'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : t;
+    } catch (e) {}
+  </script>
+
+  <title>Geeta ForgeTech | Secure Software, Websites &amp; IT Solutions</title>
+  <meta name="description" content="Geeta ForgeTech delivers secure software, websites, mobile apps, cloud and 24/7 cyber security solutions for growing businesses in India.">
+  <meta name="keywords" content="software company noida, IT services, web development, cyber security, mobile apps, cloud solutions">
+  <link rel="canonical" href="http://127.0.0.1:8010/?responsive=verified">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b1224">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Geeta ForgeTech",
+    "description": "Secure Software, Websites \u0026 IT Solutions",
+    "email": "chcyberarmy@gmail.com",
+    "telephone": "+91 8819981884",
+    "url": "http://127.0.0.1:8010/?responsive\u003Dverified"
+  }
+  </script>
+  
+
+  <meta property="og:title" content="Geeta ForgeTech | Secure Software, Websites &amp; IT Solutions">
+  <meta property="og:description" content="Geeta ForgeTech delivers secure software, websites, mobile apps, cloud and 24/7 cyber security solutions for growing businesses in India.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://127.0.0.1:8010/?responsive=verified">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Geeta ForgeTech | Secure Software, Websites &amp; IT Solutions">
+  <meta name="twitter:description" content="Geeta ForgeTech delivers secure software, websites, mobile apps, cloud and 24/7 cyber security solutions for growing businesses in India.">
+
+  
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/static/website/css/cms-site.css">
+  <link rel="stylesheet" href="/static/website/css/cms-premium.css">
+
+  
+    <style>
+      :root {
+        --brand: #5b63ee;
+        --brand-2: #0b1635;
+        --font-sans: Inter, sans-serif;
+        --font-display: Inter, sans-serif;
+      }
+    </style>
+  
+  <style>
+    @media (max-width:600px){html,body{max-width:100%;overflow-x:hidden}.site-header .site-nav-wrap{width:100%;padding-inline:16px}.site-header .site-brand{max-width:calc(100% - 58px);overflow:hidden}.site-header .brand-name{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.site-header .nav-toggle{display:inline-grid!important;position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:130}.carousel-slide .container{width:100%;padding-inline:16px}.carousel-slide h1{max-width:100%;font-size:clamp(2rem,10vw,2.65rem);overflow-wrap:anywhere}.carousel-slide p{max-width:100%;overflow-wrap:anywhere}.carousel-slide .btn-row,.carousel-slide .site-btn{max-width:100%}}
+  </style>
+
+  <script defer src="/static/js/theme-manager.js"></script>
+  <script defer src="/static/js/website-main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  
+<header class="site-header">
+  <div class="container site-nav-wrap">
+    <a class="site-brand" href="/" aria-label="Geeta ForgeTech home">
+      
+        <span class="brand-mark" aria-hidden="true">G</span>
+      
+      <span class="brand-name">Geeta ForgeTech<small>Secure Software, Websites &amp; IT So…</small></span>
+    </a>
+
+    <button class="nav-toggle icon-btn" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-navigation" aria-label="Open navigation menu">
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <nav class="site-nav" id="site-navigation" data-site-nav aria-label="Main navigation">
+      
+        
+          <a class="nav-link" href="/" aria-current="page" >
+            <i class="fa-solid fa-house" aria-hidden="true"></i>Home
+          </a>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-layer-group" aria-hidden="true"></i>Services
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu mega">
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-angles-right" aria-hidden="true"></i>Service Overview
+                  </a>
+                
+              
+                
+                  <a href="/pricing/"  >
+                    <i class="fa-solid fa-tags" aria-hidden="true"></i>Pricing Plans
+                  </a>
+                
+              
+                
+                  <a href="/faq/"  >
+                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i>FAQ
+                  </a>
+                
+              
+                
+                  <a href="/contact/"  >
+                    <i class="fa-solid fa-angles-right" aria-hidden="true"></i>Get a Quote
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-cubes" aria-hidden="true"></i>Solutions
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu mega">
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Cyber Security
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-cloud" aria-hidden="true"></i>Cloud &amp; DevOps
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-robot" aria-hidden="true"></i>AI &amp; Automation
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-cubes" aria-hidden="true"></i>ERP Solutions
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-box-open" aria-hidden="true"></i>Products
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+              
+                
+                  <a href="/"  aria-current="page">
+                    <i class="fa-solid fa-box-open" aria-hidden="true"></i>All Products
+                  </a>
+                
+              
+                
+                  <a href="/projects/"  >
+                    <i class="fa-solid fa-images" aria-hidden="true"></i>Portfolio
+                  </a>
+                
+              
+                
+                  <a href="/pricing/"  >
+                    <i class="fa-solid fa-tags" aria-hidden="true"></i>Pricing
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-building-columns" aria-hidden="true"></i>Industries
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu mega">
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Education
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>Healthcare
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i>FinTech
+                  </a>
+                
+              
+                
+                  <a href="/services/"  >
+                    <i class="fa-solid fa-landmark" aria-hidden="true"></i>Government
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-book-open" aria-hidden="true"></i>Resources
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu mega">
+              
+                
+                  <a href="/faq/"  >
+                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i>FAQ
+                  </a>
+                
+              
+                
+                  <a href="/team/"  >
+                    <i class="fa-solid fa-users" aria-hidden="true"></i>Team
+                  </a>
+                
+              
+                
+                  <a href="/projects/"  >
+                    <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>Projects
+                  </a>
+                
+              
+                
+                  <a href="/career/"  >
+                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers
+                  </a>
+                
+              
+                
+                  <a href="/pricing/"  >
+                    <i class="fa-solid fa-tags" aria-hidden="true"></i>Pricing
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <div class="nav-dropdown">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-flag" aria-hidden="true"></i>Company
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="nav-dropdown-menu mega">
+              
+                
+                  <a href="/about/"  >
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>About Us
+                  </a>
+                
+              
+                
+                  <a href="/team/"  >
+                    <i class="fa-solid fa-users" aria-hidden="true"></i>Team
+                  </a>
+                
+              
+                
+                  <a href="/career/"  >
+                    <i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers
+                  </a>
+                
+              
+                
+                  <a href="/terms-and-conditions/"  >
+                    <i class="fa-solid fa-file-contract" aria-hidden="true"></i>Terms &amp; Conditions
+                  </a>
+                
+              
+            </div>
+          </div>
+        
+      
+        
+          <a class="nav-link" href="/contact/"  >
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>Contact Us
+          </a>
+        
+      
+
+      <div class="nav-actions">
+        <a class="icon-btn" href="/search/" aria-label="Search the website"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></a>
+        <div class="theme-switch" role="group" aria-label="Color theme">
+          <button type="button" class="theme-toggle-btn" data-theme-choice="light" data-theme="light" aria-label="Use light mode"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+          <button type="button" class="theme-toggle-btn" data-theme-choice="dark" data-theme="dark" aria-label="Use dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+          <button type="button" class="theme-toggle-btn" data-theme-choice="system" data-theme="system" aria-label="Use system theme"><i class="fa-solid fa-desktop" aria-hidden="true"></i></button>
+        </div>
+        
+          <a class="nav-cta" href="/contact/">Get a Free Quote <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+
+  <main id="main-content">
+    
+    
+        
+            
+                
+                
+                
+                    <section class="cms-carousel" data-carousel data-autoplay="false" aria-roledescription="carousel" aria-label="Secure Software, Websites &amp; IT Solutions You Can Trust">
+  <div class="carousel-track">
+    
+      <article class="carousel-slide is-active" data-slide  aria-roledescription="slide" aria-label="Slide 1 of 3"
+        >
+        <div class="container">
+          <span class="badge slide-badge">Software &amp; IT Solutions</span>
+          <h1>Enterprise Software That Drives Growth</h1>
+          <p>From secure websites to full ERP platforms — we design, build and operate technology that moves your business forward.</p>
+          
+            <div class="btn-row">
+              <a class="site-btn" href="/services/">Explore Services <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="site-btn ghost" href="/contact/">Contact Us</a>
+            </div>
+          
+        </div>
+      </article>
+    
+      <article class="carousel-slide" data-slide hidden aria-roledescription="slide" aria-label="Slide 2 of 3"
+        >
+        <div class="container">
+          <span class="badge slide-badge">24/7 Cyber Security</span>
+          <h1>Defend Your Business Around the Clock</h1>
+          <p>Managed SOC monitoring, penetration testing and incident response from certified security engineers.</p>
+          
+            <div class="btn-row">
+              <a class="site-btn" href="/contact/">Talk to an Expert <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="site-btn ghost" href="/services/">Our Services</a>
+            </div>
+          
+        </div>
+      </article>
+    
+      <article class="carousel-slide" data-slide hidden aria-roledescription="slide" aria-label="Slide 3 of 3"
+        >
+        <div class="container">
+          <span class="badge slide-badge">Cloud &amp; DevOps</span>
+          <h1>Cloud, AI &amp; Automation — Built for Scale</h1>
+          <p>Kubernetes-native deployments, CI/CD pipelines and AI-powered automation that cut costs and ship faster.</p>
+          
+            <div class="btn-row">
+              <a class="site-btn" href="/projects/">See Our Work <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="site-btn ghost" href="/pricing/">Get Pricing</a>
+            </div>
+          
+        </div>
+      </article>
+    
+  </div>
+
+  
+    <div class="carousel-controls">
+      <button type="button" data-carousel-prev aria-label="Previous slide"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+      <span data-carousel-status aria-live="polite">1 / 3</span>
+      <button type="button" data-carousel-next aria-label="Next slide"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="carousel-dots" aria-label="Choose slide"></div>
+  
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section stats-section" aria-labelledby="section-5"><div class="container"><header class="section-head"><span class="section-kicker">Impact</span><h2 id="section-5">Trusted by Businesses Across India</h2><p>Results that speak for themselves</p></header><div class="stats-grid"><article class="stat-card"><strong>2K+</strong><h3>Projects Delivered</h3><p>Web, mobile, cloud and security engagements</p></article><article class="stat-card"><strong>17M+</strong><h3>Users Served</h3><p>People on platforms we have built</p></article><article class="stat-card"><strong>18K+</strong><h3>Threats Blocked</h3><p>Cyber attacks stopped every single month</p></article><article class="stat-card"><strong>99.9%</strong><h3>Uptime SLA</h3><p>Monitored 24/7 by our own SOC</p></article></div></div></section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Our Services</span>
+      <h2>What We Do</h2>
+      <p>Full-cycle software &amp; IT services under one roof</p>
+    </header>
+    <div class="cms-grid cols-3">
+      
+        <article class="cms-card reveal">
+          <div class="cms-card-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></div>
+          <h3>Web Development</h3>
+          <p>Responsive, secure and maintainable web platforms.</p>
+          
+          <a href="/contact/" aria-label="Enquire about Web Development">Enquire now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+        <article class="cms-card reveal">
+          <div class="cms-card-icon"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i></div>
+          <h3>Mobile Applications</h3>
+          <p>Cross-platform mobile experiences for customers and teams.</p>
+          
+          <a href="/contact/" aria-label="Enquire about Mobile Applications">Enquire now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+        <article class="cms-card reveal">
+          <div class="cms-card-icon"><i class="fa-solid fa-cloud" aria-hidden="true"></i></div>
+          <h3>Cloud &amp; DevOps</h3>
+          <p>Reliable cloud infrastructure, automation and monitoring.</p>
+          
+          <a href="/contact/" aria-label="Enquire about Cloud &amp; DevOps">Enquire now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Products &amp; Solutions</span>
+      <h2>Products &amp; Solutions</h2>
+      <p>Ready-made platforms we build, host and support</p>
+    </header>
+    <div class="cms-grid cols-2">
+      
+        <article class="cms-card reveal">
+          
+            <div class="cms-card-icon"><i class="fa-solid fa-cubes-stacked" aria-hidden="true"></i></div>
+          
+          <span class="card-tag">Product</span>
+          <h3>Horilla HRMS</h3>
+          <p>Open-source HRMS — recruitment, onboarding, payroll, attendance, leave and performance in one clean platform.</p>
+          <a href="/contact/">Learn more <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+        <article class="cms-card reveal">
+          
+            <div class="cms-card-icon"><i class="fa-solid fa-cubes" aria-hidden="true"></i></div>
+          
+          <span class="card-tag">Solution</span>
+          <h3>GFT ERP Suite</h3>
+          <p>End-to-end ERP for manufacturing and services: inventory, finance, procurement and analytics on a single source of truth.</p>
+          <a href="/contact/">Learn more <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+        <article class="cms-card reveal">
+          
+            <div class="cms-card-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+          
+          <span class="card-tag">Solution</span>
+          <h3>CyberShield SOC</h3>
+          <p>Managed 24/7 security operations: monitoring, threat hunting, incident response and compliance reporting.</p>
+          <a href="/contact/">Learn more <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Featured Work</span>
+      <h2>Featured Work</h2>
+      <p>A snapshot of what we have delivered</p>
+    </header>
+    <div class="cms-grid cols-3">
+      
+        <article class="cms-card project-card reveal">
+          <div class="project-cover">
+            
+              <div style="aspect-ratio:16/10;background:var(--gradient-soft);display:grid;place-items:center;color:var(--brand)"><i class="fa-solid fa-diagram-project fa-2x" aria-hidden="true"></i></div>
+            
+            <span class="project-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+          <div class="project-body">
+            <h3>Horilla HRMS Platform</h3>
+            <p>A full-featured, open-source HRMS used by thousands of organisations — designed for scale, security and ease …</p>
+          </div>
+        </article>
+      
+        <article class="cms-card project-card reveal">
+          <div class="project-cover">
+            
+              <div style="aspect-ratio:16/10;background:var(--gradient-soft);display:grid;place-items:center;color:var(--brand)"><i class="fa-solid fa-diagram-project fa-2x" aria-hidden="true"></i></div>
+            
+            <span class="project-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+          <div class="project-body">
+            <h3>Smart Campus ERP</h3>
+            <p>Unified ERP for education: admissions, fees, exams, transport and parent communication for 12+ institutions.</p>
+          </div>
+        </article>
+      
+        <article class="cms-card project-card reveal">
+          <div class="project-cover">
+            
+              <div style="aspect-ratio:16/10;background:var(--gradient-soft);display:grid;place-items:center;color:var(--brand)"><i class="fa-solid fa-diagram-project fa-2x" aria-hidden="true"></i></div>
+            
+            <span class="project-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+          </div>
+          <div class="project-body">
+            <h3>Banking Analytics Portal</h3>
+            <p>Real-time MIS and risk analytics dashboard for a mid-size NBFC — 17M+ transactions processed monthly.</p>
+          </div>
+        </article>
+      
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Feature grid</span>
+      <h2>Why Choose Us</h2>
+      <p>The edge every engagement gets with GFT</p>
+    </header>
+
+    
+      <div class="cms-grid cols-3">
+        
+          
+            <article class="cms-card reveal">
+              <div class="cms-card-icon"><i class="fa-solid fa-medal" aria-hidden="true"></i></div>
+              <h3>Enterprise-grade Engineering</h3>
+              <p>Senior engineers, code reviews and CI/CD on every delivery.</p>
+              
+            </article>
+          
+        
+          
+            <article class="cms-card reveal">
+              <div class="cms-card-icon"><i class="fa-solid fa-certificate" aria-hidden="true"></i></div>
+              <h3>Certified Security Experts</h3>
+              <p>CEH, OSCP and ISO-aligned practitioners on every team.</p>
+              
+            </article>
+          
+        
+          
+            <article class="cms-card reveal">
+              <div class="cms-card-icon"><i class="fa-solid fa-indian-rupee-sign" aria-hidden="true"></i></div>
+              <h3>Transparent Pricing</h3>
+              <p>Fixed quotes, milestone billing, zero surprises.</p>
+              
+            </article>
+          
+        
+          
+            <article class="cms-card reveal">
+              <div class="cms-card-icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></div>
+              <h3>24/7 Support</h3>
+              <p>Real engineers on call — not ticket queues.</p>
+              
+            </article>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Technology / expertise</span>
+      <h2>Technologies We Work With</h2>
+      <p>A modern, battle-tested stack</p>
+    </header>
+
+    
+      <div class="tech-chip-list">
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-python" aria-hidden="true"></i>Python / Django</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-react" aria-hidden="true"></i>React / Next.js</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>Flutter / React Native</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-cloud" aria-hidden="true"></i>AWS / Azure / GCP</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-dharmachakra" aria-hidden="true"></i>Kubernetes / Docker</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-database" aria-hidden="true"></i>MySQL / PostgreSQL</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-robot" aria-hidden="true"></i>Machine Learning / AI</span>
+          
+        
+          
+            <span class="tech-chip reveal"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Cybersecurity</span>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    
+<section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Testimonials</span>
+      <h2>Clients Trust Us for a Reason</h2>
+      <p>Don&#x27;t take our word for it</p>
+    </header>
+    <div class="cms-grid cols-3">
+      
+        <figure class="cms-card testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 star rating">
+            <i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i>
+          </div>
+          <blockquote>
+            <i class="fa-solid fa-quote-left quote-mark" aria-hidden="true"></i>
+            <p>GFT delivered our platform two weeks early and the code quality was outstanding. Their security review caught issues our previous vendor missed entirely.</p>
+          </blockquote>
+          <figcaption>
+            
+              <span class="avatar avatar-initials" aria-hidden="true">RS</span>
+            
+            <span class="avatar-meta">
+              <strong>Rohit Sharma</strong>
+              <small>CTO, TechNova Labs</small>
+            </span>
+          </figcaption>
+        </figure>
+      
+        <figure class="cms-card testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 star rating">
+            <i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i>
+          </div>
+          <blockquote>
+            <i class="fa-solid fa-quote-left quote-mark" aria-hidden="true"></i>
+            <p>From wireframes to launch, the team treated our product like their own. Uptime has been rock solid since day one.</p>
+          </blockquote>
+          <figcaption>
+            
+              <span class="avatar avatar-initials" aria-hidden="true">PV</span>
+            
+            <span class="avatar-meta">
+              <strong>Priya Verma</strong>
+              <small>Founder, EduNest</small>
+            </span>
+          </figcaption>
+        </figure>
+      
+        <figure class="cms-card testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 star rating">
+            <i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i><i class="fa-solid fa-star" aria-hidden="true"></i>
+          </div>
+          <blockquote>
+            <i class="fa-solid fa-quote-left quote-mark" aria-hidden="true"></i>
+            <p>Their 24/7 SOC blocked a coordinated phishing campaign within minutes. That level of vigilance is exactly why we keep them on retainer.</p>
+          </blockquote>
+          <figcaption>
+            
+              <span class="avatar avatar-initials" aria-hidden="true">AM</span>
+            
+            <span class="avatar-meta">
+              <strong>Arjun Mehta</strong>
+              <small>COO, FinEdge Capital</small>
+            </span>
+          </figcaption>
+        </figure>
+      
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section">
+  <div class="container container-narrow">
+    <header class="section-head">
+      <span class="section-kicker">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know before you start</p>
+    </header>
+    <div class="faq-list">
+      
+        <details class="faq-item reveal" open>
+          <summary>
+            <span>How long does a typical project take?</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <p>A marketing website usually ships in 2–4 weeks, a custom web application in 6–12 weeks, and enterprise platforms in 3–6 months. You get a fixed milestone plan before we start.</p>
+        </details>
+      
+        <details class="faq-item reveal" >
+          <summary>
+            <span>Do you provide support after launch?</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <p>Yes. Every engagement includes a support window, and we offer 24/7 managed support plans with guaranteed response times.</p>
+        </details>
+      
+        <details class="faq-item reveal" >
+          <summary>
+            <span>Can you take over an existing project or codebase?</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <p>Absolutely. We do code audits, tech-debt cleanup and full project takeovers — including for platforms built by other vendors.</p>
+        </details>
+      
+        <details class="faq-item reveal" >
+          <summary>
+            <span>How do you keep our data and systems secure?</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <p>Security is baked into our process: secure SDLC, regular penetration testing, 24/7 SOC monitoring and ISO-aligned policies.</p>
+        </details>
+      
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="cta-content">
+        <h2>Ready to Build Something Great?</h2>
+        
+        <div class="btn-row">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+                
+
+            
+        
+    
+        
+            
+                
+                
+                
+                    <section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Contact Us</span>
+      <h2>Let&#x27;s Start a Conversation</h2>
+      <p>Tell us about your project and we&#x27;ll take it from there</p>
+    </header>
+
+    
+    
+    <div class="contact-grid">
+      <div class="contact-info">
+        
+          <div class="contact-block">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <div><h3>Visit us</h3><p>Sector 62, Noida,<br>Uttar Pradesh 201301, India</p></div>
+          </div>
+        
+        
+          <div class="contact-block">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <div><h3>Call us</h3><p><a href="tel:+91 8819981884">+91 8819981884</a></p></div>
+          </div>
+        
+        
+          <div class="contact-block">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <div><h3>Email us</h3><p><a href="mailto:chcyberarmy@gmail.com">chcyberarmy@gmail.com</a></p></div>
+          </div>
+        
+        
+          <div class="contact-block">
+            <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            <div><h3>Office hours</h3><p>Mon – Sat, 9:30 AM – 7:00 PM IST</p></div>
+          </div>
+        
+      </div>
+
+      <form class="contact-form cms-card" action="/website/submit/" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="CpcQK7VBlHuXr2gVNSTTdUklOaQl3HmNlpXkeqjZe0h8rOrJyt5LKgTOUzBc5zqM">
+        <input type="hidden" name="submission_type" value="contact">
+        <input type="hidden" name="_subject" value="Website contact form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contact-name">Full name *</label>
+            <input id="contact-name" type="text" name="name" required maxlength="150" placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label for="contact-email">Email *</label>
+            <input id="contact-email" type="email" name="email" required maxlength="254" placeholder="you@company.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contact-phone">Phone</label>
+            <input id="contact-phone" type="tel" name="phone" maxlength="50" placeholder="+91 ...">
+          </div>
+          <div class="form-field">
+            <label for="contact-service">Service needed</label>
+            <select id="contact-service" name="service_needed">
+              <option value="">Select a service</option>
+              
+                <option value="Web Development">Web Development</option>
+              
+                <option value="Mobile Applications">Mobile Applications</option>
+              
+                <option value="Cloud &amp; DevOps">Cloud &amp; DevOps</option>
+              
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="contact-message">Message *</label>
+          <textarea id="contact-message" name="message" required rows="5" maxlength="2000" placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button class="site-btn wide" type="submit">Send message <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+      </form>
+    </div>
+
+    <div class="contact-map">
+      
+        <iframe src="https://www.google.com/maps?q=Sector%2062%2C%20Noida%2C%20Uttar%20Pradesh%20201301&amp;output=embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Office location map"></iframe>
+      
+      
+        <a class="map-cta" href="https://www.google.com/maps/dir/?api=1&amp;destination=Sector+62,+Noida,+Uttar+Pradesh+201301" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i> Get directions</a>
+      
+    </div>
+    
+  </div>
+</section>
+
+                
+
+            
+        
+    
+
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="site-brand" href="/" aria-label="Geeta ForgeTech home">
+          
+            <span class="brand-mark" aria-hidden="true">G</span>
+          
+          <span class="brand-name">Geeta ForgeTech</span>
+        </a>
+        <p>Building secure, modern software that powers business growth.</p>
+        
+          <div class="social-row">
+            
+              <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+            
+              <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            
+              <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+            
+          </div>
+        
+      </div>
+
+      
+        <div class="footer-col">
+          <h3>Company</h3>
+          
+            <div class="footer-links">
+              
+                
+                  <a href="/about/" >About Us</a>
+                
+              
+                
+                  <a href="/services/" >Services</a>
+                
+              
+                
+                  <a href="/projects/" >Projects</a>
+                
+              
+                
+                  <a href="/career/" >Careers</a>
+                
+              
+                
+                  <a href="/contact/" >Contact</a>
+                
+              
+            </div>
+          
+        </div>
+      
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          
+            <p>Sector 62, Noida, Uttar Pradesh 201301, India<br>+91 8819981884<br>chcyberarmy@gmail.com</p>
+            <div class="footer-links">
+              
+            </div>
+          
+        </div>
+      
+        <div class="footer-col">
+          <h3>Sign up for Newsletter</h3>
+          
+            <div class="footer-newsletter">
+              <p>Product updates, security tips and company news. No spam.</p>
+              <form action="/website/submit/" method="post">
+                <input type="hidden" name="csrfmiddlewaretoken" value="r3Wn0Y86jdFXqkKDdL7MMkaFMA5VPL1ua3HRuhwucws8q6VrYmjEjGJ8SZQMRD5t">
+                <input type="hidden" name="submission_type" value="newsletter">
+                <label class="sr-only" for="newsletter-email">Email address</label>
+                <input id="newsletter-email" type="email" name="email" required maxlength="254" placeholder="you@company.com">
+                <button class="site-btn sm" type="submit">Subscribe</button>
+              </form>
+            </div>
+          
+        </div>
+      
+        <div class="footer-col">
+          <h3>Legal</h3>
+          
+            <div class="footer-links">
+              
+                
+                  <a href="/terms-and-conditions/" >Terms &amp; Conditions</a>
+                
+              
+                
+                  <a href="/contact/" >Contact</a>
+                
+              
+            </div>
+          
+        </div>
+      
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Geeta ForgeTech. Building secure, modern software that powers business growth.</span>
+      
+        <nav aria-label="Footer navigation">
+          
+            <a href="/about/">About</a> · 
+          
+            <a href="/services/">Services</a> · 
+          
+            <a href="/projects/">Projects</a> · 
+          
+            <a href="/contact/">Contact</a> · 
+          
+            <a href="/terms-and-conditions/">Terms</a>
+          
+        </nav>
+      
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

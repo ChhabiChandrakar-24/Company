@@ -1,0 +1,22 @@
+<section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Our Services</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-3">
+      {% for service in services %}
+        <article class="cms-card reveal">
+          {% if service.icon %}<div class="cms-card-icon"><i class="fa-solid {{ service.icon }}" aria-hidden="true"></i></div>{% endif %}
+          <h3>{{ service.name }}</h3>
+          {% if service.short_description %}<p>{{ service.short_description }}</p>{% endif %}
+          {% if service.keywords %}<small class="card-tag">{{ service.keywords|truncatechars:60 }}</small>{% endif %}
+          <a href="/contact/" aria-label="Enquire about {{ service.name }}">Enquire now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Services will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

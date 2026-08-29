@@ -1,0 +1,44 @@
+<section class="cms-section{% if section.section_type != 'stats' %} alt{% endif %}">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">{{ section.get_section_type_display }}</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+
+    {% if section.section_type == 'stats' %}
+      <div class="stats-band">
+        {% for item in section.section_items.all %}
+          {% if item.is_active %}
+            <div class="stat-item reveal">
+              {% if item.value %}<div class="stat-value">{{ item.value }}</div>{% endif %}
+              {% if item.title %}<div class="stat-label">{{ item.title }}</div>{% endif %}
+              {% if item.description %}<p style="color:var(--muted);font-size:.85rem;margin:6px 0 0">{{ item.description }}</p>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% elif section.section_type == 'tech' %}
+      <div class="tech-chip-list">
+        {% for item in section.section_items.all %}
+          {% if item.is_active %}
+            <span class="tech-chip reveal"><i class="fa-solid {{ item.icon|default:'fa-microchip' }}" aria-hidden="true"></i>{{ item.title }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="cms-grid cols-3">
+        {% for item in section.section_items.all %}
+          {% if item.is_active %}
+            <article class="cms-card reveal">
+              {% if item.icon %}<div class="cms-card-icon"><i class="fa-solid {{ item.icon }}" aria-hidden="true"></i></div>{% endif %}
+              <h3>{{ item.title }}</h3>
+              {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+              {% if item.button_text %}<a href="{{ item.button_url }}">{{ item.button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>

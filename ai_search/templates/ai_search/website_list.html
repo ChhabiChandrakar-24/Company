@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Websites <a href="{% url 'ai_search:add_website' %}" class="btn btn-success btn-sm">Add New</a></h2>
+    <ul class="list-group mt-3">
+    {% for w in websites %}
+        <li class="list-group-item"><a href="{% url 'ai_search:website_detail' w.id %}">{{ w.name }}</a> ({{ w.base_url }})</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

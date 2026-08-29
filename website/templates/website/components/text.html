@@ -1,0 +1,9 @@
+<section class="cms-section">
+  <div class="container container-narrow">
+    <div class="prose reveal">
+      {% if section.subheading %}<span class="section-kicker">{{ section.subheading }}</span>{% endif %}
+      <h2>{{ section.heading }}</h2>
+      {% if section.content %}<div>{{ section.content|linebreaks }}</div>{% endif %}
+    </div>
+  </div>
+</section>

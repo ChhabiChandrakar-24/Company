@@ -1,0 +1,10 @@
+{% extends "website/base.html" %}
+{% block content %}
+    {% if page.sections.exists %}
+        {% for section in page.sections.all %}
+            {% include "website/sections/{{ section.section_type }}.html" with section=section %}
+        {% endfor %}
+    {% else %}
+        {{ page.html_content|safe }}
+    {% endif %}
+{% endblock %}

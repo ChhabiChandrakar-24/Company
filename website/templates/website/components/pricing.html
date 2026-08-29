@@ -1,0 +1,29 @@
+<section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Pricing</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-3">
+      {% for plan in pricing_plans %}
+        <article class="cms-card pricing-card{% if plan.is_featured %} featured{% endif %} reveal">
+          {% if plan.is_featured %}<span class="pricing-badge">Most Popular</span>{% endif %}
+          <h3>{{ plan.name }}</h3>
+          {% if plan.description %}<p>{{ plan.description }}</p>{% endif %}
+          <div class="pricing-price">
+            <span class="currency">₹</span>{{ plan.price }}<small>/{{ plan.billing_period }}</small>
+          </div>
+          <ul class="pricing-features">
+            {% for feature in plan.feature_list %}
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>{{ feature }}</li>
+            {% endfor %}
+          </ul>
+          <a class="site-btn{% if not plan.is_featured %} ghost{% endif %}" href="{{ plan.button_url }}">{{ plan.button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Pricing plans will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

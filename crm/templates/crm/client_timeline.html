@@ -1,0 +1,380 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Header with Back Button and Client Details -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">{{ client.name }} Timeline</h2>
+            <p class="text-muted mb-0">
+                <i class="fa fa-envelope-o"></i> {{ client.email }} &nbsp;|&nbsp;
+                <i class="fa fa-phone"></i> {{ client.phone|default:"N/A" }} &nbsp;|&nbsp;
+                <i class="fa fa-building-o"></i> {{ client.company_name|default:"Individual" }} &nbsp;|&nbsp;
+                <span class="badge bg-secondary">{{ client.get_status_display }}</span>
+            </p>
+        </div>
+        <a href="{% url 'inquiry-list' %}" class="btn btn-outline-secondary">
+            <i class="fa fa-arrow-left"></i> {% trans "Back to Pipeline" %}
+        </a>
+    </div>
+
+    <!-- Portal Setup Link Alert -->
+    {% if generated_link %}
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+        <h5 class="alert-heading"><i class="fa fa-key"></i> {% trans "Secure Access Link Generated" %}</h5>
+        <p class="mb-2">{% trans "Provide this secure, one-time login setup link to the client. It grants access to their workspace dashboard:" %}</p>
+        <div class="input-group">
+            <input type="text" class="form-control" value="{{ generated_link }}" id="accessLinkUrl" readonly>
+            <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('accessLinkUrl').value); alert('{% trans "Link copied to clipboard!" %}');">
+                <i class="fa fa-copy"></i> {% trans "Copy" %}
+            </button>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <!-- Info Cards: Portal Status & Requirements specifications -->
+    <div class="row mb-4">
+        <!-- Portal Access Config Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card rounded-3 shadow-sm h-100">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Secure Portal Access Controls" %}</h5>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <p class="mb-3">
+                            {% trans "Client Portal Status" %}: 
+                            {% if client.is_portal_active %}
+                                <span class="badge bg-success">{% trans "Active Access" %}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{% trans "Access Revoked" %}</span>
+                            {% endif %}
+                        </p>
+                        <p class="text-muted" style="font-size: 13px;">
+                            {% trans "Granting access generates a secure one-time setup token. Revoking access instantly disables the client user account and refuses login." %}
+                        </p>
+                    </div>
+                    <div>
+                        {% if not client.is_portal_active %}
+                            <a href="{% url 'crm-client-portal-access' client.id 'grant' %}" class="btn btn-success btn-sm w-100">
+                                <i class="fa fa-unlock"></i> {% trans "Grant Portal Access" %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'crm-client-portal-access' client.id 'revoke' %}" class="btn btn-danger btn-sm w-100" onclick="return confirm('{% trans "Are you sure you want to revoke portal access?" %}');">
+                                <i class="fa fa-lock"></i> {% trans "Revoke Portal Access" %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements Specs Card -->
+        <div class="col-md-6 mb-3">
+            <div class="card rounded-3 shadow-sm h-100">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">{% trans "Specification Specifications" %}</h5>
+                    <a href="{% url 'crm-requirement-create' active_inquiry.id %}" class="btn btn-xs btn-outline-primary">
+                        <i class="fa fa-plus"></i> {% trans "New Spec" %}
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush" style="max-height: 180px; overflow-y: auto;">
+                        {% for req in requirements %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-2 px-3">
+                            <div>
+                                <span class="font-weight-bold" style="font-size: 13px;">{{ req.title }}</span>
+                                <small class="text-muted d-block">v{{ req.revision_number }} &bull; {{ req.get_priority_display }} priority</small>
+                            </div>
+                            <a href="{% url 'crm-requirement-detail' req.id %}" class="btn btn-xs btn-outline-secondary">
+                                <i class="fa fa-eye"></i> {% trans "Specs Details" %}
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center text-muted py-4">{% trans "No specifications captured yet." %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick action buttons to record events / transition status -->
+    <div class="card mb-4 bg-light shadow-sm">
+        <div class="card-body py-3">
+            <h6 class="text-secondary font-weight-bold mb-3">{% trans "Record Client Milestones / Touchpoints" %}</h6>
+            <div class="d-flex flex-wrap gap-2">
+                <!-- Requirements -->
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalRequirement">
+                    <i class="fa fa-file-text-o"></i> {% trans "Quick Requirement" %}
+                </button>
+                <!-- Quotation -->
+                <button type="button" class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalQuotation">
+                    <i class="fa fa-money"></i> {% trans "Create Quotation" %}
+                </button>
+                <!-- Project -->
+                <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#modalProject">
+                    <i class="fa fa-tasks"></i> {% trans "Link Active Project" %}
+                </button>
+                <!-- Scheduler Meeting -->
+                <a href="{% url 'crm-schedule-meeting' active_inquiry.id %}" class="btn btn-sm btn-secondary">
+                    <i class="fa fa-calendar"></i> {% trans "Schedule Meeting" %}
+                </a>
+                <a href="{% url 'crm-add-task' active_inquiry.id %}" class="btn btn-sm btn-warning">
+                    <i class="fa fa-check-square-o"></i> {% trans "Add Task / Follow-up" %}
+                </a>
+                <!-- Link Scheduled Meeting -->
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalMeeting">
+                    <i class="fa fa-link"></i> {% trans "Link Scheduled Meeting" %}
+                </button>
+                <!-- Payment -->
+                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalPayment">
+                    <i class="fa fa-credit-card"></i> {% trans "Log Payment" %}
+                </button>
+                <!-- Communication -->
+                <button type="button" class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalCommunication">
+                    <i class="fa fa-comment-o"></i> {% trans "Log Communication Note" %}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Chronology Feed -->
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h5 class="card-title mb-4 border-bottom pb-2">{% trans "Interaction & Conversion History" %}</h5>
+            
+            <div class="position-relative ps-4" style="border-left: 2px solid #dee2e6; margin-left: 10px;">
+                {% for log in logs %}
+                <div class="mb-4 position-relative">
+                    <!-- Bullet icon -->
+                    <div class="position-absolute translate-middle-x rounded-circle d-flex align-items-center justify-content-center" 
+                         style="left: -25px; top: 10px; width: 30px; height: 30px; background-color: #f8f9fa; border: 2px solid 
+                         {% if log.activity_type == 'inquiry' %}#0d6efd
+                         {% elif log.activity_type == 'status_change' %}#6c757d
+                         {% elif log.activity_type == 'requirement' %}#0dcaf0
+                         {% elif log.activity_type == 'quotation' %}#0dcaf0
+                         {% elif log.activity_type == 'project' %}#212529
+                         {% elif log.activity_type == 'meeting' %}#6c757d
+                         {% elif log.activity_type == 'payment' %}#198754
+                         {% elif log.activity_type == 'communication' %}#ffc107
+                         {% else %}#adb5bd{% endif %};">
+                        <i class="fa 
+                           {% if log.activity_type == 'inquiry' %}fa-paper-plane text-primary
+                           {% elif log.activity_type == 'status_change' %}fa-refresh text-secondary
+                           {% elif log.activity_type == 'requirement' %}fa-file-text-o text-info
+                           {% elif log.activity_type == 'quotation' %}fa-money text-info
+                           {% elif log.activity_type == 'project' %}fa-tasks text-dark
+                           {% elif log.activity_type == 'meeting' %}fa-calendar text-secondary
+                           {% elif log.activity_type == 'payment' %}fa-credit-card text-success
+                           {% elif log.activity_type == 'communication' %}fa-comment-o text-warning
+                           {% else %}fa-circle text-muted{% endif %}" style="font-size: 12px;"></i>
+                    </div>
+
+                    <div class="card bg-light border-0 shadow-none ms-2">
+                        <div class="card-body py-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 font-weight-bold">{{ log.title }}</h6>
+                                <small class="text-muted">{{ log.created_at|date:"d M Y, h:i A" }}</small>
+                            </div>
+                            <p class="mb-0 text-secondary" style="white-space: pre-wrap;">{{ log.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5 text-muted">
+                    <i class="fa fa-clock-o fa-2x mb-3 d-block"></i>
+                    {% trans "No events recorded in client timeline." %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Definitions -->
+
+<!-- 1. Discovery Requirement Modal -->
+<div class="modal fade" id="modalRequirement" tabindex="-1" aria-labelledby="lblReq" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblReq">{% trans "Discover Client Requirement" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-add-requirement' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Requirement Title" %}</label>
+                        {{ req_form.title }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Detailed Specifications" %}</label>
+                        {{ req_form.description }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Quotation Modal -->
+<div class="modal fade" id="modalQuotation" tabindex="-1" aria-labelledby="lblQuote" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblQuote">{% trans "Generate Quotation/Proposal" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-add-quotation' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Quote Number" %}</label>
+                        {{ quote_form.quote_number }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Amount" %}</label>
+                        {{ quote_form.amount }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Terms / Description" %}</label>
+                        {{ quote_form.description }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Status" %}</label>
+                        {{ quote_form.status }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Link Active Project Modal -->
+<div class="modal fade" id="modalProject" tabindex="-1" aria-labelledby="lblProj" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblProj">{% trans "Associate Active Project" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-link-project' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Select Project" %}</label>
+                        {{ project_form.project }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Associate" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Link Scheduled Meeting Modal -->
+<div class="modal fade" id="modalMeeting" tabindex="-1" aria-labelledby="lblMeet" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblMeet">{% trans "Link Scheduled Meeting" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-link-meeting' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Select Scheduled Meeting" %}</label>
+                        {{ meeting_form.meeting }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Associate" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 5. Log Payment Modal -->
+<div class="modal fade" id="modalPayment" tabindex="-1" aria-labelledby="lblPay" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblPay">{% trans "Log Client Payment" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-add-payment' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Payment Amount" %}</label>
+                        {{ pay_form.amount }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Date Paid" %}</label>
+                        {{ pay_form.payment_date }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Payment Reference / Receipt #" %}</label>
+                        {{ pay_form.reference_number }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Status" %}</label>
+                        {{ pay_form.status }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Log Payment" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 6. Log Communication Modal -->
+<div class="modal fade" id="modalCommunication" tabindex="-1" aria-labelledby="lblComm" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lblComm">{% trans "Log Communication Note" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'crm-add-communication' active_inquiry.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Channel" %}</label>
+                        {{ comm_form.channel }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Message Content" %}</label>
+                        {{ comm_form.message }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Log" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

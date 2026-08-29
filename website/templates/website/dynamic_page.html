@@ -1,0 +1,57 @@
+{% extends "website/dynamic_base.html" %}
+
+{% block content %}
+    {% for section in page.sections.all %}
+        {% if section.is_active and section.visibility != 'admin_only' %}
+            {% if section.visibility == 'public' or request.user.is_authenticated %}
+                
+                {# Component Resolver #}
+                {% if section.section_type == 'hero' %}
+                    {% include "website/components/hero.html" with section=section %}
+                {% elif section.section_type == 'carousel' %}
+                    {% include "website/components/carousel.html" with section=section %}
+                {% elif section.section_type == 'products' %}
+                    {% include "website/components/products.html" with section=section %}
+                {% elif section.section_type == 'text' or section.section_type == 'content' %}
+                    {% include "website/components/text.html" with section=section %}
+                {% elif section.section_type == 'image' %}
+                    {% include "website/components/image.html" with section=section %}
+                {% elif section.section_type == 'features' %}
+                    {% include "website/components/features.html" with section=section %}
+                {% elif section.section_type == 'stats' %}
+                    {% include "website/components/stats.html" with section=section %}
+                {% elif section.section_type == 'tech' %}
+                    {% include "website/components/features.html" with section=section %}
+                {% elif section.section_type == 'services' %}
+                    {% include "website/components/services.html" with section=section %}
+                {% elif section.section_type == 'pricing' %}
+                    {% include "website/components/pricing.html" with section=section %}
+                {% elif section.section_type == 'jobs' %}
+                    {% include "website/components/jobs.html" with section=section %}
+                {% elif section.section_type == 'projects' %}
+                    {% include "website/components/projects.html" with section=section %}
+                {% elif section.section_type == 'faq' %}
+                    {% include "website/components/faq.html" with section=section %}
+                {% elif section.section_type == 'team' %}
+                    {% include "website/components/team.html" with section=section %}
+                {% elif section.section_type == 'testimonials' %}
+                    {% include "website/components/testimonials.html" with section=section %}
+                {% elif section.section_type == 'contact' %}
+                    {% include "website/components/contact.html" with section=section %}
+                {% elif section.section_type == 'cta' %}
+                    {% include "website/components/cta.html" with section=section %}
+                {% elif section.section_type == 'policy' %}
+                    {% include "website/components/policy.html" with section=section %}
+                {% else %}
+                    {# Fallback for unknown or text components #}
+                    {% include "website/components/text.html" with section=section %}
+                {% endif %}
+
+            {% endif %}
+        {% endif %}
+    {% empty %}
+        <div class="container text-center py-5">
+            <h2 class="text-muted">No content available for this page yet.</h2>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{% trans "Issued Joining Letters" %}</h2>
+        {% if perms.employee.change_employee or user.is_superuser %}
+        <a href="{% url 'issue-joining-letter' %}" class="btn btn-primary">
+            <i class="fa fa-paper-plane"></i> {% trans "Issue New Letter" %}
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="card rounded-3 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-4 py-3">{% trans "Employee" %}</th>
+                        <th class="py-3">{% trans "Title" %}</th>
+                        <th class="py-3">{% trans "Issued Date" %}</th>
+                        <th class="py-3">{% trans "Status" %}</th>
+                        <th class="px-4 py-3 text-end">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for letter in letters %}
+                    <tr>
+                        <td class="px-4 py-3 align-middle font-weight-bold">{{ letter.employee.get_full_name }}</td>
+                        <td class="py-3 align-middle">{{ letter.title }}</td>
+                        <td class="py-3 align-middle">{{ letter.issued_date|default:"-" }}</td>
+                        <td class="py-3 align-middle">
+                            {% if letter.status == 'draft' %}
+                                <span class="badge bg-secondary">{% trans "Draft" %}</span>
+                            {% elif letter.status == 'issued' %}
+                                <span class="badge bg-primary">{% trans "Issued" %}</span>
+                            {% elif letter.status == 'accepted' %}
+                                <span class="badge bg-success">{% trans "Accepted" %}</span>
+                            {% elif letter.status == 'rejected' %}
+                                <span class="badge bg-danger">{% trans "Rejected" %}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-3 text-end align-middle">
+                            <!-- View / Modal Details -->
+                            <button type="button" class="btn btn-sm btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#viewLetterModal{{ letter.id }}">
+                                <i class="fa fa-eye"></i> {% trans "View" %}
+                            </button>
+                            
+                            <!-- Employee Acceptance Actions -->
+                            {% if letter.status == 'issued' %}
+                                {% if user.employee_get == letter.employee or perms.employee.change_employee or user.is_superuser %}
+                                    <a href="{% url 'issued-joining-letter-action' letter.id 'accept' %}" class="btn btn-sm btn-success me-1">
+                                        <i class="fa fa-check"></i> {% trans "Accept" %}
+                                    </a>
+                                    <a href="{% url 'issued-joining-letter-action' letter.id 'reject' %}" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-times"></i> {% trans "Reject" %}
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+
+                            <!-- Modal -->
+                            <div class="modal fade text-start" id="viewLetterModal{{ letter.id }}" tabindex="-1" aria-labelledby="viewLetterModalLabel{{ letter.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="viewLetterModalLabel{{ letter.id }}">{{ letter.title }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body bg-light">
+                                            <div class="card p-4">
+                                                <div style="white-space: pre-wrap; font-family: 'Courier New', Courier, monospace;">{{ letter.body }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fa fa-envelope-open-o fa-2x mb-3 d-block"></i>
+                            {% trans "No letters issued." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

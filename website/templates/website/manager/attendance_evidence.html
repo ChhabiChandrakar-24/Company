@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="oh-wrapper" style="padding-top:2rem;padding-bottom:2rem">
+  <div class="oh-inner-sidebar-content">
+    <div class="oh-inner-sidebar-content__header mb-3">
+      <h2 class="oh-inner-sidebar-content__title">{% trans "Attendance Evidence" %}</h2>
+      <p class="text-muted mb-0">{% trans "Employee check-in/out selfie and actual captured GPS location." %}</p>
+    </div>
+
+    <form method="get" class="oh-card p-3 mb-3">
+      <div class="row align-items-end">
+        <div class="col-md-4 mb-2"><label class="oh-label">{% trans "Employee" %}</label><input class="oh-input w-100" name="employee" value="{{ request.GET.employee }}" placeholder="{% trans 'Name, email or badge ID' %}"></div>
+        <div class="col-md-3 mb-2"><label class="oh-label">{% trans "Date" %}</label><input class="oh-input w-100" type="date" name="date" value="{{ request.GET.date }}"></div>
+        <div class="col-md-3 mb-2"><label class="oh-label">{% trans "Action" %}</label><select class="oh-select w-100" name="action"><option value="">{% trans "All actions" %}</option><option value="clock-in" {% if request.GET.action == 'clock-in' %}selected{% endif %}>{% trans "Check In" %}</option><option value="clock-out" {% if request.GET.action == 'clock-out' %}selected{% endif %}>{% trans "Check Out" %}</option></select></div>
+        <div class="col-md-2 mb-2 d-flex"><button class="oh-btn oh-btn--secondary flex-fill">{% trans "Filter" %}</button><a class="oh-btn oh-btn--light-bkg ms-2" href="{% url 'website-attendance-evidence' %}">{% trans "Reset" %}</a></div>
+      </div>
+    </form>
+
+    <div class="oh-card p-0" style="overflow:auto">
+      <table class="oh-sticky-table">
+        <thead><tr><th class="oh-sticky-table__th">{% trans "Selfie" %}</th><th class="oh-sticky-table__th">{% trans "Employee" %}</th><th class="oh-sticky-table__th">{% trans "Action & time" %}</th><th class="oh-sticky-table__th">{% trans "Actual GPS location" %}</th><th class="oh-sticky-table__th">{% trans "Accuracy" %}</th></tr></thead>
+        <tbody>
+        {% for record in page %}
+          <tr class="oh-sticky-table__tr">
+            <td class="oh-sticky-table__td"><a href="{% url 'website-attendance-selfie' record.pk %}" target="_blank"><img src="{% url 'website-attendance-selfie' record.pk %}" alt="Attendance selfie - {{ record.employee.get_full_name }}" loading="lazy" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #ddd"></a></td>
+            <td class="oh-sticky-table__td"><strong>{{ record.employee.get_full_name }}</strong><br><small class="text-muted">{{ record.employee.badge_id|default:record.employee.email }}</small></td>
+            <td class="oh-sticky-table__td"><span class="oh-badge {% if record.action == 'clock-in' %}oh-badge--success{% endif %}">{{ record.get_action_display }}</span><br><small>{{ record.created_at|date:"d M Y, h:i:s A" }}</small></td>
+            <td class="oh-sticky-table__td"><code>{{ record.latitude }}, {{ record.longitude }}</code><br><a href="https://www.google.com/maps/search/?api=1&amp;query={{ record.latitude }},{{ record.longitude }}" target="_blank" rel="noopener noreferrer">{% trans "Open exact point in Google Maps" %} ↗</a></td>
+            <td class="oh-sticky-table__td">{% if record.accuracy != None %}±{{ record.accuracy|floatformat:2 }} m{% else %}—{% endif %}</td>
+          </tr>
+        {% empty %}<tr><td class="oh-sticky-table__td text-center" colspan="5" style="padding:4rem">{% trans "No attendance evidence found." %}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if page.has_other_pages %}<div class="d-flex justify-content-between align-items-center mt-3"><span>{% blocktrans with current=page.number total=page.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktrans %}</span><div>{% if page.has_previous %}<a class="oh-btn oh-btn--light-bkg" href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page.previous_page_number }}">{% trans "Previous" %}</a>{% endif %}{% if page.has_next %}<a class="oh-btn oh-btn--light-bkg" href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page.next_page_number }}">{% trans "Next" %}</a>{% endif %}</div></div>{% endif %}
+  </div>
+</div>
+{% endblock %}

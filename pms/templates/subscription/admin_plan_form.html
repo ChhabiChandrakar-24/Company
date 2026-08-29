@@ -1,0 +1,140 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper" style="padding: 24px;">
+    
+    <div style="margin-bottom: 24px;">
+      <a href="{% url 'meeting-admin-plans' %}" style="text-decoration: none; color: #2563eb; font-weight: 600; font-size: 14px;">⬅️ Back to Plans List</a>
+      <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 8px 0 0 0;">
+        {% if action == 'create' %}Create New Subscription Plan{% else %}Edit Subscription Plan: {{ plan.name }}{% endif %}
+      </h1>
+    </div>
+
+    <div style="background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 28px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); max-width: 800px;">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Plan Name *</label>
+            <input type="text" name="name" value="{{ plan.name }}" required placeholder="e.g. Pro Professional" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Plan Code *</label>
+            <input type="text" name="code" value="{{ plan.code }}" {% if action == 'edit' %}disabled{% endif %} required placeholder="e.g. pro_plus" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: {% if action == 'edit' %}#f3f4f6{% else %}#fff{% endif %};">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Plan Description</label>
+          <textarea name="description" rows="3" placeholder="Provide a summary of the plan advantages..." style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: inherit;">{{ plan.description }}</textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Plan Type</label>
+            <select name="plan_type" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+              <option value="free" {% if plan.plan_type == 'free' %}selected{% endif %}>Free / Trial</option>
+              <option value="p2p_monthly" {% if plan.plan_type == 'p2p_monthly' %}selected{% endif %}>Peer-to-Peer Monthly</option>
+              <option value="pro_monthly" {% if plan.plan_type == 'pro_monthly' %}selected{% endif %}>Pro Monthly</option>
+              <option value="enterprise_annual" {% if plan.plan_type == 'enterprise_annual' %}selected{% endif %}>Enterprise Annual</option>
+              <option value="custom" {% if plan.plan_type == 'custom' %}selected{% endif %}>Custom / Dedicated</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Price (INR) *</label>
+            <input type="number" step="0.01" name="price_inr" value="{{ plan.price_inr|default:'0.00' }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Billing Cycle (Days) *</label>
+            <input type="number" name="billing_cycle_days" value="{{ plan.billing_cycle_days|default:30 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Per-Seat Price (INR)</label>
+            <input type="number" step="0.01" name="per_seat_price_inr" value="{{ plan.per_seat_price_inr|default:'0.00' }}" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Visibility Mode</label>
+            <select name="visibility" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; background: #fff;">
+              <option value="public" {% if plan.visibility == 'public' %}selected{% endif %}>Publicly Visible</option>
+              <option value="private" {% if plan.visibility == 'private' %}selected{% endif %}>Private / Restricted</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="font-size: 16px; font-weight: 700; color: #111827; margin: 28px 0 16px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">Quotas and Limits</h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Max Participants / Room</label>
+            <input type="number" name="max_participants" value="{{ plan.max_participants|default:2 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Max Duration (Minutes)</label>
+            <input type="number" name="max_duration_minutes" value="{{ plan.max_duration_minutes|default:40 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Concurrent Room Limit</label>
+            <input type="number" name="max_concurrent_rooms" value="{{ plan.max_concurrent_rooms|default:1 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Max API Requests / Day</label>
+            <input type="number" name="max_api_calls_per_day" value="{{ plan.max_api_calls_per_day|default:100 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Storage Limit (MB)</label>
+            <input type="number" name="storage_limit_mb" value="{{ plan.storage_limit_mb|default:0 }}" required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+        </div>
+
+        <h3 style="font-size: 16px; font-weight: 700; color: #111827; margin: 28px 0 16px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">Feature Entitlements</h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="allow_cloud_recording" name="allow_cloud_recording" {% if plan.allow_cloud_recording %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="allow_cloud_recording" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Allow Cloud Recording</label>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="allow_screen_share" name="allow_screen_share" {% if plan.allow_screen_share|default:True %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="allow_screen_share" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Allow Screen Sharing</label>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="allow_captions" name="allow_captions" {% if plan.allow_captions|default:True %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="allow_captions" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Allow Closed Captions</label>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="allow_developer_api" name="allow_developer_api" {% if plan.allow_developer_api %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="allow_developer_api" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Allow Developer REST API</label>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="is_active" name="is_active" {% if plan.is_active|default:True %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="is_active" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Plan Enabled</label>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="is_popular" name="is_popular" {% if plan.is_popular %}checked{% endif %} style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="is_popular" style="font-size: 14px; font-weight: 600; color: #374151; cursor: pointer;">Mark as Popular</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 28px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #4b5563; margin-bottom: 6px;">Badge Text (Optional)</label>
+          <input type="text" name="badge_text" value="{{ plan.badge_text }}" placeholder="e.g. BEST SELLER or RECOMMENDED" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button type="submit" class="oh-btn oh-btn--primary" style="padding: 10px 24px; border-radius: 8px; font-weight:600; border:0; cursor:pointer;">💾 Save Plan</button>
+          <a href="{% url 'meeting-admin-plans' %}" class="oh-btn" style="padding: 10px 24px; border-radius: 8px; font-weight:600; background:#f3f4f6; border:1px solid #d1d5db; text-decoration:none; color:#374151; display:inline-block;">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ company.name }}</h2>
+        <a href="{% url 'company-list' %}" class="btn btn-outline-secondary">
+            <i class="fa fa-arrow-left"></i> {% trans "Back to Companies" %}
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Company Profile" %}</h5>
+                    <p><strong>{% trans "Industry:" %}</strong> {{ company.industry|default:"N/A" }}</p>
+                    <p><strong>{% trans "Website:" %}</strong> {% if company.website %}<a href="{{ company.website }}" target="_blank">{{ company.website }}</a>{% else %}N/A{% endif %}</p>
+                    <p><strong>{% trans "Address:" %}</strong> {{ company.address|default:"N/A" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">{% trans "Related Contacts" %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for contact in company.contacts.all %}
+                        <li class="list-group-item">
+                            <strong>{{ contact.name }}</strong> 
+                            {% if contact.position %}({{ contact.position }}){% endif %}
+                            <br>
+                            <small class="text-muted"><i class="fa fa-envelope"></i> {{ contact.email }} | <i class="fa fa-phone"></i> {{ contact.phone }}</small>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-muted">{% trans "No contacts linked to this company." %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

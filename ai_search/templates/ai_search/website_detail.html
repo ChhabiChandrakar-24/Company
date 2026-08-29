@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ website.name }} <a href="{% url 'ai_search:start_scan' website.id %}" class="btn btn-primary btn-sm">Start New Scan</a></h2>
+    <p>URL: {{ website.base_url }}</p>
+    <p>Max Crawl Pages: {{ website.max_crawl_pages }}</p>
+    
+    <hr>
+    
+    <h4>Scan History (Analytics)</h4>
+    <div style="width:100%; max-width:800px; margin-bottom:30px;">
+        <canvas id="scoreChart"></canvas>
+    </div>
+
+    <h4>Scan History</h4>
+    <ul class="list-group">
+    {% for scan in scans %}
+        <li class="list-group-item">
+            <a href="{% url 'ai_search:scan_detail' scan.id %}">Scan #{{ scan.id }}</a> 
+            - Status: <strong>{{ scan.status }}</strong>
+            {% if scan.overall_score %}
+            - Overall Score: {{ scan.overall_score }} 
+            {% endif %}
+            ({{ scan.started_at|date }})
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const websiteId = "{{ website.id }}";
+        fetch(`/ai-search/api/websites/${websiteId}/history/`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.length === 0) return;
+                
+                const labels = data.map(scan => new Date(scan.completed_at).toLocaleDateString());
+                const overallScores = data.map(scan => scan.overall_score);
+                const seoScores = data.map(scan => scan.seo_score);
+                const aeoScores = data.map(scan => scan.aeo_score);
+                
+                const ctx = document.getElementById('scoreChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Overall Score',
+                                data: overallScores,
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'SEO Score',
+                                data: seoScores,
+                                borderColor: 'rgb(54, 162, 235)',
+                                tension: 0.1,
+                                fill: false,
+                                borderDash: [5, 5]
+                            },
+                            {
+                                label: 'AEO Score',
+                                data: aeoScores,
+                                borderColor: 'rgb(255, 99, 132)',
+                                tension: 0.1,
+                                fill: false,
+                                borderDash: [5, 5]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching scan history:', error));
+    });
+</script>
+{% endblock %}

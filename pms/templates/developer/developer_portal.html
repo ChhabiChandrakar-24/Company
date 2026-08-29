@@ -1,0 +1,258 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<style>
+  .dev-container {
+    max-width: 1100px;
+    margin: 20px auto;
+  }
+  .api-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+  .code-snippet-box {
+    background: #111827;
+    color: #e5e7eb;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin: 12px 0;
+  }
+  .tab-btn-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .tab-lang-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: #374151;
+    border: 0;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .tab-lang-btn.active {
+    background: #2563eb;
+    color: #fff;
+  }
+  .endpoint-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  .endpoint-badge.post {
+    background: #dcfce7;
+    color: #166534;
+  }
+</style>
+
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper dev-container">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h1 style="font-size: 26px; font-weight: 800; color: #111827;">Developer Platform & REST API</h1>
+        <p style="font-size: 14px; color: #6b7280;">Embed Zoom-like video meetings, create rooms programmatically, and issue instant guest tokens.</p>
+      </div>
+      <div>
+        <button class="oh-btn oh-btn--primary" onclick="document.getElementById('modalCreateKey').style.display='block'">
+          + Generate New API Key
+        </button>
+      </div>
+    </div>
+
+    <!-- API KEYS LIST -->
+    <div class="api-card">
+      <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 16px;">🔑 Your API Credentials</h2>
+      {% if api_keys %}
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        {% for k in api_keys %}
+        <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="font-weight:700; font-size:15px; color:#111827;">{{ k.app_name }}</div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:11px; color:#6b7280;">Total Requests: <b>{{ k.total_requests }}</b></span>
+              <a href="{% url 'developer-key-revoke' k.id %}" onclick="return confirm('Revoke this API Key? Third-party integrations will stop working.')" style="color:#ef4444; font-size:12px; font-weight:600; text-decoration:none;">Revoke</a>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:12px;">
+            <div>
+              <span style="color:#6b7280; display:block; margin-bottom:2px;">API Key (Header: <code>X-API-Key</code>)</span>
+              <div style="background:#fff; border:1px solid #d1d5db; padding:6px 10px; border-radius:6px; font-family:monospace; display:flex; justify-content:space-between;">
+                <span>{{ k.api_key }}</span>
+                <button type="button" style="border:0; background:transparent; cursor:pointer; font-size:11px; color:#2563eb;" onclick="navigator.clipboard.writeText('{{ k.api_key }}'); alert('API Key copied!')">Copy</button>
+              </div>
+            </div>
+            <div>
+              <span style="color:#6b7280; display:block; margin-bottom:2px;">API Secret (Header: <code>X-API-Secret</code>)</span>
+              <div style="background:#fff; border:1px solid #d1d5db; padding:6px 10px; border-radius:6px; font-family:monospace; display:flex; justify-content:space-between;">
+                <span>{{ k.api_secret }}</span>
+                <button type="button" style="border:0; background:transparent; cursor:pointer; font-size:11px; color:#2563eb;" onclick="navigator.clipboard.writeText('{{ k.api_secret }}'); alert('API Secret copied!')">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div style="text-align:center; padding:30px; color:#9ca3af;">
+        No API keys generated yet. Click <b>+ Generate New API Key</b> to start integrating.
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- INTERACTIVE REST API DOCUMENTATION -->
+    <div class="api-card">
+      <h2 style="font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 8px;">📚 Public REST API Reference</h2>
+      <p style="font-size: 13px; color: #6b7280; margin-bottom: 20px;">Use these endpoints in your mobile app, backend server, LMS, CRM, or website to create and control video meetings.</p>
+
+      <!-- Endpoint 1: Create Meeting -->
+      <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 20px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+          <span class="endpoint-badge post">POST</span>
+          <code style="font-weight:700; font-size:14px;">{{ base_api_url }}meetings/create/</code>
+        </div>
+        <p style="font-size:13px; color:#4b5563; margin-bottom:8px;">Creates a new video room and returns direct join links for Host and Guest with signed tokens.</p>
+
+        <div class="tab-btn-group">
+          <button class="tab-lang-btn active" onclick="switchSnippet(this, 'curl-create')">cURL</button>
+          <button class="tab-lang-btn" onclick="switchSnippet(this, 'py-create')">Python</button>
+          <button class="tab-lang-btn" onclick="switchSnippet(this, 'js-create')">Node.js / JS</button>
+        </div>
+
+        <div id="curl-create" class="code-snippet-box">curl -X POST {{ base_api_url }}meetings/create/ \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -H "X-API-Secret: YOUR_API_SECRET" \
+  -d '{
+    "title": "Doctor Consultation Call",
+    "host_name": "Dr. Ramesh (Host)",
+    "guest_name": "Patient Amit",
+    "allow_recording": true,
+    "allow_chat": true,
+    "allow_captions": true
+  }'</div>
+
+        <div id="py-create" class="code-snippet-box" style="display:none;">import requests
+
+url = "{{ base_api_url }}meetings/create/"
+headers = {
+    "X-API-Key": "YOUR_API_KEY",
+    "X-API-Secret": "YOUR_API_SECRET",
+    "Content-Type": "application/json"
+}
+payload = {
+    "title": "Doctor Consultation Call",
+    "host_name": "Dr. Ramesh",
+    "guest_name": "Patient Amit"
+}
+response = requests.post(url, json=payload, headers=headers)
+data = response.json()
+print("Host Join URL:", data["join_url_host"])
+print("Patient Join URL:", data["join_url_participant"])</div>
+
+        <div id="js-create" class="code-snippet-box" style="display:none;">const response = await fetch("{{ base_api_url }}meetings/create/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-Key": "YOUR_API_KEY",
+    "X-API-Secret": "YOUR_API_SECRET"
+  },
+  body: JSON.stringify({
+    title: "Doctor Consultation Call",
+    host_name: "Dr. Ramesh",
+    guest_name: "Patient Amit"
+  })
+});
+const meeting = await response.json();
+console.log("Guest Join Link:", meeting.join_url_participant);</div>
+      </div>
+
+      <!-- Endpoint 2: Generate Additional Guest Join Token -->
+      <div style="border-bottom: 1px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 20px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+          <span class="endpoint-badge post">POST</span>
+          <code style="font-weight:700; font-size:14px;">{{ base_api_url }}meetings/{id}/join-token/</code>
+        </div>
+        <p style="font-size:13px; color:#4b5563; margin-bottom:8px;">Generates a new secure signed token and direct join URL for an extra attendee without requiring login.</p>
+        <div class="code-snippet-box">curl -X POST {{ base_api_url }}meetings/101/join-token/ \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -d '{
+    "guest_name": "Sita Sharma",
+    "guest_email": "sita@example.com",
+    "guest_role": "participant",
+    "expiry_hours": 48
+  }'</div>
+      </div>
+
+      <!-- Endpoint 3: Get Meeting Recordings -->
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+          <span class="endpoint-badge">GET</span>
+          <code style="font-weight:700; font-size:14px;">{{ base_api_url }}meetings/{id}/recordings/</code>
+        </div>
+        <p style="font-size:13px; color:#4b5563; margin-bottom:8px;">Lists and downloads all recorded video files (.webm) for a specific meeting.</p>
+        <div class="code-snippet-box">curl -X GET {{ base_api_url }}meetings/101/recordings/ \
+  -H "X-API-Key: YOUR_API_KEY"</div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- Modal: Generate API Key -->
+<div id="modalCreateKey" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; display:none; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:12px; max-width:480px; width:90%; padding:24px; margin: 100px auto; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+    <h3 style="font-size:18px; font-weight:700; margin-bottom:14px;">Generate Developer API Key</h3>
+    <form method="POST" action="{% url 'developer-key-generate' %}">
+      {% csrf_token %}
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px; font-weight:600; color:#374151; display:block; margin-bottom:4px;">Application Name</label>
+        <input type="text" name="app_name" placeholder="e.g. My Telehealth App / CRM" class="oh-input" style="width:100%; border:1px solid #d1d5db; padding:9px 12px; border-radius:6px;" required>
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:12px; font-weight:600; color:#374151; display:block; margin-bottom:4px;">Webhook Notification URL (Optional)</label>
+        <input type="url" name="webhook_url" placeholder="https://api.yourdomain.com/webhooks/video/" class="oh-input" style="width:100%; border:1px solid #d1d5db; padding:9px 12px; border-radius:6px;">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button type="button" class="oh-btn" onclick="document.getElementById('modalCreateKey').style.display='none'">Cancel</button>
+        <button type="submit" class="oh-btn oh-btn--primary">Create Key</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function switchSnippet(btn, targetId) {
+  const container = btn.closest('div').parentElement;
+  container.querySelectorAll('.tab-lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  container.querySelectorAll('.code-snippet-box').forEach(box => {
+    if (box.id.startsWith('curl-') || box.id.startsWith('py-') || box.id.startsWith('js-')) {
+      box.style.display = 'none';
+    }
+  });
+  const target = document.getElementById(targetId);
+  if (target) target.style.display = 'block';
+}
+</script>
+{% endblock content %}

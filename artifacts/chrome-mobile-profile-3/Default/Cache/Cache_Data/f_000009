@@ -1,0 +1,3141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Page not found at /favicon.ico</title>
+  <meta name="robots" content="NONE,NOARCHIVE">
+  <style type="text/css">
+    html * { padding:0; margin:0; }
+    body * { padding:10px 20px; }
+    body * * { padding:0; }
+    body { font:small sans-serif; background:#eee; color:#000; }
+    body>div { border-bottom:1px solid #ddd; }
+    h1 { font-weight:normal; margin-bottom:.4em; }
+    h1 span { font-size:60%; color:#666; font-weight:normal; }
+    table { border:none; border-collapse: collapse; width:100%; }
+    td, th { vertical-align:top; padding:2px 3px; }
+    th { width:12em; text-align:right; color:#666; padding-right:.5em; }
+    #info { background:#f6f6f6; }
+    #info ol { margin: 0.5em 4em; }
+    #info ol li { font-family: monospace; }
+    #summary { background: #ffc; }
+    #explanation { background:#eee; border-bottom: 0px none; }
+    pre.exception_value { font-family: sans-serif; color: #575757; font-size: 1.5em; margin: 10px 0 10px 0; }
+  </style>
+</head>
+<body>
+  <div id="summary">
+    <h1>Page not found <span>(404)</span></h1>
+    
+    <table class="meta">
+      <tr>
+        <th>Request Method:</th>
+        <td>GET</td>
+      </tr>
+      <tr>
+        <th>Request URL:</th>
+        <td>http://127.0.0.1:8010/favicon.ico</td>
+      </tr>
+      
+    </table>
+  </div>
+  <div id="info">
+    
+      <p>
+      Using the URLconf defined in <code>chhabi.urls</code>,
+      Django tried these URL patterns, in this order:
+      </p>
+      <ol>
+        
+          <li>
+            
+                accounts/
+                
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                sitemap.xml
+                [name='django-contrib-sitemaps']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                robots.txt
+                [name='website-robots']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                
+                [name='website-home']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                about/
+                [name='website-about']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                services/
+                [name='website-services']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                pricing/
+                [name='website-pricing']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                career/
+                [name='website-career']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                contact/
+                [name='website-contact']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                faq/
+                [name='website-faq']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                team/
+                [name='website-team']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                projects/
+                [name='website-projects']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                terms-and-conditions/
+                [name='website-terms']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                thank-you/
+                [name='website-thank-you']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                website/preview/&lt;int:pk&gt;/
+                [name='website-preview']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                website/submit/
+                [name='website-submit']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                search/
+                [name='website-search']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                api/v1/cms/
+                
+            
+          </li>
+        
+          <li>
+            
+                website/manage/
+                
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                dashboard/
+                [name='home-page']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-database
+                [name='initialize-database']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                load-demo-database
+                [name='load-demo-database']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-database-user
+                [name='initialize-database-user']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-database-company
+                [name='initialize-database-company']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-database-department
+                [name='initialize-database-department']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-department-edit/&lt;int:obj_id&gt;
+                [name='initialize-department-edit']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-department-delete/&lt;int:obj_id&gt;
+                [name='initialize-department-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-database-job-position
+                [name='initialize-database-job-position']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-job-position-edit/&lt;int:obj_id&gt;
+                [name='initialize-job-position-edit']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                initialize-job-position-delete/&lt;int:obj_id&gt;
+                [name='initialize-job-position-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                404
+                [name='404']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                login/
+                [name='login']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                forgot-password
+                [name='forgot-password']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-reset-password
+                [name='employee-reset-password']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                reset-send-success
+                [name='reset-send-success']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                change-password
+                [name='change-password']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                change-username
+                [name='change-username']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                two-factor
+                [name='two-factor']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                send-otp
+                [name='send-otp']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                logout
+                [name='logout']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings
+                [name='settings']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/user-group-create/
+                [name='user-group-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/user-group-view/
+                [name='user-group-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/user-group-search/
+                [name='user-group-search']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                user-group-delete/&lt;int:obj_id&gt;/
+                [name='user-group-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                group-permission-remove/&lt;int:pid&gt;/&lt;int:gid&gt;/
+                [name='group-permission-remove']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                user-group-assign-view
+                [name='user-group-assign-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/user-group-assign/
+                [name='user-group-assign']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                group-remove-user/&lt;int:uid&gt;/&lt;int:gid&gt;/
+                [name='group-remove-user']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-permission-assign/
+                [name='employee-permission-assign']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-permission-search
+                [name='permission-search']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-user-permission
+                [name='update-user-permission']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-group-permission
+                [name='update-group-permission']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                permission-table
+                [name='permission-table']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/mail-server-conf/
+                [name='mail-server-conf']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/mail-server-create-update/
+                [name='mail-server-create-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/mail-server-test-email/
+                [name='mail-server-test-email']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                mail-server-delete
+                [name='mail-server-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                replace-primary-mail
+                [name='replace-primary-mail']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/view-mail-templates/
+                [name='view-mail-templates']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                view-mail-template/&lt;int:obj_id&gt;/
+                [name='view-mail-template']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                create-mail-template/
+                [name='create-mail-template']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                duplicate-mail-template/&lt;int:obj_id&gt;/
+                [name='duplicate-mail-template']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-mail-template/
+                [name='delete-mail-template']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/company-create/
+                [name='company-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/company-view/
+                [name='company-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/company-update/&lt;int:id&gt;/
+                [name='company-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/company-delete/&lt;int:obj_id&gt;/
+                [name='company-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/department-view/
+                [name='department-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/department-creation/
+                [name='department-creation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/department-update/&lt;int:id&gt;/
+                [name='department-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                department-delete/&lt;int:obj_id&gt;/
+                [name='department-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-position-creation/
+                [name='job-position-creation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-position-view/
+                [name='job-position-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-position-update/&lt;int:id&gt;/
+                [name='job-position-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                job-position-delete/&lt;int:obj_id&gt;/
+                [name='job-position-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-role-create/
+                [name='job-role-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-role-view/
+                [name='job-role-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/job-role-update/&lt;int:id&gt;/
+                [name='job-role-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                job-role-delete/&lt;int:obj_id&gt;/
+                [name='job-role-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/work-type-view/
+                [name='work-type-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/work-type-create/
+                [name='work-type-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/work-type-update/&lt;int:id&gt;/
+                [name='work-type-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-delete/&lt;int:obj_id&gt;/
+                [name='work-type-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                add-remove-work-type-fields
+                [name='add-remove-work-type-fields']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-work-type-create/
+                [name='rotating-work-type-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-work-type-view/
+                [name='rotating-work-type-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-work-type-update/&lt;int:id&gt;/
+                [name='rotating-work-type-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-delete/&lt;int:obj_id&gt;/
+                [name='rotating-work-type-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee/rotating-work-type-assign/
+                [name='rotating-work-type-assign']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-add
+                [name='rotating-work-type-assign-add']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-view
+                [name='rotating-work-type-assign-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-export
+                [name='rotating-work-type-assign-export']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-work-type-assign-update/&lt;int:id&gt;/
+                [name='rotating-work-type-assign-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-duplicate/&lt;int:obj_id&gt;/
+                [name='rotating-work-type-assign-duplicate']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-archive/&lt;int:obj_id&gt;/
+                [name='rotating-work-type-assign-archive']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-bulk-archive
+                [name='rotating-shift-work-type-bulk-archive']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-bulk-delete
+                [name='rotating-shift-work-type-bulk-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-work-type-assign-delete/&lt;int:obj_id&gt;/
+                [name='rotating-work-type-assign-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-type-view/
+                [name='employee-type-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-type-create/
+                [name='employee-type-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-type-update/&lt;int:id&gt;/
+                [name='employee-type-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-type-delete/&lt;int:obj_id&gt;/
+                [name='employee-type-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-view/
+                [name='employee-shift-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-create/
+                [name='employee-shift-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-update/&lt;int:id&gt;/
+                [name='employee-shift-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-shift-delete/&lt;int:obj_id&gt;/
+                [name='employee-shift-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-schedule-view/
+                [name='employee-shift-schedule-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-schedule-create/
+                [name='employee-shift-schedule-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/employee-shift-schedule-update/&lt;int:id&gt;/
+                [name='employee-shift-schedule-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-shift-schedule-delete/&lt;int:obj_id&gt;/
+                [name='employee-shift-schedule-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-shift-create/
+                [name='rotating-shift-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                add-remove-shift-fields
+                [name='add-remove-shift-fields']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-shift-view/
+                [name='rotating-shift-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-shift-update/&lt;int:id&gt;/
+                [name='rotating-shift-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-delete/&lt;int:obj_id&gt;/
+                [name='rotating-shift-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee/rotating-shift-assign/
+                [name='rotating-shift-assign']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-add
+                [name='rotating-shift-assign-add']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-view
+                [name='rotating-shift-assign-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-info-export
+                [name='rotating-shift-assign-info-export']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-info-import
+                [name='rotating-shift-assign-info-import']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/rotating-shift-assign-update/&lt;int:id&gt;/
+                [name='rotating-shift-assign-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-duplicate/&lt;int:obj_id&gt;/
+                [name='rotating-shift-assign-duplicate']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-archive/&lt;int:obj_id&gt;/
+                [name='rotating-shift-assign-archive']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-bulk-archive
+                [name='rotating-shift-assign-bulk-archive']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-bulk-delete
+                [name='rotating-shift-assign-bulk-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rotating-shift-assign-delete/&lt;int:obj_id&gt;/
+                [name='rotating-shift-assign-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request
+                [name='work-type-request']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-duplicate/&lt;int:obj_id&gt;/
+                [name='work-type-request-duplicate']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee/work-type-request-view/
+                [name='work-type-request-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-info-export
+                [name='work-type-request-info-export']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-search
+                [name='work-type-request-search']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-cancel/&lt;int:id&gt;/
+                [name='work-type-request-cancel']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-bulk-cancel
+                [name='work-type-request-bulk-cancel']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-approve/&lt;int:id&gt;/
+                [name='work-type-request-approve']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-bulk-approve
+                [name='work-type-request-bulk-approve']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-update/&lt;int:work_type_request_id&gt;/
+                [name='work-type-request-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-delete/&lt;int:obj_id&gt;/
+                [name='work-type-request-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-single-view/&lt;int:obj_id&gt;/
+                [name='work-type-request-single-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-request-bulk-delete
+                [name='work-type-request-bulk-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request
+                [name='shift-request']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-duplicate/&lt;int:obj_id&gt;/
+                [name='shift-request-duplicate']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-reallocate
+                [name='shift-request-reallocate']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-employee-allocation
+                [name='update-employee-allocation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee/shift-request-view/
+                [name='shift-request-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-info-export
+                [name='shift-request-info-export']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-search
+                [name='shift-request-search']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-details/&lt;int:id&gt;/
+                [name='shift-request-details']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-allocation-request-details/&lt;int:id&gt;/
+                [name='shift-allocation-request-details']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-update/&lt;int:shift_request_id&gt;/
+                [name='shift-request-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-allocation-request-update/&lt;int:shift_request_id&gt;/
+                [name='shift-allocation-request-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-cancel/&lt;int:id&gt;/
+                [name='shift-request-cancel']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-allocation-request-cancel/&lt;int:id&gt;/
+                [name='shift-allocation-request-cancel']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-bulk-cancel
+                [name='shift-request-bulk-cancel']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-approve/&lt;int:id&gt;/
+                [name='shift-request-approve']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-allocation-request-approve/&lt;int:id&gt;/
+                [name='shift-allocation-request-approve']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-bulk-approve
+                [name='shift-request-bulk-approve']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-delete/&lt;int:id&gt;/
+                [name='shift-request-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-bulk-delete
+                [name='shift-request-bulk-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                notifications
+                [name='notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                clear-notifications
+                [name='clear-notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-all-notifications
+                [name='delete-all-notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                read-notifications
+                [name='read-notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                mark-as-read-notification/&lt;int:notification_id&gt;
+                [name='mark-as-read-notification']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                mark-as-read-notification-json/
+                [name='mark-as-read-notification-json']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                all-notifications
+                [name='all-notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-notifications/&lt;id&gt;/
+                [name='delete-notifications']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/general-settings/
+                [name='general-settings']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/date-settings/
+                [name='date-settings']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/save-date/
+                [name='save_date_format']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/get-date-format/
+                [name='get-date-format']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/save-time/
+                [name='save_time_format']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/get-time-format/
+                [name='get-time-format']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                history-field-settings
+                [name='history-field-settings']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                enable-account-block-unblock
+                [name='enable-account-block-unblock']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                enable-profile-edit-feature
+                [name='enable-profile-edit-feature']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rwork-individual-view/&lt;int:instance_id&gt;/
+                [name='rwork-individual-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                rshit-individual-view/&lt;int:instance_id&gt;/
+                [name='rshift-individual-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-select/
+                [name='shift-select']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-select-filter/
+                [name='shift-select-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-select/
+                [name='work-type-select']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                work-type-filter/
+                [name='work-type-select-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                r-shift-select/
+                [name='r-shift-select']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                r-shift-select-filter/
+                [name='r-shift-select-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                r-work-type-select/
+                [name='r-work-type-select']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                r-work-type-filter/
+                [name='r-work-type-select-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/tag-view/
+                [name='tag-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/helpdesk-tag-view/
+                [name='helpdesk-tag-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                tag-create
+                [name='tag-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                tag-update/&lt;int:tag_id&gt;
+                [name='tag-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                tag-delete/&lt;int:obj_id&gt;
+                [name='tag-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                audit-tag-create
+                [name='audit-tag-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                audit-tag-update/&lt;int:tag_id&gt;
+                [name='audit-tag-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                audit-tag-delete/&lt;int:obj_id&gt;
+                [name='audit-tag-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/multiple-approval-condition
+                [name='multiple-approval-condition']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/condition-value-fields
+                [name='condition-value-fields']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/add-more-approval-managers
+                [name='add-more-approval-managers']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/remove-approval-manager
+                [name='remove-approval-manager']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/hx-multiple-approval-condition
+                [name='hx-multiple-approval-condition']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                multiple-level-approval-create
+                [name='multiple-level-approval-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                multiple-level-approval-edit/&lt;int:condition_id&gt;
+                [name='multiple-level-approval-edit']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                multiple-level-approval-delete/&lt;int:condition_id&gt;
+                [name='multiple-level-approval-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-add-comment/&lt;int:shift_id&gt;/
+                [name='shift-request-add-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                view-shift-comment/&lt;int:shift_id&gt;/
+                [name='view-shift-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-shift-comment-file/
+                [name='delete-shift-comment-file']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                view-work-type-comment/&lt;int:work_type_id&gt;/
+                [name='view-work-type-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-work-type-comment-file/
+                [name='delete-work-type-comment-file']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                shift-request-delete-comment/&lt;int:comment_id&gt;/
+                [name='shift-request-delete-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                worktype-request-add-comment/&lt;int:worktype_id&gt;/
+                [name='worktype-request-add-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                worktype-request-delete-comment/&lt;int:comment_id&gt;/
+                [name='worktype-request-delete-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                dashboard-shift-request
+                [name='dashboard-shift-request']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                dashboard-work-type-request
+                [name='dashboard-work-type-request']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/pagination-settings-view/
+                [name='pagination-settings-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/action-type/
+                [name='action-type']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                action-type-create
+                [name='action-type-create']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                action-type-update/&lt;int:act_id&gt;
+                [name='action-type-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                action-type-delete/&lt;int:act_id&gt;
+                [name='action-type-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                pagination-settings-view
+                [name='pagination-settings-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-list
+                [name='announcement-list']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                create-announcement
+                [name='create-announcement']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-announcement/&lt;int:anoun_id&gt;
+                [name='delete-announcement']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-announcement/&lt;int:anoun_id&gt;
+                [name='update-announcement']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                remove-announcement-file/&lt;int:obj_id&gt;/&lt;int:attachment_id&gt;
+                [name='remove-announcement-file']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-add-comment/&lt;int:anoun_id&gt;/
+                [name='announcement-add-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-view-comment/&lt;int:anoun_id&gt;/
+                [name='announcement-view-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-single-view/&lt;int:anoun_id&gt;
+                [name='announcement-single-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-single-view/
+                [name='announcement-single-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-delete-comment/&lt;int:comment_id&gt;/
+                [name='announcement-delete-comment']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                announcement-viewed-by
+                [name='announcement-viewed-by']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                driver-viewed
+                [name='driver-viewed']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                dashboard-components-toggle
+                [name='dashboard-components-toggle']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                employee-chart-show
+                [name='employee-chart-show']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/enable-biometric-attendance/
+                [name='enable-biometric-attendance']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                settings/activate-biometric-attendance
+                [name='activate-biometric-attendance']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                emp-workinfo-complete
+                [name='emp-workinfo-complete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                get-chhabi-installed-apps/
+                [name='get-chhabi-installed-apps']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/holiday-view
+                [name='holiday-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/holidays-excel-template
+                [name='holidays-excel-template']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holidays-info-import
+                [name='holidays-info-import']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-info-export
+                [name='holiday-info-export']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                get-upcoming-holidays
+                [name='get-upcoming-holidays']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-creation
+                [name='holiday-creation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-update/&lt;int:obj_id&gt;
+                [name='holiday-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                duplicate-holiday/&lt;int:obj_id&gt;
+                [name='duplicate-holiday']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-delete/&lt;int:obj_id&gt;
+                [name='holiday-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holidays-bulk-delete
+                [name='holidays-bulk-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-filter
+                [name='holiday-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-select/
+                [name='holiday-select']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                holiday-select-filter/
+                [name='holiday-select-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                company-leave-creation
+                [name='company-leave-creation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/company-leave-view
+                [name='company-leave-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                company-leave-update/&lt;int:id&gt;
+                [name='company-leave-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                company-leave-delete/&lt;int:id&gt;
+                [name='company-leave-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                company-leave-filter
+                [name='company-leave-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                view-penalties
+                [name='view-penalties']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                ^media/(?P&lt;path&gt;.*)$
+                [name='protected_media']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-selected-company
+                [name='update-selected-company']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                configuration/mail-automations
+                [name='mail-automations']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                mail-automations-nav
+                [name='mail-automations-nav']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                create-automation
+                [name='create-automation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                update-automation/&lt;int:pk&gt;/
+                [name='update-automation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                mail-automations-list-view
+                [name='mail-automations-list-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                get-to-mail-field
+                [name='get-to-mail-field']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                automation-detailed-view/&lt;int:pk&gt;/
+                [name='automation-detailed-view']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-automation/&lt;int:pk&gt;/
+                [name='delete-automation']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                load-automations
+                [name='load-automations']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                refresh-automations
+                [name='refresh-automations']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                toggle-columns
+                [name='toggle-columns']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                active-tab
+                [name='active-tab']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                active-group
+                [name='cbv-active-group']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                reload-field
+                [name='reload-field']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                reload-messages
+                [name='reload-messages']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                saved-filter/
+                [name='saved-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                saved-filter/&lt;int:pk&gt;/
+                [name='saved-filter-update']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                delete-saved-filter/&lt;int:pk&gt;/
+                [name='delete-saved-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                active-hnv-view-type/
+                [name='active-hnv-view-type']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                search-in-instance-ids
+                [name='search-in-instance-ids']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                last-applied-filter
+                [name='last-applied-filter']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                generic-delete
+                [name='generic-delete']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                chhabi-history-revert/&lt;int:pk&gt;/&lt;int:history_id&gt;/
+                [name='history-revert']
+            
+          </li>
+        
+          <li>
+            
+                employee/
+                
+            
+          </li>
+        
+          <li>
+            
+                report/
+                
+            
+          </li>
+        
+          <li>
+            
+                chhabi-widget/
+                
+            
+          </li>
+        
+          <li>
+            
+                ^inbox/notifications/
+                
+            
+          </li>
+        
+          <li>
+            
+                pms/
+                
+            
+          </li>
+        
+          <li>
+            
+                crm/
+                
+            
+          </li>
+        
+          <li>
+            
+                billing/
+                
+            
+          </li>
+        
+          <li>
+            
+                i18n/
+                
+            
+          </li>
+        
+          <li>
+            
+                health/
+                
+            
+          </li>
+        
+          <li>
+            
+                quotations/
+                
+            
+          </li>
+        
+          <li>
+            
+                ai-search/
+                
+            
+          </li>
+        
+          <li>
+            
+                ^media/(?P&lt;path&gt;.*)$
+                
+            
+          </li>
+        
+          <li>
+            
+                recruitment/
+                
+            
+          </li>
+        
+          <li>
+            
+                leave/
+                
+            
+          </li>
+        
+          <li>
+            
+                pms/
+                
+            
+          </li>
+        
+          <li>
+            
+                onboarding/
+                
+            
+          </li>
+        
+          <li>
+            
+                asset/
+                
+            
+          </li>
+        
+          <li>
+            
+                attendance/
+                
+            
+          </li>
+        
+          <li>
+            
+                payroll/
+                
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                user-accessibility/
+                [name='user-accessibility']
+            
+          </li>
+        
+          <li>
+            
+                
+                
+            
+                get-initial-accessibility-data
+                [name='get-initial-accessibility-data']
+            
+          </li>
+        
+          <li>
+            
+                biometric/
+                
+            
+          </li>
+        
+          <li>
+            
+                helpdesk/
+                
+            
+          </li>
+        
+          <li>
+            
+                offboarding/
+                
+            
+          </li>
+        
+          <li>
+            
+                backup/
+                
+            
+          </li>
+        
+          <li>
+            
+                project/
+                
+            
+          </li>
+        
+          <li>
+            
+                api/
+                
+            
+          </li>
+        
+          <li>
+            
+                api/geofencing/
+                
+            
+          </li>
+        
+          <li>
+            
+                api/facedetection/
+                
+            
+          </li>
+        
+          <li>
+            
+                chhabi-audit-log
+                [name='chhabi-audit-log']
+            
+          </li>
+        
+          <li>
+            
+                recruitment/
+                
+            
+          </li>
+        
+          <li>
+            
+                onboarding/
+                
+            
+          </li>
+        
+          <li>
+            
+                employee/
+                
+            
+          </li>
+        
+          <li>
+            
+                attendance/
+                
+            
+          </li>
+        
+          <li>
+            
+                leave/
+                
+            
+          </li>
+        
+          <li>
+            
+                payroll/
+                
+            
+          </li>
+        
+          <li>
+            
+                pms/
+                
+            
+          </li>
+        
+          <li>
+            
+                asset/
+                
+            
+          </li>
+        
+          <li>
+            
+                project/
+                
+            
+          </li>
+        
+      </ol>
+      <p>
+        
+          The current path, <code>favicon.ico</code>,
+        
+        didn’t match any of these.
+      </p>
+    
+  </div>
+
+  <div id="explanation">
+    <p>
+      You’re seeing this error because you have <code>DEBUG = True</code> in
+      your Django settings file. Change that to <code>False</code>, and Django
+      will display a standard 404 page.
+    </p>
+  </div>
+</body>
+</html>

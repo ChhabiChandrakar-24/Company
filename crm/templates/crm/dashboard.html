@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% load i18n static %}
+{% block styles %}<link rel="stylesheet" href="{% static 'crm/css/crm.css' %}">{% endblock %}
+
+{% block content %}
+<div class="crm-shell">
+    <section class="crm-hero d-flex justify-content-between align-items-center gap-4 flex-wrap">
+        <div><div class="crm-eyebrow">{% trans "Customer workspace" %}</div><h1 class="crm-title">{% trans "CRM command center" %}</h1><p class="crm-subtitle">{% trans "Track leads, close opportunities, and keep every client conversation moving." %}</p></div>
+        <div class="crm-actions"><a class="crm-btn" href="{% url 'inquiry-create' %}"><i class="fa fa-plus"></i>{% trans "New lead" %}</a><a class="crm-btn crm-btn-secondary" href="{% url 'deal-pipeline' %}"><i class="fa fa-columns"></i>{% trans "View pipeline" %}</a></div>
+    </section>
+    <div class="crm-metrics">
+        <div class="crm-metric"><div class="crm-metric-icon"><i class="fa fa-users"></i></div><div class="crm-metric-label">{% trans "Open leads" %}</div><div class="crm-metric-value">{{ lead_count }}</div></div>
+        <div class="crm-metric"><div class="crm-metric-icon"><i class="fa fa-briefcase"></i></div><div class="crm-metric-label">{% trans "Active deals" %}</div><div class="crm-metric-value">{{ active_deals }}</div></div>
+        <div class="crm-metric"><div class="crm-metric-icon"><i class="fa fa-line-chart"></i></div><div class="crm-metric-label">{% trans "Pipeline value" %}</div><div class="crm-metric-value">${{ pipeline_value|floatformat:0 }}</div></div>
+        <div class="crm-metric"><div class="crm-metric-icon"><i class="fa fa-calendar-check-o"></i></div><div class="crm-metric-label">{% trans "Upcoming follow-ups" %}</div><div class="crm-metric-value">{{ upcoming_tasks }}</div></div>
+    </div>
+    
+    <div class="crm-grid">
+        <section class="crm-panel"><div class="crm-panel-head"><h3>{% trans "Recent activity" %}</h3><a href="{% url 'inquiry-list' %}">{% trans "All leads" %}</a></div><ul class="crm-list">
+                    {% for activity in recent_activities %}
+                    <li><div class="crm-list-title">{{ activity.title }}</div><div class="crm-list-meta">{{ activity.client.name }} · {{ activity.created_at|date:"d M Y, h:i A" }}</div></li>
+                    {% empty %}
+                    <li class="crm-empty">{% trans "No recent activity yet." %}</li>
+                    {% endfor %}
+                </ul></section>
+        
+        <section class="crm-panel"><div class="crm-panel-head"><h3>{% trans "Pipeline health" %}</h3></div><ul class="crm-list">
+                        {% for stage in pipeline_summary %}
+                        <li class="crm-stage"><span class="crm-stage-name">{{ stage.stage|title }}</span><span class="crm-stage-track"><span class="crm-stage-fill" style="width:{% widthratio stage.count lead_count 100 %}%"></span></span><strong>{{ stage.count }}</strong></li>
+                        {% empty %}<li class="crm-empty">{% trans "No deals in the pipeline." %}</li>{% endfor %}</ul></section>
+    </div>
+</div>
+{% endblock %}

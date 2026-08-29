@@ -1,0 +1,22 @@
+<section class="cms-hero">
+  <div class="hero-glow g1" aria-hidden="true"></div>
+  <div class="hero-glow g2" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-inner">
+      {% if section.subheading %}<span class="section-kicker">{{ section.subheading }}</span>{% endif %}
+      <h1>{{ section.heading }}</h1>
+      {% if section.content %}<p>{{ section.content|linebreaksbr }}</p>{% endif %}
+      {% if section.primary_button_text or section.secondary_button_text %}
+        <div class="btn-row">
+          {% if section.primary_button_text %}<a class="site-btn" href="{{ section.primary_button_url }}">{{ section.primary_button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+          {% if section.secondary_button_text %}<a class="site-btn ghost" href="{{ section.secondary_button_url }}">{{ section.secondary_button_text }}</a>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if section.image %}
+    <div class="hero-media">
+      <img src="{{ section.image.url }}" alt="{{ section.heading }}" loading="eager">
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Quotations</h1>
+<ul>
+{% for q in quotations %}
+    <li>
+        <a href="{% url 'quotation-detail' q.number %}">{{ q.number }} – {{ q.title }} ({{ q.status }})</a>
+        – {{ q.client.name }} – {{ q.created_at|date:"Y-m-d" }}
+    </li>
+{% empty %}
+    <li>No quotations found.</li>
+{% endfor %}
+</ul>
+{% endblock %}

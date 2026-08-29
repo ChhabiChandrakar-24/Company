@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="oh-wrapper" style="max-width: 600px; margin: 40px auto;">
+    <div class="oh-card" style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;">
+        <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 20px; color: #1f2937;">{% trans "Create Organization" %}</h2>
+        <p style="color: #4b5563; margin-bottom: 24px; line-height: 1.5;">
+            {% trans "Please create an organization to start scheduling isolated video meetings, issuing developer API keys, and tracking operational metrics." %}
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="id_name" style="display: block; font-weight: 600; margin-bottom: 8px; color: #374151;">{% trans "Organization Name" %}</label>
+                <input type="text" id="id_name" name="name" class="oh-input" placeholder="e.g. Acme Corp" required style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px;">
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="submit" class="oh-btn oh-btn--primary" style="background: #2563eb; color: white; padding: 10px 20px; border: 0; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    {% trans "Create & Get Started" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Specification Details: {{ requirement.title }}</h2>
+            <p class="text-muted mb-0">
+                {% trans "Client" %}: {{ requirement.inquiry.client.name }} &nbsp;|&nbsp;
+                {% trans "Revision" %}: <span class="badge bg-dark">v{{ requirement.revision_number }}</span> &nbsp;|&nbsp;
+                {% trans "Priority" %}: <span class="badge 
+                   {% if requirement.priority == 'critical' %}bg-danger
+                   {% elif requirement.priority == 'high' %}bg-warning text-dark
+                   {% elif requirement.priority == 'medium' %}bg-primary
+                   {% else %}bg-secondary{% endif %}">{{ requirement.get_priority_display }}</span> &nbsp;|&nbsp;
+                {% trans "Status" %}: <span class="badge 
+                   {% if requirement.approval_status == 'approved' %}bg-success
+                   {% elif requirement.approval_status == 'rejected' %}bg-danger
+                   {% else %}bg-secondary{% endif %}">{{ requirement.get_approval_status_display }}</span>
+            </p>
+        </div>
+        <div>
+            {% if not user.crm_client_profile %}
+            <a href="{% url 'crm-requirement-edit' requirement.id %}" class="btn btn-outline-primary me-2">
+                <i class="fa fa-edit"></i> {% trans "Revise Specifications" %}
+            </a>
+            <a href="{% url 'client-timeline' requirement.inquiry.client.id %}" class="btn btn-outline-secondary">
+                <i class="fa fa-arrow-left"></i> {% trans "Back to Timeline" %}
+            </a>
+            {% else %}
+            <a href="{% url 'crm-client-portal-dashboard' %}" class="btn btn-outline-secondary">
+                <i class="fa fa-arrow-left"></i> {% trans "Back to Portal" %}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main details -->
+        <div class="col-md-8">
+            <!-- Specs Content -->
+            <div class="card rounded-3 shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title border-bottom pb-2 mb-3">{% trans "Specification Specifications" %}</h5>
+                    <div class="mb-4" style="white-space: pre-wrap; font-size: 15px;">{{ requirement.description }}</div>
+
+                    {% if requirement.modules_requested %}
+                    <h6 class="font-weight-bold text-secondary">{% trans "Requested Modules / Features" %}:</h6>
+                    <div class="border rounded p-3 bg-light mb-4 text-monospace" style="white-space: pre-wrap;">{{ requirement.modules_requested }}</div>
+                    {% endif %}
+
+                    {% if requirement.attachment %}
+                    <h6 class="font-weight-bold text-secondary mb-2">{% trans "Attachments" %}:</h6>
+                    <a href="{{ requirement.attachment.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                        <i class="fa fa-paperclip"></i> {% trans "Download Attachment" %}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Discussion thread -->
+            <div class="card rounded-3 shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Discussion & Comments" %}</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Existing comments -->
+                    <div class="mb-4">
+                        {% for comment in comments %}
+                        <div class="border-bottom py-3 {% if forloop.last %}border-0{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="font-weight-bold {% if comment.author == requirement.inquiry.client.portal_user %}text-primary{% else %}text-dark{% endif %}">
+                                    {{ comment.author.username }} 
+                                    {% if comment.author == requirement.inquiry.client.portal_user %}({% trans "Client" %}){% endif %}
+                                </span>
+                                <small class="text-muted">{{ comment.created_at|date:"d M Y, h:i A" }}</small>
+                            </div>
+                            <p class="mb-0 text-secondary">{{ comment.comment }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center py-4 mb-0">{% trans "No comments yet. Start the conversation." %}</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Add comment form -->
+                    <form method="POST" action="{% url 'crm-requirement-comment' requirement.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">{{ comment_form.comment }}</div>
+                        <button type="submit" class="btn btn-primary btn-sm">{% trans "Post Comment" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- History revisions sidebar -->
+        <div class="col-md-4">
+            <div class="card rounded-3 shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Revision History" %}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="position-relative ps-3" style="border-left: 2px solid #dee2e6; margin-left: 5px;">
+                        {% for rev in revisions %}
+                        <div class="mb-3 position-relative">
+                            <div class="position-absolute translate-middle-x rounded-circle bg-secondary" 
+                                 style="left: -20px; top: 5px; width: 10px; height: 10px;"></div>
+                            <div class="ms-2">
+                                <div class="font-weight-bold">Revision v{{ rev.revision_number }}</div>
+                                <small class="text-muted d-block">By: {{ rev.updated_by.username }}</small>
+                                <small class="text-muted">{{ rev.created_at|date:"d M Y, h:i A" }}</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center mb-0">{% trans "No previous revisions recorded." %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

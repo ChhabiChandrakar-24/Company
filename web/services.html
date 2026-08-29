@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Geeta ForgeTech | Software • Websites • Cybersecurity</title> -->
+    <title>Our Services | Geeta ForgeTech - Software, Websites & IT Solutions</title>
+
+    <meta name="description"
+        content="Explore Geeta ForgeTech services — from secure software development and responsive websites to ERP systems, e-commerce platforms, and scalable IT solutions for businesses.">
+
+    <meta name="keywords"
+        content="IT services, software development, website design, ERP solutions, e-commerce development, business IT solutions, Geeta ForgeTech services">
+
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/logo/main_logo.jpeg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo/main_logo.jpeg">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo/main_logo.jpeg">
+    <link rel="manifest" href="assets/images/logo/main_logo.jpeg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/images/logo/main_logo.jpeg">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mobile.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Custom Styles */
+        .for-marigon-top {
+            margin-top: -165px !important;
+        }
+
+        .set-height {
+            height: 343px;
+        }
+
+        .set-height2 {
+            height: 147px;
+        }
+
+        .set-height3 {
+            height: 273px;
+        }
+
+        .for-set-margin {
+            margin-left: -81px;
+        }
+
+        /* Service icons size adjustment */
+        .icons-rounded-box img {
+            width: 210px;
+            height: 240px;
+            object-fit: contain;
+        }
+
+        /* Modal styles */
+        .modal-background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.35;
+            object-fit: cover;
+            object-position: center;
+            background-blend-mode: overlay;
+        }
+
+        .custom-modal {
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 10px 30px rgba(0, 46, 109, 0.3);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            background-color: #001a33;
+        }
+
+        .custom-modal::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #003366, #0066cc, #0099ff, #00ccff);
+            background-size: 300% 300%;
+            animation: borderAnimation 8s ease infinite;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.9) 0%, rgba(0, 40, 80, 0.85) 100%);
+            z-index: 2;
+        }
+
+        .modal-content-inner {
+            position: relative;
+            z-index: 3;
+            color: #fff;
+            padding: 70px 40px 40px;
+        }
+
+        .modal-content-inner h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 8px rgba(0, 102, 204, 0.4);
+        }
+
+        .modal-content-inner p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .btn-close-custom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close-custom::before,
+        .btn-close-custom::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 2px;
+            background: white;
+        }
+
+        .btn-close-custom::before {
+            transform: rotate(45deg);
+        }
+
+        .btn-close-custom::after {
+            transform: rotate(-45deg);
+        }
+
+        .btn-close-custom:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Sticky social icons */
+        .sticky-social-icons {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            z-index: 999;
+        }
+
+        .sticky-social-icons ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sticky-social-icons ul li {
+            margin: 5px 0;
+        }
+
+        .sticky-social-icons ul li a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #192133;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sticky-social-icons ul li a:hover {
+            background: #98773b;
+        }
+
+        .header-logo {
+            height: 140px;
+        }
+
+        .footer-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-left: -29px;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .for-marigon-top {
+                margin-top: 0px !important;
+            }
+
+            .set-height {
+                height: 200px !important;
+            }
+
+            .set-height2 {
+                height: 100px;
+            }
+
+            .set-height3 {
+                height: 192px;
+            }
+
+            .for-set-margin {
+                margin-left: 0px;
+            }
+
+            .header-logo {
+                height: 75px !important;
+            }
+
+            .footer-logo {
+                width: 64px !important;
+                height: 100px;
+                object-fit: contain;
+                margin-left: -29px;
+            }
+
+            .resposive-button {
+                width: 52px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.96) translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes borderAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER-SECTION -->
+    <div class="home-header-section">
+        <figure class="banner-right-img left_icon img">
+            <img src="assets/images/header-right-img.png" alt="" class="star">
+        </figure>
+        <header class="header">
+            <div class="main-header">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg navbar-light p-0 for-set-margin">
+                        <a class="navbar-brand pt-0" href="index.html">
+                            <img src="assets/images/logo/main_logo.jpeg" alt=""
+                                class="img-fluid diverge-logo header-logo">
+                        </a>
+                        <button class="navbar-toggler collapsed resposive-button" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                            <span class="navbar-toggler-icon"></span>
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link text-decoration-none navbar-text-color home-margin-top"
+                                        href="index.html">Home<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-decoration-none navbar-text-color" href="about.html">About
+                                        us</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link text-decoration-none navbar-text-color"
+                                        href="services.html">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-decoration-none navbar-text-color"
+                                        href="pricing.html">Pricing Plan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="career.html">Careers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact us</a>
+                                </li>
+                            </ul>
+                            <div class="btn-talk ml-auto">
+                                <ul class="m-0 p-0">
+                                    <li class="list-unstyled d-lg-inline-block">
+                                        <a class="nav-link contact" href="tel:+91  8819981884">Call Now</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- BANNER-SECTION -->
+        <div class="home-banner-section overflow-hidden position-relative sub-banner-section">
+            <div class="banner-container-box">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="sub-banner-outer">
+                                <h1>Services</h1>
+                                <p>We deliver innovative, reliable, and customized solutions to help your business grow.
+                                </p>
+                                <div class="banner-btn discover-btn-banner">
+                                    <div class="btn-inner" onclick="window.location.href='index.html'"
+                                        style="cursor: pointer;">
+                                        Home <span class="arrow-angles"><i class="fa fa-angles-right"></i></span>
+                                        <span class="about-margin">Services</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="our-services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Our Services</h6>
+                    <h2 class="text-center">Cyber Security Solutions</h2>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Service 1 -->
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-md-4 mb-sm-4 mb-0">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/services/ios_app.jpeg"
+                                    alt="Mobile App Development"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>Custom Android & iOS App Development</h5>
+                            <p class="security-services-p">We create secure, high-performance mobile apps for Android
+                                and iOS, fully tailored to match your brand identity and user needs.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal1">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0 icon-color"><img src="assets/images/services/cross_plateform.jpeg"
+                                    alt="Cross-Platform Apps"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>Cross-Platform & Hybrid Apps</h5>
+                            <p class="security-services-p">Develop powerful apps that run seamlessly across Android and
+                                iOS, reducing costs and reaching a wider audience efficiently.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal2">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-sm-4 mb-0">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/services/ui_ux.jpeg" alt="UI/UX Design">
+                            </figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>UI/UX Design & Development</h5>
+                            <p class="security-services-p">Design engaging, modern interfaces that deliver smooth
+                                navigation and an excellent user experience to keep your audience connected.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal3">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-md-4 mb-sm-4 mb-0">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/services/economi.jpeg" alt="E-Commerce Apps">
+                            </figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>E-Commerce & Business Apps</h5>
+                            <p class="security-services-p">Launch scalable e-commerce and business apps with secure
+                                payments, real-time tracking, and advanced management features.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal4">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0 icon-color"><img src="assets/images/services/ai_iot.jpeg"
+                                    alt="AI & IoT Integration"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>AI & IoT Integration</h5>
+                            <p class="security-services-p">Integrate smart AI and IoT technologies to create innovative
+                                apps that automate tasks and improve decision-making.</p>
+                            <div class="pt-4"></div>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal5">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/services/app_managements.jpeg"
+                                    alt="App Maintenance"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>App Maintenance & Support</h5>
+                            <p class="security-services-p">Get reliable support and maintenance services to keep your
+                                apps updated, secure, and performing optimally.</p>
+                            <div class="pt-4"></div>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal6">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Service 7: Red Team Service -->
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-md-4 mb-sm-4 mb-0">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/img/read_team.jpeg" alt="Red Team Service">
+                            </figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>Red Team Security Assessment</h5>
+                            <p class="security-services-p">Simulate real-world cyber attacks to identify vulnerabilities
+                                and test your organization's detection and response capabilities.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal7">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Service 8: Blue Team Service -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0 icon-color"><img src="assets/images/img/blue_team_services.jpeg"
+                                    alt="Blue Team Service"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>Blue Team Defense Services</h5>
+                            <p class="security-services-p">Strengthen your security posture with proactive defense
+                                strategies, monitoring, and incident response solutions.</p>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal8">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Service 9: CEH Service -->
+                <div class="col-lg-4 col-md-6 col-sm-6 mb-sm-4 mb-0">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/img/cms.jpeg" alt="CEH Service"></figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>Certified Ethical Hacking</h5>
+                            <p class="security-services-p">Professional ethical hacking services to identify security
+                                weaknesses before malicious actors can exploit them.</p>
+                            <div class="pt-4"></div>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal9">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Service 10: SMS and SEO for Web -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="services-content services-page-content">
+                        <div class="icons-rounded-box">
+                            <figure class="mb-0"><img src="assets/images/img/seo.png" alt="SMS and SEO Service">
+                            </figure>
+                        </div>
+                        <div class="services-box">
+                            <h5>SMS & SEO for Web Security</h5>
+                            <p class="security-services-p">Comprehensive security monitoring and optimization services
+                                to protect and enhance your web presence.</p>
+                            <div class="pt-4"></div>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#serviceModal10">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 1: Custom Android & iOS App Development -->
+        <div class="modal fade" id="serviceModal1" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/ios.png" class="modal-background" alt="Mobile App Development">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>Custom Android & iOS App Development</h2>
+                        <p>We create secure, high-performance mobile apps for Android and iOS, fully tailored to match
+                            your brand identity and user needs.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ End-to-End Custom App Development<br>
+                            ✔️ Robust Security and Data Encryption<br>
+                            ✔️ High-Speed Performance Optimization<br>
+                            ✔️ User-Centric Interface & Smooth UX<br>
+                            ✔️ Ongoing Support and Maintenance<br><br>
+                            Our experienced team ensures your app stands out in the competitive market while delivering
+                            an exceptional experience to your users.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2: Cross-Platform & Hybrid Apps -->
+        <div class="modal fade" id="serviceModal2" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/cross_plateform.jpeg" class="modal-background"
+                        alt="Cross-Platform Apps">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>Cross-Platform & Hybrid Apps</h2>
+                        <p>Develop powerful apps that run seamlessly across Android and iOS, reducing costs and reaching
+                            a wider audience efficiently.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Single Codebase for Multiple Platforms<br>
+                            ✔️ Cost-Effective Development Solution<br>
+                            ✔️ Native-like Performance<br>
+                            ✔️ Faster Time-to-Market<br>
+                            ✔️ Easy Maintenance & Updates<br><br>
+                            Our cross-platform solutions combine the best of native and hybrid approaches for optimal
+                            results.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 3: UI/UX Design & Development -->
+        <div class="modal fade" id="serviceModal3" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/ui_ux.jpeg" class="modal-background" alt="UI/UX Design">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>UI/UX Design & Development</h2>
+                        <p>Design engaging, modern interfaces that deliver smooth navigation and an excellent user
+                            experience to keep your audience connected.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ User-Centered Design Approach<br>
+                            ✔️ Intuitive Navigation Structures<br>
+                            ✔️ Responsive & Adaptive Layouts<br>
+                            ✔️ Prototyping & User Testing<br>
+                            ✔️ Accessibility Compliance<br><br>
+                            We transform complex processes into simple, beautiful interfaces that users love.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 4: E-Commerce & Business Apps -->
+        <div class="modal fade" id="serviceModal4" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/economi.jpeg" class="modal-background" alt="E-Commerce Apps">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>E-Commerce & Business Apps</h2>
+                        <p>Launch scalable e-commerce and business apps with secure payments, real-time tracking, and
+                            advanced management features.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Secure Payment Gateway Integration<br>
+                            ✔️ Inventory & Order Management<br>
+                            ✔️ Customer Analytics Dashboard<br>
+                            ✔️ Multi-Vendor Marketplace Support<br>
+                            ✔️ CRM Integration<br><br>
+                            Our solutions help businesses streamline operations and boost sales through mobile
+                            platforms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 5: AI & IoT Integration -->
+        <div class="modal fade" id="serviceModal5" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/ai_iot.jpeg" class="modal-background" alt="AI & IoT Integration">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>AI & IoT Integration</h2>
+                        <p>Integrate smart AI and IoT technologies to create innovative apps that automate tasks and
+                            improve decision-making.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Machine Learning Algorithms<br>
+                            ✔️ Predictive Analytics<br>
+                            ✔️ Smart Device Connectivity<br>
+                            ✔️ Voice & Image Recognition<br>
+                            ✔️ Automated Workflows<br><br>
+                            We help businesses leverage cutting-edge technologies to create smarter mobile solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 6: App Maintenance & Support -->
+        <div class="modal fade" id="serviceModal6" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/services/app_managements.jpeg" class="modal-background"
+                        alt="App Maintenance">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>App Maintenance & Support</h2>
+                        <p>Get reliable support and maintenance services to keep your apps updated, secure, and
+                            performing optimally.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Regular Performance Optimization<br>
+                            ✔️ Security Updates & Patches<br>
+                            ✔️ Bug Fixes & Troubleshooting<br>
+                            ✔️ Feature Enhancements<br>
+                            ✔️ 24/7 Monitoring & Support<br><br>
+                            Our maintenance plans ensure your app stays competitive and secure in the ever-evolving
+                            digital landscape.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Modal 7: Red Team Service -->
+        <div class="modal fade" id="serviceModal7" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/img/read_team.jpeg" class="modal-background" alt="Red Team Service">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>Red Team Security Assessment</h2>
+                        <p>Our Red Team services simulate sophisticated cyber attacks to rigorously test your security
+                            defenses and incident response capabilities.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Real-world attack simulation<br>
+                            ✔️ Advanced persistent threat emulation<br>
+                            ✔️ Social engineering testing<br>
+                            ✔️ Physical security penetration<br>
+                            ✔️ Detailed threat analysis reporting<br><br>
+                            We help you understand your vulnerabilities from an attacker's perspective, providing
+                            actionable insights to strengthen your security posture.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Modal 8: Blue Team Service -->
+        <div class="modal fade" id="serviceModal8" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/img/blue_team_services.jpeg" class="modal-background"
+                        alt="Blue Team Service">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>Blue Team Defense Services</h2>
+                        <p>Our Blue Team services focus on strengthening your defensive security measures and improving
+                            your organization's ability to detect and respond to threats.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Security Operations Center (SOC) services<br>
+                            ✔️ Threat detection system implementation<br>
+                            ✔️ Incident response planning<br>
+                            ✔️ Security monitoring and analysis<br>
+                            ✔️ Security awareness training<br><br>
+                            We help build robust defenses that can withstand modern cyber threats while ensuring
+                            compliance with industry standards.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Modal 9: CEH Service -->
+        <div class="modal fade" id="serviceModal9" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/img/cms.jpeg" class="modal-background" alt="CEH Service">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>Certified Ethical Hacking</h2>
+                        <p>Our Certified Ethical Hacking services employ professional penetration testers to identify
+                            and help remediate security vulnerabilities before they can be exploited.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Comprehensive vulnerability assessments<br>
+                            ✔️ Penetration testing (network, web, mobile)<br>
+                            ✔️ Security gap analysis<br>
+                            ✔️ Compliance auditing<br>
+                            ✔️ Remediation guidance<br><br>
+                            Using the same tools and techniques as malicious hackers, we help you find and fix security
+                            weaknesses in your systems and applications.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Modal 10: SMS and SEO for Web -->
+        <div class="modal fade" id="serviceModal10" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-0 overflow-hidden custom-modal">
+                    <img src="assets/images/img/seo.png" class="modal-background" alt="SMS and SEO Service">
+                    <div class="modal-overlay"></div>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body modal-content-inner">
+                        <h2>SMS & SEO for Web Security</h2>
+                        <p>Our Security Monitoring Service (SMS) and Search Engine Optimization (SEO) solutions work
+                            together to protect and enhance your web presence.<br><br>
+                            <strong>Key Features:</strong><br>
+                            ✔️ Continuous security monitoring<br>
+                            ✔️ Vulnerability scanning and patching<br>
+                            ✔️ Secure SEO implementation<br>
+                            ✔️ Malware detection and removal<br>
+                            ✔️ Performance optimization<br><br>
+                            We ensure your website remains secure while maintaining optimal visibility and performance
+                            in search engines, protecting both your data and your online reputation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Sticky Social Icons -->
+    <div class="sticky-social-icons">
+        <ul>
+            <li>
+                <a href="https://www.facebook.com/profile.php?id=61578737467946&mibextid=ZbWKwL" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/cyber_world_forge_tech" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/company/geetaforgetech/" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://chat.whatsapp.com/ChrBs8egVTsEhVpAZ0bLom?text=Hello%20I%20am%20interested%20in%20your%20services"
+                    target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Footer-Section -->
+    <div class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="footer-content1">
+                        <a href="index.html" class="text-decoration-none">
+                            <figure style="margin-top: -31px;">
+                                <h5 class="footer-link footer-next-list footer-next-list-about"
+                                    style="padding-left: 8px;">
+                                    <img src="assets/images/logo/main_logo.jpeg" class="footer-logo"
+                                        alt="Geeta ForgeTech">
+                                    geetaforgetech
+                                </h5>
+                            </figure>
+                        </a>
+                        <p class="footer-section-text" style="margin-top: -27px;">
+                            At Geeta ForgeTech, we aim to deliver reliable cybersecurity, software, and web
+                            solutions. Our growing team is committed to quality, security, and innovation in every
+                            project we handle.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="list-item">
+                                <a href="https://www.facebook.com/profile.php?id=61578737467946&mibextid=ZbWKwL"
+                                    target="_blank" style="text-decoration: none;">
+                                    <i class="fa-brands fa-facebook-f marginLeft"></i>
+                                </a>
+                                <a href="https://www.instagram.com/cyber_world_forge_tech" target="_blank"
+                                    style="text-decoration: none;">
+                                    <i class="fa-brands fa-instagram marginLeft"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/company/geetaforgetech/" target="_blank"
+                                    style="text-decoration: none;">
+                                    <i class="fa-brands fa-linkedin-in marginLeft"></i>
+                                </a>
+                                <a href="https://wa.me/91 8819981884" target="_blank" style="text-decoration: none;">
+                                    <i class="fa-brands fa-whatsapp marginLeft"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12 d-lg-block d-none">
+                    <h5 class="footer-link footer-next-list footer-next-list-about">About Us</h5>
+                    <ul class="useful-footer">
+                        <li>
+                            <a href="services.html" class="text-decoration-none footer-link-p">Services</a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="text-decoration-none footer-link-p">Projects</a>
+                        </li>
+                        <li>
+                            <a href="services.html" class="text-decoration-none footer-link-p">Careers</a>
+                        </li>
+                        <li>
+                            <a href="about.html" class="text-decoration-none footer-link-p">About Us</a>
+                        </li>
+                        <li>
+                            <a href="pricing.html" class="text-decoration-none footer-link-p">Pricing Plan</a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="text-decoration-none footer-link-p">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12 d-md-block d-none">
+                    <h5 class="footer-link text-white footer-next-list footer-next-list-contact">Contact Info</h5>
+                    <div class="footer-list footer-link contact-list">
+                        <div class="icon-list-box1">
+                            <ul class="list-unstyled contact-us-ul">
+                                <li class="list-item">
+                                    <a href="tel:+ 8819981884" class="text-decoration-none footer-link-auto">+91
+                                        8819981884</a>
+                                    <i class="fa fa-phone fa-icon footer-location3"></i>
+                                </li>
+                                <li class="list-item">
+                                    <a href="mailto:webmaster@example.com"
+                                        class="text-decoration-none footer-link-auto">chhabi@geetaforgetech.in</a>
+                                    <i class="fa fa-envelope fa-icon footer-location2" style="margin-top: -19px;"></i>
+                                </li>
+                                <li class="list-item">
+                                    <a class="text-decoration-none footer-link-auto">Shyam Nagar, Raipur, Chhattisgarh
+                                        492001</a>
+                                    <i class="fa-solid fa-location-dot footer-location"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="footer-list signupbox">
+                        <h4 class="footer-link text-white footer-next-list footer-next-list-signup">Sign up for News
+                        </h4>
+                        <div class="icon-list-box1">
+                            <form id="form_id" method="POST" action="https://formsubmit.co/chcyberarmy@gmail.com"
+                                style="margin-left:20px !important;">
+                                <input type="hidden" name="_next" value="http://localhost:81/whizcyber/thankyou.html">
+                                <input type="hidden" name="_captcha" value="false">
+                                <input type="hidden" name="_subject" value="New Newsletter Subscription from Website">
+                                <div class="col-inner">
+                                    <input type="tel" name="email" class="form-control input-fill"
+                                        placeholder="Email Address:">
+                                </div>
+                                <div class="form-btn">
+                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <style>
+            #preloader {
+                position: fixed;
+                z-index: 9999;
+                background-color: #001f3f;
+                /* Navy blue */
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: opacity 0.5s ease-out;
+            }
+
+            #preloader.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            #preloader img {
+                width: 100px;
+                height: auto;
+            }
+        </style>
+
+        <!-- Preloader -->
+        <div id="preloader">
+            <img src="assets/images/preloder/preloder.png" alt="Loading..." />
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                setTimeout(function () {
+                    document.getElementById("preloader").classList.add("hidden");
+                }, 1000); // 1000ms = 1 second
+            });
+        </script>
+
+
+        <div class="footer-bar text-center">
+            <div class="row">
+                <div class="footer-bar-content w-100">
+                    <p id="copyright"></p>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const currentYear = new Date().getFullYear();
+                            const establishedYear = 2025;
+                            const companyName = "Geeta ForgeTech";
+
+                            document.getElementById("copyright").textContent =
+                                `© ${establishedYear}–${currentYear} ${companyName}. All Rights Reserved.`;
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/owl.carousel.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/text-animations.js"></script>
+    <script src="assets/js/carousel.js"></script>
+    <script src="assets/js/showhide.html"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+    <script src="https://unpkg.com/ityped@0.0.10"></script>
+    <script src="assets/js/type.js"></script>
+    <script src="assets/js/custom-script.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/688badf65089db1921655035/1j1gpv3gk';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+</body>
+
+</html>

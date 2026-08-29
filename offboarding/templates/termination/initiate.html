@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card rounded-3 shadow-sm max-w-lg mx-auto">
+        <div class="card-body p-4">
+            <h2 class="mb-4 text-danger">{% trans "Initiate Termination Workflow" %}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Select Employee" %}</label>
+                    {{ form.employee }}
+                    {% if form.employee.errors %}
+                        <div class="text-danger mt-1">{{ form.employee.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Effective Termination Date" %}</label>
+                    {{ form.effective_date }}
+                    {% if form.effective_date.errors %}
+                        <div class="text-danger mt-1">{{ form.effective_date.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Reason for Termination" %}</label>
+                    {{ form.reason }}
+                    {% if form.reason.errors %}
+                        <div class="text-danger mt-1">{{ form.reason.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">{% trans "Termination Letter Draft" %}</label>
+                    {{ form.termination_letter }}
+                    {% if form.termination_letter.errors %}
+                        <div class="text-danger mt-1">{{ form.termination_letter.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">{% trans "Initiate Offboarding" %}</button>
+                    <a href="{% url 'termination-list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

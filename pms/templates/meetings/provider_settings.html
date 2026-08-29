@@ -1,0 +1,15 @@
+{% extends "index.html" %}{% load i18n %}{% block content %}
+<main class="oh-wrapper"><div class="oh-main__topbar"><h1 class="oh-main__titlebar-title fw-bold">{% trans "Meeting Integrations" %}</h1></div>
+<div class="oh-card p-4"><p>Configure Zoom, Google Meet, Microsoft Teams, or a custom meeting API per company. Secrets are only shown while saving.</p>
+<form method="post" class="oh-profile-section">{% csrf_token %}
+<label class="oh-label">Provider</label><select class="oh-select oh-select-2 w-100" name="provider"><option value="zoom">Zoom</option><option value="google_meet">Google Meet</option><option value="teams">Microsoft Teams</option><option value="custom">Custom API</option></select>
+<label class="oh-label mt-3">Client ID</label><input class="oh-input w-100" name="client_id">
+<label class="oh-label mt-3">Client Secret</label><input class="oh-input w-100" type="password" name="client_secret">
+<label class="oh-label mt-3">OAuth Access Token (Google Meet / Teams)</label><input class="oh-input w-100" type="password" name="access_token">
+<label class="oh-label mt-3">Account ID / Zoom Account ID</label><input class="oh-input w-100" name="account_id">
+<label class="oh-label mt-3">Tenant ID (Microsoft)</label><input class="oh-input w-100" name="tenant_id">
+<label class="oh-label mt-3">Custom API base URL</label><input class="oh-input w-100" type="url" name="api_base_url">
+<label class="oh-label mt-3"><input type="checkbox" name="is_active" checked> Active</label><br>
+<button class="oh-btn oh-btn--secondary mt-3" type="submit">Save integration</button></form></div>
+<div class="oh-card p-4 mt-3"><h3>Configured providers</h3>{% for item in configs %}<p><b>{{ item.get_provider_display }}</b> — {% if item.is_active %}Active{% else %}Disabled{% endif %}</p>{% empty %}<p>No provider configured. Internal calls work without an external provider.</p>{% endfor %}</div></main>
+{% endblock content %}

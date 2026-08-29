@@ -1,0 +1,4 @@
+{% load i18n %}{% load chhabifilters %}
+{% if "attendance"|app_installed %}
+<div hx-get="{% url "view-penalties" %}?employee_id={{employee.id}}" hx-trigger="load"></div>
+{% endif %}

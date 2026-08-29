@@ -1,0 +1,15 @@
+<section class="cms-section">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="cta-content">
+        <h2>{{ section.heading }}</h2>
+        {% if section.content %}<p>{{ section.content|linebreaksbr }}</p>{% endif %}
+        <div class="btn-row">
+          {% if section.primary_button_text %}<a class="site-btn light" href="{{ section.primary_button_url }}">{{ section.primary_button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+          {% if section.secondary_button_text %}<a class="site-btn ghost-light" href="{{ section.secondary_button_url }}">{{ section.secondary_button_text }}</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

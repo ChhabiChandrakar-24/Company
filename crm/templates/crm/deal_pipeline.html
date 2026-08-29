@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% load i18n static %}
+{% block styles %}<link rel="stylesheet" href="{% static 'crm/css/crm.css' %}">{% endblock %}
+
+{% block content %}
+<style>
+    .pipeline-board { display: flex; overflow-x: auto; padding-bottom: 20px; }
+    .pipeline-col { min-width: 300px; max-width: 300px; margin-right: 15px; background: #f8f9fa; border-radius: 8px; padding: 10px; }
+    .pipeline-col h6 { text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 15px; color: #495057; }
+    .deal-card { background: #fff; border-radius: 6px; padding: 15px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 4px solid #0d6efd; }
+    .deal-card h5 { font-size: 1.1rem; margin-bottom: 5px; }
+    .deal-card .amount { font-weight: bold; color: #198754; }
+</style>
+<div class="container-fluid mt-4 crm-shell">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-3">
+        <h2>{% trans "Deals Pipeline" %}</h2>
+    </div>
+
+    <div class="pipeline-board px-3">
+        {% for stage in stages %}
+        <div class="pipeline-col shadow-sm">
+            <h6>{{ stage|title }}</h6>
+            {% for deal in deals %}
+                {% if deal.stage == stage %}
+                <div class="deal-card">
+                    <h5>{{ deal.title }}</h5>
+                    <p class="mb-1 text-muted small">{{ deal.inquiry.client.name }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="amount">${{ deal.amount }}</span>
+                        <span class="badge bg-secondary">{{ deal.expected_close_date|date:"d M"|default:"-" }}</span>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

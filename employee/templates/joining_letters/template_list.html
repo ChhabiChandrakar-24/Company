@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{% trans "Joining Letter Templates" %}</h2>
+        <a href="{% url 'joining-letter-template-create' %}" class="btn btn-primary">
+            <i class="fa fa-plus"></i> {% trans "Create Template" %}
+        </a>
+    </div>
+
+    <div class="card rounded-3 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-4 py-3">{% trans "Template Title" %}</th>
+                        <th class="py-3">{% trans "Company" %}</th>
+                        <th class="py-3">{% trans "Created At" %}</th>
+                        <th class="px-4 py-3 text-end">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for template in templates %}
+                    <tr>
+                        <td class="px-4 py-3 align-middle font-weight-bold">{{ template.title }}</td>
+                        <td class="py-3 align-middle">{{ template.company.company|default:"-" }}</td>
+                        <td class="py-3 align-middle">{{ template.created_at|date:"d M Y" }}</td>
+                        <td class="px-4 py-3 text-end align-middle">
+                            <a href="{% url 'joining-letter-template-edit' template.id %}" class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="fa fa-edit"></i> {% trans "Edit" %}
+                            </a>
+                            <a href="{% url 'joining-letter-template-delete' template.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('{% trans "Are you sure you want to delete this template?" %}');">
+                                <i class="fa fa-trash"></i> {% trans "Delete" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">
+                            <i class="fa fa-file-text-o fa-2x mb-3 d-block"></i>
+                            {% trans "No templates found. Create one to get started." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

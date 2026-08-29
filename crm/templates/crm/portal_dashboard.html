@@ -1,0 +1,154 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Portal Header -->
+    <div class="mb-4">
+        <h2>Welcome, {{ client.name }}!</h2>
+        <p class="text-muted mb-0">
+            {% trans "Client Portal Workspace" %} &nbsp;|&nbsp; 
+            <span class="font-weight-bold text-dark">{{ client.company_name|default:"Individual" }}</span>
+        </p>
+    </div>
+
+    <div class="row">
+        <!-- Main body: projects, requirements -->
+        <div class="col-md-8">
+            <!-- Active Projects -->
+            <div class="card rounded-3 shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Your Active Projects" %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="px-4 py-3">{% trans "Project Name" %}</th>
+                                <th class="py-3">{% trans "Start Date" %}</th>
+                                <th class="py-3">{% trans "Status" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in projects %}
+                            <tr>
+                                <td class="px-4 py-3 align-middle font-weight-bold">{{ project.title }}</td>
+                                <td class="py-3 align-middle">{{ project.start_date|date:"d M Y" }}</td>
+                                <td class="py-3 align-middle">
+                                    <span class="badge bg-primary">{{ project.get_status_display }}</span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-muted">{% trans "No active projects linked yet." %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Requirement Specifications -->
+            <div class="card rounded-3 shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Project Specifications" %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="px-4 py-3">{% trans "Specification Title" %}</th>
+                                <th class="py-3">{% trans "Priority" %}</th>
+                                <th class="py-3">{% trans "Status" %}</th>
+                                <th class="px-4 py-3 text-end">{% trans "Actions" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for req in requirements %}
+                            <tr>
+                                <td class="px-4 py-3 align-middle">
+                                    <div class="font-weight-bold">{{ req.title }}</div>
+                                    <small class="text-muted">v{{ req.revision_number }}</small>
+                                </td>
+                                <td class="py-3 align-middle">
+                                    <span class="badge bg-secondary">{{ req.get_priority_display }}</span>
+                                </td>
+                                <td class="py-3 align-middle">
+                                    {% if req.approval_status == 'approved' %}
+                                        <span class="badge bg-success">{% trans "Approved" %}</span>
+                                    {% elif req.approval_status == 'rejected' %}
+                                        <span class="badge bg-danger">{% trans "Rejected" %}</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">{% trans "Pending" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-4 py-3 text-end align-middle">
+                                    <a href="{% url 'crm-requirement-detail' req.id %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa fa-comments-o"></i> {% trans "View Discussion" %}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">{% trans "No requirements specifications logged." %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar: Timeline and Payment details -->
+        <div class="col-md-4">
+            <!-- Timeline feed -->
+            <div class="card rounded-3 shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Recent Timeline Activity" %}</h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <div class="position-relative ps-3" style="border-left: 2px solid #dee2e6; margin-left: 5px;">
+                        {% for log in logs %}
+                        <div class="mb-3 position-relative">
+                            <div class="position-absolute translate-middle-x rounded-circle bg-primary" 
+                                 style="left: -20px; top: 5px; width: 8px; height: 8px;"></div>
+                            <div class="ms-2">
+                                <div class="font-weight-bold" style="font-size: 13px;">{{ log.title }}</div>
+                                <small class="text-muted d-block" style="font-size: 11px;">{{ log.created_at|date:"d M Y, h:i A" }}</small>
+                                <p class="mb-0 text-secondary" style="font-size: 12px; white-space: pre-wrap;">{{ log.description }}</p>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center mb-0">{% trans "No activities logged." %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment milestones -->
+            <div class="card rounded-3 shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{% trans "Payment History" %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for pay in payments %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <div>
+                                <div class="font-weight-bold">{{ pay.amount }}</div>
+                                <small class="text-muted">{{ pay.payment_date|date:"d M Y" }}</small>
+                            </div>
+                            <span class="badge 
+                               {% if pay.status == 'completed' %}bg-success
+                               {% elif pay.status == 'pending' %}bg-warning text-dark
+                               {% else %}bg-danger{% endif %}">{{ pay.status|title }}</span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center text-muted py-4">{% trans "No payment logs recorded." %}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

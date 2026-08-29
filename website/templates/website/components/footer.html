@@ -1,0 +1,82 @@
+{% load website_extras %}
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="site-brand" href="/" aria-label="{{ site_settings.company_name }} home">
+          {% if site_settings.logo %}
+            <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.company_name }} logo">
+          {% else %}
+            <span class="brand-mark" aria-hidden="true">{{ site_settings.company_name|first_word }}</span>
+          {% endif %}
+          <span class="brand-name">{{ site_settings.company_name }}</span>
+        </a>
+        <p>{{ site_settings.footer_text|default:site_settings.tagline|default:"Building secure, modern software that powers business growth." }}</p>
+        {% if social_links %}
+          <div class="social-row">
+            {% for social in social_links %}
+              <a href="{{ social.url }}" target="_blank" rel="noopener" aria-label="{{ social.platform }}"><i class="{{ social.icon_class }}" aria-hidden="true"></i></a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% for section in footer_sections %}
+        <div class="footer-col">
+          <h3>{{ section.title }}</h3>
+          {% if section.section_type == 'newsletter' %}
+            <div class="footer-newsletter">
+              {% if section.content %}<p>{{ section.content }}</p>{% endif %}
+              <form action="{% url 'website-submit' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="submission_type" value="newsletter">
+                <label class="sr-only" for="newsletter-email">Email address</label>
+                <input id="newsletter-email" type="email" name="email" required maxlength="254" placeholder="you@company.com">
+                <button class="site-btn sm" type="submit">Subscribe</button>
+              </form>
+            </div>
+          {% elif section.section_type == 'contact' %}
+            {% if section.content %}<p>{{ section.content|linebreaksbr }}</p>{% endif %}
+            <div class="footer-links">
+              {% for link in section.links.all %}
+                {% if link.is_active %}
+                  <a href="{{ link.url }}" {% if link.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}>{% if link.icon_class %}<i class="{{ link.icon_class }}" aria-hidden="true"></i>{% endif %}{{ link.label }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% elif section.section_type == 'text' %}
+            {% if section.content %}<p>{{ section.content|linebreaksbr }}</p>{% endif %}
+          {% else %}
+            <div class="footer-links">
+              {% for link in section.links.all %}
+                {% if link.is_active %}
+                  <a href="{{ link.url }}" {% if link.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}>{% if link.icon_class %}<i class="{{ link.icon_class }}" aria-hidden="true"></i>{% endif %}{{ link.label }}</a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% empty %}
+        <div class="footer-col">
+          <h3>Contact</h3>
+          {% if site_settings.address %}<p>{{ site_settings.address|linebreaksbr }}</p>{% endif %}
+          <div class="footer-links">
+            <a href="tel:{{ site_settings.phone }}"><i class="fa-solid fa-phone" aria-hidden="true"></i>{{ site_settings.phone }}</a>
+            <a href="mailto:{{ site_settings.email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i>{{ site_settings.email }}</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {% now 'Y' %} {{ site_settings.company_name }}. {{ site_settings.footer_text|default:'All rights reserved.' }}</span>
+      {% if footer_menu_items %}
+        <nav aria-label="Footer navigation">
+          {% for item in footer_menu_items %}
+            <a href="{{ item.get_url }}">{{ item.label }}</a>{% if not forloop.last %} · {% endif %}
+          {% endfor %}
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+</footer>

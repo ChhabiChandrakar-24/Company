@@ -1,0 +1,57 @@
+{% load website_extras %}
+<header class="site-header">
+  <div class="container site-nav-wrap">
+    <a class="site-brand" href="/" aria-label="{{ site_settings.company_name }} home">
+      {% if site_settings.logo %}
+        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.company_name }} logo">
+      {% else %}
+        <span class="brand-mark" aria-hidden="true">{{ site_settings.company_name|first_word }}</span>
+      {% endif %}
+      <span class="brand-name">{{ site_settings.company_name }}{% if site_settings.tagline %}<small>{{ site_settings.tagline|truncatechars:20 }}</small>{% endif %}</span>
+    </a>
+
+    <button class="nav-toggle icon-btn" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-navigation" aria-label="Open navigation menu">
+      <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <nav class="site-nav" id="site-navigation" data-site-nav aria-label="Main navigation">
+      {% for item in main_menu_items %}
+        {% if item.children.exists %}
+          <div class="nav-dropdown{% if item.get_url != '/' and request.path|startswith:item.get_url %} is-open{% endif %}">
+            <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+             {{ item.label }}
+              
+            </button>
+            <div class="nav-dropdown-menu{% if item.children.all|length >= 4 %} mega{% endif %}">
+              {% for child in item.children.all %}
+                {% if child.is_active %}
+                  <a href="{{ child.get_url }}" {% if child.open_in_new_tab %}target="_blank" rel="noopener"{% endif %} {% if request.path == child.get_url %}aria-current="page"{% endif %}>
+                    <i class="fa-solid {{ child|menu_icon }}" aria-hidden="true"></i>{{ child.label }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <a class="nav-link" href="{{ item.get_url }}" {% if request.path == item.get_url %}aria-current="page"{% endif %} {% if item.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}>
+            {{ item.label }}
+          </a>
+        {% endif %}
+      {% empty %}
+        <a class="nav-link" href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
+      {% endfor %}
+
+      <div class="nav-actions">
+        <a class="icon-btn" href="{% url 'website-search' %}" aria-label="Search the website"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></a>
+        <div class="theme-switch" role="group" aria-label="Color theme">
+          <button type="button" class="theme-toggle-btn" data-theme-choice="light" data-theme="light" aria-label="Use light mode"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+          <button type="button" class="theme-toggle-btn" data-theme-choice="dark" data-theme="dark" aria-label="Use dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+          <button type="button" class="theme-toggle-btn" data-theme-choice="system" data-theme="system" aria-label="Use system theme"><i class="fa-solid fa-desktop" aria-hidden="true"></i></button>
+        </div>
+        {% if site_settings.header_cta_text %}
+          <a class="nav-cta" href="{{ site_settings.header_cta_url }}">{{ site_settings.header_cta_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>

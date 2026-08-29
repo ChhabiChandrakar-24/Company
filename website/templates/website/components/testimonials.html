@@ -1,0 +1,36 @@
+{% load website_extras %}
+<section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Testimonials</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-3">
+      {% for testimonial in testimonials %}
+        <figure class="cms-card testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 star rating">
+            {% for star in "12345" %}<i class="fa-solid fa-star" aria-hidden="true"></i>{% endfor %}
+          </div>
+          <blockquote>
+            <i class="fa-solid fa-quote-left quote-mark" aria-hidden="true"></i>
+            <p>{{ testimonial.quote }}</p>
+          </blockquote>
+          <figcaption>
+            {% if testimonial.image %}
+              <img class="avatar" src="{{ testimonial.image.url }}" alt="{{ testimonial.author }}">
+            {% else %}
+              <span class="avatar avatar-initials" aria-hidden="true">{{ testimonial.author|initials }}</span>
+            {% endif %}
+            <span class="avatar-meta">
+              <strong>{{ testimonial.author }}</strong>
+              {% if testimonial.designation %}<small>{{ testimonial.designation }}</small>{% endif %}
+            </span>
+          </figcaption>
+        </figure>
+      {% empty %}
+        <div class="cms-card"><p>Testimonials will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

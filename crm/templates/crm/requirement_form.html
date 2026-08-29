@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card rounded-3 shadow-sm max-w-lg mx-auto">
+        <div class="card-body p-4">
+            <h2 class="mb-4">{{ title }}</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Requirement Title" %}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger mt-1">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Detailed Specifications" %}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger mt-1">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Requested Modules / Features" %}</label>
+                    {{ form.modules_requested }}
+                    {% if form.modules_requested.errors %}
+                        <div class="text-danger mt-1">{{ form.modules_requested.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Priority" %}</label>
+                        {{ form.priority }}
+                        {% if form.priority.errors %}
+                            <div class="text-danger mt-1">{{ form.priority.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Approval Status" %}</label>
+                        {{ form.approval_status }}
+                        {% if form.approval_status.errors %}
+                            <div class="text-danger mt-1">{{ form.approval_status.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">{% trans "Attachment Document" %}</label>
+                    {{ form.attachment }}
+                    {% if form.attachment.errors %}
+                        <div class="text-danger mt-1">{{ form.attachment.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">{% trans "Assigned Team Members" %}</label>
+                        {{ form.assigned_team }}
+                        {% if form.assigned_team.errors %}
+                            <div class="text-danger mt-1">{{ form.assigned_team.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label font-weight-bold">{% trans "Associate Active Project" %}</label>
+                        {{ form.project }}
+                        {% if form.project.errors %}
+                            <div class="text-danger mt-1">{{ form.project.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <button type="submit" class="btn btn-primary">{% trans "Save Specification" %}</button>
+                    <a href="{% url 'client-timeline' inquiry.client.id %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

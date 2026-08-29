@@ -1,0 +1,35 @@
+<section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Careers</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="job-list">
+      {% for job in job_openings %}
+        <article class="job-card reveal">
+          <div class="job-main">
+            <h3>{{ job.title }}</h3>
+            <div class="job-meta">
+              {% if job.location %}<span><i class="fa-solid fa-location-dot" aria-hidden="true"></i>{{ job.location }}</span>{% endif %}
+              {% if job.job_type %}<span><i class="fa-solid fa-clock" aria-hidden="true"></i>{{ job.job_type }}</span>{% endif %}
+              {% if job.experience %}<span><i class="fa-solid fa-briefcase" aria-hidden="true"></i>{{ job.experience }}</span>{% endif %}
+            </div>
+            {% if job.description %}<p>{{ job.description|truncatechars:180 }}</p>{% endif %}
+          </div>
+          <div class="job-apply">
+            {% if job.application_url %}
+              <a class="site-btn sm" href="{{ job.application_url }}" target="_blank" rel="noopener">Apply now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            {% elif job.application_email %}
+              <a class="site-btn sm" href="mailto:{{ job.application_email }}?subject=Application for {{ job.title|urlencode }}">Apply now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            {% else %}
+              <a class="site-btn sm" href="/career/">Apply now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            {% endif %}
+          </div>
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Job openings will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

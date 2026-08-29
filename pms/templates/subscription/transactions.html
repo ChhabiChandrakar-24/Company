@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<main :class="sidebarOpen ? 'oh-main__sidebar-visible' : ''">
+  <div class="oh-wrapper" style="padding-top: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 700; color: #111827;">Billing & Payment Transactions</h1>
+        <p style="font-size: 14px; color: #6b7280;">View all invoice receipts, gateway payments, and subscription histories.</p>
+      </div>
+      <div>
+        <a href="{% url 'meeting-subscription-plans' %}" class="oh-btn oh-btn--primary">
+          ✨ View / Upgrade Plans
+        </a>
+      </div>
+    </div>
+
+    <div class="oh-card" style="background:#fff; border-radius:12px; border:1px solid #e5e7eb; overflow:hidden;">
+      <table class="oh-table" style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="background: #f9fafb; border-bottom: 1px solid #e5e7eb; text-align: left; font-size: 12px; text-transform: uppercase; color: #6b7280;">
+            <th style="padding: 14px 16px;">TXN Ref / Order ID</th>
+            <th style="padding: 14px 16px;">User / Organization</th>
+            <th style="padding: 14px 16px;">Plan</th>
+            <th style="padding: 14px 16px;">Amount</th>
+            <th style="padding: 14px 16px;">Gateway</th>
+            <th style="padding: 14px 16px;">Status</th>
+            <th style="padding: 14px 16px;">Date</th>
+          </tr>
+        </thead>
+        <tbody style="font-size: 13px; color: #374151;">
+          {% for t in transactions %}
+          <tr style="border-bottom: 1px solid #f3f4f6;">
+            <td style="padding: 14px 16px; font-family: monospace; font-weight: 600;">
+              {{ t.order_id }}
+              {% if t.payment_id %}
+              <div style="font-size: 11px; color: #9ca3af;">PG Ref: {{ t.payment_id }}</div>
+              {% endif %}
+            </td>
+            <td style="padding: 14px 16px;">
+              <b>{{ t.user.get_full_name|default:t.user.username }}</b>
+              <div style="font-size: 11px; color: #6b7280;">{{ t.user.email }}</div>
+            </td>
+            <td style="padding: 14px 16px;">
+              <span class="oh-badge oh-badge--secondary" style="font-weight: 600;">{{ t.plan.name|default:"Custom" }}</span>
+            </td>
+            <td style="padding: 14px 16px; font-weight: 700;">
+              ₹{{ t.amount }}
+            </td>
+            <td style="padding: 14px 16px;">
+              <span style="font-weight: 600; text-transform: uppercase;">{{ t.gateway }}</span>
+            </td>
+            <td style="padding: 14px 16px;">
+              {% if t.status == 'success' %}
+                <span style="background: #d1fae5; color: #065f46; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">SUCCESS</span>
+              {% elif t.status == 'initiated' %}
+                <span style="background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">INITIATED</span>
+              {% else %}
+                <span style="background: #fee2e2; color: #991b1b; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 12px;">FAILED</span>
+              {% endif %}
+            </td>
+            <td style="padding: 14px 16px; color: #6b7280;">
+              {{ t.created_at|date:"d M Y, h:i A" }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 40px; color: #9ca3af;">
+              No payment transactions found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{% trans "Termination Workflows" %}</h2>
+        <a href="{% url 'termination-initiate' %}" class="btn btn-danger">
+            <i class="fa fa-ban"></i> {% trans "Initiate Termination" %}
+        </a>
+    </div>
+
+    <div class="card rounded-3 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-4 py-3">{% trans "Employee" %}</th>
+                        <th class="py-3">{% trans "Initiated By" %}</th>
+                        <th class="py-3">{% trans "Effective Date" %}</th>
+                        <th class="py-3">{% trans "Status" %}</th>
+                        <th class="px-4 py-3 text-end">{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for term in terminations %}
+                    <tr>
+                        <td class="px-4 py-3 align-middle font-weight-bold">{{ term.employee.get_full_name }}</td>
+                        <td class="py-3 align-middle">{{ term.initiated_by.username }}</td>
+                        <td class="py-3 align-middle">{{ term.effective_date|date:"d M Y" }}</td>
+                        <td class="py-3 align-middle">
+                            {% if term.status == 'initiated' %}
+                                <span class="badge bg-secondary">{% trans "Initiated" %}</span>
+                            {% elif term.status == 'pending_approval' %}
+                                <span class="badge bg-warning text-dark">{% trans "Pending Approval" %}</span>
+                            {% elif term.status == 'approved' %}
+                                <span class="badge bg-primary">{% trans "Approved" %}</span>
+                            {% elif term.status == 'rejected' %}
+                                <span class="badge bg-danger">{% trans "Rejected" %}</span>
+                            {% elif term.status == 'completed' %}
+                                <span class="badge bg-success">{% trans "Completed" %}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-3 text-end align-middle">
+                            <a href="{% url 'termination-detail' term.id %}" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-cogs"></i> {% trans "Manage Workflow" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fa fa-exclamation-triangle fa-2x mb-3 d-block"></i>
+                            {% trans "No termination workflows initiated." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,43 @@
+<section class="cms-carousel" data-carousel data-autoplay="false" aria-roledescription="carousel" aria-label="{{ section.heading|default:'Featured highlights' }}">
+  <div class="carousel-track">
+    {% for slide in carousel_slides %}
+      <article class="carousel-slide{% if forloop.first %} is-active{% endif %}" data-slide {% if not forloop.first %}hidden{% endif %} aria-roledescription="slide" aria-label="Slide {{ forloop.counter }} of {{ carousel_slides|length }}"
+        {% if slide.image %}style="background-image:linear-gradient(90deg, rgba(5,10,26,.88) 0%, rgba(8,16,40,.55) 55%, rgba(8,16,40,.22) 100%), url('{{ slide.image.url }}')"{% endif %}>
+        <div class="container">
+          {% if slide.subtitle %}<span class="badge slide-badge">{{ slide.subtitle }}</span>{% endif %}
+          <h1>{{ slide.title }}</h1>
+          {% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+          {% if slide.primary_button_text or slide.secondary_button_text %}
+            <div class="btn-row">
+              {% if slide.primary_button_text %}<a class="site-btn" href="{{ slide.primary_button_url }}">{{ slide.primary_button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+              {% if slide.secondary_button_text %}<a class="site-btn ghost" href="{{ slide.secondary_button_url }}">{{ slide.secondary_button_text }}</a>{% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <article class="carousel-slide is-active" data-slide>
+        <div class="container">
+          {% if section.subheading %}<span class="badge slide-badge">{{ section.subheading }}</span>{% endif %}
+          <h1>{{ section.heading }}</h1>
+          {% if section.content %}<p>{{ section.content|linebreaksbr }}</p>{% endif %}
+          {% if section.primary_button_text or section.secondary_button_text %}
+            <div class="btn-row">
+              {% if section.primary_button_text %}<a class="site-btn" href="{{ section.primary_button_url }}">{{ section.primary_button_text }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+              {% if section.secondary_button_text %}<a class="site-btn ghost" href="{{ section.secondary_button_url }}">{{ section.secondary_button_text }}</a>{% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if carousel_slides|length > 1 %}
+    <div class="carousel-controls">
+      <button type="button" data-carousel-prev aria-label="Previous slide"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+      <span data-carousel-status aria-live="polite">1 / {{ carousel_slides|length }}</span>
+      <button type="button" data-carousel-next aria-label="Next slide"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+    </div>
+    <div class="carousel-dots" aria-label="Choose slide"></div>
+  {% endif %}
+</section>

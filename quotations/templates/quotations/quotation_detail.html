@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Quotation {{ quotation.number }}</h1>
+<p><strong>Client:</strong> {{ quotation.client.name }}</p>
+<p><strong>Title:</strong> {{ quotation.title }}</p>
+<p><strong>Status:</strong> {{ quotation.status }}</p>
+<p><strong>Created:</strong> {{ quotation.created_at|date:"Y-m-d" }}</p>
+<p><strong>Details:</strong></p>
+<pre>{{ quotation.details|json_script:"quotation-details" }}</pre>
+{% endblock %}

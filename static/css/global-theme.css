@@ -1,0 +1,184 @@
+[data-theme="light"] {
+  --primary: #123b91;
+  --secondary: #00c8f4;
+  --background: #f4f7ff;
+  --surface: #ffffff;
+  --text: #030b34;
+  --text-muted: #5a627d;
+  --border: rgba(18, 59, 145, 0.12);
+  --sidebar-bg: linear-gradient(180deg, #030b34, #091751 70%, #101e64);
+  --sidebar-text: #ffffff;
+}
+
+[data-theme="dark"] {
+  --primary: #00c8f4;
+  --secondary: #d000ff;
+  --background: #030b34;
+  --surface: #091751;
+  --text: #ffffff;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.12);
+  --sidebar-bg: #030b34;
+  --sidebar-text: #ffffff;
+}
+
+/* Base Variables for standard components */
+:root {
+  --chhabi-cyan: #00c8f4;
+  --chhabi-magenta: #d000ff;
+  --chhabi-yellow: #ffe500;
+}
+
+body {
+  background-color: var(--background) !important;
+  color: var(--text) !important;
+}
+
+.oh-card, .oh-auth-card, .oh-modal__dialog, .card, .modal-content, .bg-white {
+  background-color: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+h1, h2, h3, h4, h5, h6, .oh-main__titlebar-title, .text-dark {
+  color: var(--text) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Overriding theme.css values */
+.oh-sidebar {
+  background: var(--sidebar-bg) !important;
+}
+
+.oh-navbar, .navbar {
+  background-color: var(--surface) !important;
+  border-bottom: 2px solid var(--border) !important;
+}
+
+.oh-input, .oh-select, .form-control, .form-select {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+.oh-input:focus, .oh-select:focus, .form-control:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(0, 200, 244, 0.16) !important;
+}
+
+.table th, .table td {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+/* AI Control Center / CRM specific overrides */
+.oh-activity-sidebar {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-left: 1px solid var(--border) !important;
+}
+
+.oh-activity-sidebar__header {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+.dropdown-item {
+  color: var(--text) !important;
+}
+.dropdown-item:hover {
+  background-color: var(--background) !important;
+  color: var(--primary) !important;
+}
+
+/* Keep dense index-table actions compact instead of stretching the table. */
+.oh-sticky-table__td .oh-btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  width: max-content;
+  max-width: 220px;
+  border: 0;
+}
+
+.oh-sticky-table__td .oh-btn-group > *,
+.oh-sticky-table__td .oh-btn-group > form > * {
+  flex: 0 0 auto;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px;
+}
+
+.oh-sticky-table__td .oh-btn-group .oh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 7px 10px;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.oh-sticky-table__td .oh-btn-group ion-icon,
+.oh-sticky-table__td .oh-btn-group .material-symbols-outlined {
+  flex: 0 0 auto;
+}
+
+/* Detail-modal actions may wrap onto clean rows without breaking button text. */
+.oh-modal__button-container .oh-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+}
+
+.oh-modal__button-container .oh-btn-group > * {
+  flex: 1 1 120px;
+  width: auto !important;
+  min-width: 0;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px;
+}
+
+.oh-modal__button-container .oh-btn-group .oh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  min-height: 42px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.oh-modal__button-container .oh-btn-group form {
+  display: flex !important;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.oh-modal__button-container .oh-btn-group form .oh-select {
+  flex: 1 1 130px;
+  min-width: 110px;
+}
+
+@media (max-width: 575.98px) {
+  .oh-sticky-table__td .oh-btn-group {
+    max-width: 180px;
+  }
+
+  .oh-modal__button-container .oh-btn-group > * {
+    flex-basis: 100%;
+  }
+}

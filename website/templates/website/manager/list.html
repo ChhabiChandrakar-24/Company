@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% load i18n %}
+{% block content %}
+<div class="oh-wrapper" style="padding-top:2rem;padding-bottom:2rem">
+  <div class="oh-inner-sidebar-content">
+    <div class="oh-inner-sidebar-content__header d-flex justify-content-between align-items-center mb-3">
+      <div><h2 class="oh-inner-sidebar-content__title">{{ title }}</h2><p class="text-muted mb-0">Manage website content from this screen.</p></div>
+      {% if can_add %}<a href="{% url 'website-manage-add' section %}" class="oh-btn oh-btn--secondary oh-btn--shadow"><ion-icon name="add-outline" class="me-1"></ion-icon>{% trans "Create" %}</a>{% endif %}
+    </div>
+    <div class="oh-card p-0" style="overflow:auto">
+      <table class="oh-sticky-table">
+        <thead><tr>{% for column in columns %}<th class="oh-sticky-table__th">{{ column|capfirst }}</th>{% endfor %}<th class="oh-sticky-table__th text-end">{% trans "Actions" %}</th></tr></thead>
+        <tbody>
+        {% for object, cells in rows %}
+          <tr class="oh-sticky-table__tr">{% for cell in cells %}<td class="oh-sticky-table__td">{% if cell == True %}<span class="oh-dot oh-dot--small oh-dot--success"></span> Active{% elif cell == False %}<span class="oh-dot oh-dot--small oh-dot--danger"></span> Inactive{% else %}{{ cell|default:"—" }}{% endif %}</td>{% endfor %}
+            <td class="oh-sticky-table__td text-end">
+              {% if can_change %}<a href="{% url 'website-manage-edit' section object.pk %}" class="oh-btn oh-btn--light-bkg w-100-sm" title="Edit"><ion-icon name="create-outline"></ion-icon></a>{% endif %}
+              {% if can_delete %}<a href="{% url 'website-manage-delete' section object.pk %}" class="oh-btn oh-btn--danger-outline w-100-sm" title="Delete"><ion-icon name="trash-outline"></ion-icon></a>{% endif %}
+            </td>
+          </tr>
+        {% empty %}<tr><td class="oh-sticky-table__td text-center" colspan="20" style="padding:4rem">{% trans "No records found." %}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+<section class="cms-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Contact Us</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+
+    {# WebsiteSettings is the canonical contact and map configuration. #}
+    {% with map_embed=site_settings.map_embed_url map_address=site_settings.address map_phone=site_settings.phone map_email=site_settings.email %}
+    <div class="contact-grid">
+      <div class="contact-info">
+        {% if map_address %}
+          <div class="contact-block">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <div><h3>Visit us</h3><p>{{ map_address|linebreaksbr }}</p></div>
+          </div>
+        {% endif %}
+        {% if map_phone %}
+          <div class="contact-block">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+            <div><h3>Call us</h3><p><a href="tel:{{ map_phone }}">{{ map_phone }}</a></p></div>
+          </div>
+        {% endif %}
+        {% if map_email %}
+          <div class="contact-block">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <div><h3>Email us</h3><p><a href="mailto:{{ map_email }}">{{ map_email }}</a></p></div>
+          </div>
+        {% endif %}
+        {% if site_settings.office_hours %}
+          <div class="contact-block">
+            <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            <div><h3>Office hours</h3><p>{{ site_settings.office_hours }}</p></div>
+          </div>
+        {% endif %}
+      </div>
+
+      <form class="contact-form cms-card" action="{% url 'website-submit' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="submission_type" value="contact">
+        <input type="hidden" name="_subject" value="Website contact form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contact-name">Full name *</label>
+            <input id="contact-name" type="text" name="name" required maxlength="150" placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label for="contact-email">Email *</label>
+            <input id="contact-email" type="email" name="email" required maxlength="254" placeholder="you@company.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="contact-phone">Phone</label>
+            <input id="contact-phone" type="tel" name="phone" maxlength="50" placeholder="+91 ...">
+          </div>
+          <div class="form-field">
+            <label for="contact-service">Service needed</label>
+            <select id="contact-service" name="service_needed">
+              <option value="">Select a service</option>
+              {% for service in services %}
+                <option value="{{ service.name }}">{{ service.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="contact-message">Message *</label>
+          <textarea id="contact-message" name="message" required rows="5" maxlength="2000" placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button class="site-btn wide" type="submit">Send message <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+      </form>
+    </div>
+
+    <div class="contact-map">
+      {% if map_embed %}
+        <iframe src="{{ map_embed }}" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Office location map"></iframe>
+      {% else %}
+        <div class="map-fallback" role="note">
+          <div>
+            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+            <h3>{{ section.heading }}</h3>
+            {% if map_address %}<p>{{ map_address|linebreaksbr }}</p>{% endif %}
+            <p>We are easy to find. Call or email us and we will guide you.</p>
+          </div>
+        </div>
+      {% endif %}
+      {% if site_settings.map_directions_url %}
+        <a class="map-cta" href="{{ site_settings.map_directions_url }}" target="_blank" rel="noopener"><i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i> Get directions</a>
+      {% endif %}
+    </div>
+    {% endwith %}
+  </div>
+</section>

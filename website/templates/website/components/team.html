@@ -1,0 +1,32 @@
+{% load website_extras %}
+<section class="cms-section alt">
+  <div class="container">
+    <header class="section-head">
+      <span class="section-kicker">Our Team</span>
+      <h2>{{ section.heading }}</h2>
+      {% if section.subheading %}<p>{{ section.subheading }}</p>{% endif %}
+    </header>
+    <div class="cms-grid cols-4">
+      {% for member in team_members %}
+        <article class="cms-card team-card reveal">
+          {% if member.image %}
+            <img class="team-photo" src="{{ member.image.url }}" alt="{{ member.name }}" loading="lazy">
+          {% else %}
+            <span class="team-photo team-photo-initials" aria-hidden="true">{{ member.name|initials }}</span>
+          {% endif %}
+          <h3>{{ member.name }}</h3>
+          {% if member.designation %}<span class="card-tag">{{ member.designation }}</span>{% endif %}
+          {% if member.bio %}<p>{{ member.bio|truncatechars:90 }}</p>{% endif %}
+          {% if member.linkedin_url or member.twitter_url %}
+            <div class="team-social">
+              {% if member.linkedin_url %}<a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" aria-label="{{ member.name }} on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>{% endif %}
+              {% if member.twitter_url %}<a href="{{ member.twitter_url }}" target="_blank" rel="noopener" aria-label="{{ member.name }} on X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>{% endif %}
+            </div>
+          {% endif %}
+        </article>
+      {% empty %}
+        <div class="cms-card"><p>Team members will appear here once added from the admin panel.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
