@@ -11,7 +11,8 @@
 
 <div class="oh-modal__dialog-body">
     <form hx-post="{% if company.id %}{% url 'company-update' company.id %}{% else %}{% url 'company-create' %}{% endif %}"
-        hx-target="{% if company.id %}#objectUpdateModalTarget{% else %}#objectCreateModalTarget{% endif %}"
+        hx-target="#objectUpdateModalTarget"
+        hx-swap="innerHTML"
         hx-encoding="multipart/form-data" class="oh-profile-section"
     	>
         {% csrf_token %}

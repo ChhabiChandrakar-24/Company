@@ -1,1 +1,1 @@
-from . import scheduler
+"""Leave application package."""

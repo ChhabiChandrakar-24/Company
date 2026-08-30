@@ -288,6 +288,10 @@ class RecruitmentCreationForm(BaseModelForm):
         self.fields["linkedin_account_id"].queryset = LinkedInAccount.objects.filter(
             is_active=True
         )
+        self.fields["linkedin_account_id"].required = False
+        self.fields["linkedin_account_id"].widget.attrs.pop("required", None)
+        if not self.instance.pk:
+            self.fields["publish_in_linkedin"].initial = False
         self.fields["publish_in_linkedin"].widget.attrs.update(
             {"onchange": "toggleLinkedIn()"}
         )
@@ -301,28 +305,22 @@ class RecruitmentCreationForm(BaseModelForm):
     #     return option
 
     def clean(self):
+        cleaned_data = super().clean()
         if isinstance(self.fields["recruitment_managers"], ChhabiMultiSelectField):
             ids = self.data.getlist("recruitment_managers")
             if ids:
                 self.errors.pop("recruitment_managers", None)
-        open_positions = self.cleaned_data.get("open_positions")
-        is_published = self.cleaned_data.get("is_published")
+        open_positions = cleaned_data.get("open_positions")
+        is_published = cleaned_data.get("is_published")
         if is_published and not open_positions:
             raise forms.ValidationError(
                 _("Job position is required if the recruitment is publishing.")
             )
-        if (
-            self.cleaned_data.get("publish_in_linkedin")
-            and not self.cleaned_data["linkedin_account_id"]
-        ):
-            raise forms.ValidationError(
-                {
-                    "linkedin_account_id": _(
-                        "LinkedIn account is required for publishing."
-                    )
-                }
-            )
-        super().clean()
+        # LinkedIn integration is optional. If no account is selected, do not
+        # block recruitment creation; simply keep LinkedIn publishing disabled.
+        if not cleaned_data.get("linkedin_account_id"):
+            cleaned_data["publish_in_linkedin"] = False
+        return cleaned_data
 
 
 class StageCreationForm(BaseModelForm):

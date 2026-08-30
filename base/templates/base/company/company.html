@@ -7,11 +7,13 @@
 			<h2 class="oh-inner-sidebar-content__title">{{model.get_verbose_name}}</h2>
 			{% if perms.base.add_company %}
 			<button
+				type="button"
 				class="oh-btn oh-btn--secondary oh-btn--shadow"
 				data-toggle="oh-modal-toggle"
-				data-target="#objectCreateModal"
+				data-target="#objectUpdateModal"
 				hx-get="{% url 'company-create' %}"
-				hx-target="#objectCreateModalTarget"
+				hx-target="#objectUpdateModalTarget"
+				hx-swap="innerHTML"
 			>
 				<ion-icon name="add-outline" class="me-1"></ion-icon>
 				{% trans "Create" %}
@@ -28,4 +30,5 @@
 		{% endif %}
 	{% endif %}
 </div>
+
 {% endblock settings %}

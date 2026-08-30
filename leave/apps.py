@@ -11,9 +11,11 @@ class LeaveConfig(AppConfig):
         from chhabi.chhabi_settings import APPS
         from chhabi.urls import urlpatterns
         from leave import signals
+        from leave.scheduler import start_scheduler
 
         APPS.append("leave")
         urlpatterns.append(
             path("leave/", include("leave.urls")),
         )
+        start_scheduler()
         super().ready()

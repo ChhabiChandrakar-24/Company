@@ -1772,7 +1772,10 @@ def company_create(request):
             form.save()
 
             messages.success(request, _("Company has been created successfully!"))
-            return HttpResponse("<script>window.location.reload()</script>")
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("company-view")},
+            )
 
     return render(
         request,
@@ -1812,7 +1815,10 @@ def company_update(request, id, **kwargs):
         if form.is_valid():
             form.save()
             messages.success(request, _("Company updated"))
-            return HttpResponse("<script>window.location.reload()</script>")
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("company-view")},
+            )
     return render(
         request, "base/company/company_form.html", {"form": form, "company": company}
     )

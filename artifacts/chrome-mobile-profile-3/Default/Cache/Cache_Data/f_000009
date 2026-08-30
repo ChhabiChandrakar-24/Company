@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Page not found at /favicon.ico</title>
+  <title>Page not found at /favicon.png</title>
   <meta name="robots" content="NONE,NOARCHIVE">
   <style type="text/css">
     html * { padding:0; margin:0; }
@@ -34,7 +34,7 @@
       </tr>
       <tr>
         <th>Request URL:</th>
-        <td>http://127.0.0.1:8010/favicon.ico</td>
+        <td>http://127.0.0.1:8010/favicon.png</td>
       </tr>
       
     </table>
@@ -3123,7 +3123,7 @@
       </ol>
       <p>
         
-          The current path, <code>favicon.ico</code>,
+          The current path, <code>favicon.png</code>,
         
         didn’t match any of these.
       </p>

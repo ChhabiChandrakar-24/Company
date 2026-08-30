@@ -1,5 +1,6 @@
 import calendar
 import datetime as dt
+import os
 import sys
 from datetime import datetime, timedelta
 
@@ -46,14 +47,44 @@ def leave_reset():
             leave_type.save()
 
 
-if not any(
-    cmd in sys.argv
-    for cmd in ["makemigrations", "migrate", "compilemessages", "flush", "shell", "check", "test"]
-):
-    """
-    Initializes and starts background tasks using APScheduler when the server is running.
-    """
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(leave_reset, "interval", seconds=20)
+_scheduler = None
 
-    scheduler.start()
+
+def start_scheduler():
+    """
+    Start background leave tasks after Django's app registry is ready.
+
+    Django's development server imports applications once in the autoreloader
+    parent and again in the serving child, so only start in the child process.
+    """
+    global _scheduler
+
+    skipped_commands = {
+        "makemigrations",
+        "migrate",
+        "compilemessages",
+        "flush",
+        "shell",
+        "check",
+        "test",
+    }
+    if any(command in sys.argv for command in skipped_commands):
+        return
+    if (
+        "runserver" in sys.argv
+        and "--noreload" not in sys.argv
+        and os.environ.get("RUN_MAIN") != "true"
+    ):
+        return
+    if _scheduler is not None:
+        return
+
+    _scheduler = BackgroundScheduler()
+    _scheduler.add_job(
+        leave_reset,
+        "interval",
+        seconds=20,
+        id="leave_reset",
+        replace_existing=True,
+    )
+    _scheduler.start()

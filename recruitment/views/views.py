@@ -279,7 +279,10 @@ def recruitment(request):
                     icon="people-circle",
                     redirect=reverse("pipeline"),
                 )
-            return HttpResponse("<script>location.reload();</script>")
+            return HttpResponse(
+                status=204,
+                headers={"HX-Redirect": reverse("recruitment-view")},
+            )
     return render(
         request, "recruitment/recruitment_form.html", {"form": form, "dynamic": dynamic}
     )
