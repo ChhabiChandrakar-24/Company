@@ -75,6 +75,7 @@ xhtml2pdf
 XlsxWriter
 gunicorn
 psycopg2-binary
+mysqlclient==2.2.8
 whitenoise
 django-storages
 boto3

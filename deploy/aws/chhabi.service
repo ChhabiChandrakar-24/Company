@@ -1,0 +1,27 @@
+[Unit]
+Description=Chhabi Django application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=chhabi
+Group=chhabi
+WorkingDirectory=/opt/chhabi/app
+EnvironmentFile=/opt/chhabi/shared/.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+# Keep one process: this project starts APScheduler jobs inside Django app
+# processes. Multiple Gunicorn workers would run every scheduled job multiple
+# times. Threads provide request concurrency until schedulers are externalized.
+ExecStart=/opt/chhabi/venv/bin/gunicorn chhabi.wsgi:application --bind 127.0.0.1:8000 --worker-class gthread --workers 1 --threads 4 --timeout 120 --graceful-timeout 30 --access-logfile - --error-logfile -
+ExecReload=/bin/kill -s HUP $MAINPID
+KillSignal=SIGTERM
+TimeoutStopSec=45
+Restart=always
+RestartSec=5
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

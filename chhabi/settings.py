@@ -33,7 +33,9 @@ env = environ.Env(
     CSRF_TRUSTED_ORIGINS=(list, ["http://localhost:8000"]),
 )
 
-env.read_env(os.path.join(BASE_DIR, ".env"), overwrite=True)
+# Real process environment (for example systemd EnvironmentFile) must win over
+# a developer .env file if both are present.
+env.read_env(os.path.join(BASE_DIR, ".env"), overwrite=False)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
@@ -177,7 +179,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Always use a root-relative static URL. A relative value breaks admin CSS on
 # nested CMS routes such as /website/manage/pages/.
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = Path(env("STATIC_ROOT", default=str(BASE_DIR / "staticfiles")))
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -185,8 +187,8 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = env("MEDIA_URL", default="/media/")
+MEDIA_ROOT = env("MEDIA_ROOT", default=str(BASE_DIR / "media"))
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -287,9 +289,11 @@ USE_TZ = True
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_SSL_REDIRECT = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=3600)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+        "SECURE_HSTS_INCLUDE_SUBDOMAINS", default=False
+    )
+    SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -306,4 +310,3 @@ PHONEPE_MERCHANT_ID = env("PHONEPE_MERCHANT_ID", default="")
 PHONEPE_SALT_KEY = env("PHONEPE_SALT_KEY", default="")
 PHONEPE_SALT_INDEX = env("PHONEPE_SALT_INDEX", default="1")
 PHONEPE_ENV = env("PHONEPE_ENV", default="sandbox")  # "sandbox" or "production"
-
