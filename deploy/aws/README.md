@@ -1,182 +1,285 @@
-# Chhabi deployment on AWS EC2
+# Chhabi deployment on Amazon Linux 2023
 
-This runbook targets one Ubuntu 24.04 LTS EC2 instance, Amazon RDS MySQL 8,
-Nginx, Gunicorn, systemd, an Elastic IP, and HTTPS. Commands assume the app is
-installed at `/opt/chhabi/app` and the domain is `hr.example.com`; replace both
-where appropriate.
+Complete target: **Amazon Linux 2023 x86_64 EC2 + private RDS MySQL 8 +
+Nginx + Gunicorn/systemd + Elastic IP + HTTPS**. Replace every placeholder.
 
-## 1. Create the AWS resources
+## 1. Create AWS resources
 
-1. Create an EC2 instance in the intended AWS Region and VPC:
-   - Ubuntu Server 24.04 LTS, x86_64.
-   - Start with `t3.medium` (2 vCPU, 4 GiB RAM). Increase after observing RAM
-     and CPU; PDF/pandas workloads are heavier than a minimal Django app.
-   - Use at least a 30 GiB encrypted gp3 EBS volume.
-   - EC2 security group inbound rules: SSH/22 from your fixed IP only, HTTP/80
-     and HTTPS/443 from the internet. Do not expose port 8000.
-   - Allocate and associate an Elastic IP.
-2. Create an RDS MySQL 8 instance in the same VPC:
-   - Set **Public access: No**.
-   - Enable automated backups and encryption.
-   - Create database `chhabi` and application user `chhabi_app`.
-   - Its security group should allow TCP/3306 only from the EC2 security group.
-3. In Route 53 (or the current DNS provider), point an `A` record such as
-   `hr.example.com` to the Elastic IP.
+1. Launch the latest Amazon Linux 2023 `x86_64` AMI. Start with `t3.medium`
+   and a 30 GiB encrypted gp3 EBS volume.
+2. EC2 inbound rules: SSH/22 from your IP only; HTTP/80 and HTTPS/443 from
+   anywhere. Never expose port 8000. Associate an Elastic IP.
+3. Create RDS MySQL 8 in the same VPC/Region. Set Public access to **No**,
+   enable encryption/backups, create DB `chhabi` and user `chhabi_app`.
+4. RDS inbound TCP/3306 must allow only the EC2 security group.
+5. Point the domain's `A` record to the Elastic IP.
 
-## 2. Prepare the Linux server
-
-Connect using EC2 Instance Connect or SSH, then run:
+## 2. Connect and verify AL2023
 
 ```bash
-sudo apt update
-sudo apt -y upgrade
-sudo apt install -y git nginx python3 python3-venv python3-dev \
-  build-essential pkg-config default-libmysqlclient-dev libjpeg-dev zlib1g-dev \
-  libffi-dev libssl-dev wkhtmltopdf mysql-client certbot python3-certbot-nginx
-
-sudo adduser --system --group --home /opt/chhabi chhabi
-sudo install -d -o chhabi -g chhabi /opt/chhabi/app /opt/chhabi/shared/media \
-  /opt/chhabi/shared/staticfiles
-sudo -u chhabi python3 -m venv /opt/chhabi/venv
+ssh -i YOUR_KEY.pem ec2-user@YOUR_ELASTIC_IP
+cat /etc/os-release
+uname -m
 ```
 
-`wkhtmltopdf` is required because payroll/base PDF generation uses `pdfkit`.
+Expected: Amazon Linux 2023 and `x86_64`. AL2023 uses DNF. We explicitly use
+Python 3.11; never change the system `/usr/bin/python3` symlink (Python 3.9).
 
-## 3. Upload the code
+## 3. Install packages
 
-Preferred method (private Git repository):
+```bash
+sudo dnf update -y
+sudo dnf install -y \
+  git nginx rsync tar gzip \
+  python3.11 python3.11-devel \
+  gcc gcc-c++ make redhat-rpm-config pkgconf-pkg-config \
+  mariadb105 mariadb105-devel \
+  libjpeg-turbo-devel zlib-devel libffi-devel openssl-devel \
+  freetype-devel lcms2-devel openjpeg2-devel libtiff-devel \
+  libxml2-devel libxslt-devel cairo-devel pango-devel \
+  certbot python3-certbot-nginx
+
+python3.11 --version
+nginx -v
+certbot --version
+```
+
+Or, after uploading this repository, run the idempotent bootstrap:
+
+```bash
+sudo bash deploy/aws/bootstrap-amazon-linux-2023.sh
+```
+
+If Certbot is unavailable because the AMI is pinned to an old repository:
+
+```bash
+sudo dnf install -y 'dnf-command(check-release-update)'
+sudo dnf check-release-update
+sudo dnf upgrade -y
+sudo reboot
+```
+
+Reconnect and rerun package installation.
+
+## 4. Create user, directories, and virtual environment
+
+```bash
+sudo groupadd --system chhabi
+sudo useradd --system --gid chhabi --home-dir /opt/chhabi \
+  --create-home --shell /sbin/nologin chhabi
+
+sudo install -d -m 755 -o chhabi -g chhabi \
+  /opt/chhabi/app /opt/chhabi/shared \
+  /opt/chhabi/shared/media /opt/chhabi/shared/staticfiles
+sudo chmod 755 /opt/chhabi
+
+sudo -u chhabi python3.11 -m venv /opt/chhabi/venv
+```
+
+If the group/user already exists, skip its creation commands.
+
+## 5. Upload code
 
 ```bash
 sudo -u chhabi git clone YOUR_PRIVATE_REPOSITORY_URL /opt/chhabi/app
 ```
 
-For a later update:
+For an existing checkout:
 
 ```bash
 sudo -u chhabi git -C /opt/chhabi/app pull --ff-only
 ```
 
-Do not upload `.venv`, `.env`, browser profiles, caches, local logs, or the
-local database. Keep `/opt/chhabi/shared` outside the Git checkout.
+Never upload `.venv`, `.env`, browser caches/profiles, logs, or a local DB.
 
-## 4. Create production secrets
-
-Copy the template and edit it as root:
+## 6. Create production environment
 
 ```bash
 sudo cp /opt/chhabi/app/deploy/aws/env.production.example /opt/chhabi/shared/.env
+sudo chown chhabi:chhabi /opt/chhabi/shared/.env
 sudo chmod 600 /opt/chhabi/shared/.env
-sudo nano /opt/chhabi/shared/.env
+sudo vi /opt/chhabi/shared/.env
 ```
 
-Generate independent random values:
+Generate two independent secrets:
 
 ```bash
-python3 -c 'import secrets; print(secrets.token_urlsafe(64))'
-python3 -c 'import secrets; print(secrets.token_urlsafe(48))'
+python3.11 -c 'import secrets; print(secrets.token_urlsafe(64))'
+python3.11 -c 'import secrets; print(secrets.token_urlsafe(48))'
 ```
 
-Set at minimum `SECRET_KEY`, `DB_INIT_PASSWORD`, `ALLOWED_HOSTS`,
-`CSRF_TRUSTED_ORIGINS`, and the RDS `DATABASE_URL`. If the database password
-contains URL-reserved characters (`@`, `:`, `/`, `#`, `%`), URL-encode it.
-Quote values that contain shell metacharacters. Never commit the resulting
-`.env` file.
+Required values:
 
-## 5. Install and initialize the application
-
-For the first deployment, run the application commands before enabling the
-service:
-
-```bash
-sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install --upgrade pip setuptools wheel
-sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install -r /opt/chhabi/app/requirements.txt
-
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py check --deploy'
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py migrate --noinput'
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py collectstatic --noinput'
+```dotenv
+DEBUG=False
+SECRET_KEY=FIRST_RANDOM_VALUE
+DB_INIT_PASSWORD=SECOND_RANDOM_VALUE
+ALLOWED_HOSTS=hr.example.com
+CSRF_TRUSTED_ORIGINS=https://hr.example.com
+TIME_ZONE=Asia/Kolkata
+DATABASE_URL=mysql://chhabi_app:URL_ENCODED_PASSWORD@RDS_ENDPOINT:3306/chhabi
+STATIC_ROOT=/opt/chhabi/shared/staticfiles
+MEDIA_URL=/media/
+MEDIA_ROOT=/opt/chhabi/shared/media
 ```
 
-Create an admin only if existing production data is not being imported:
+URL-encode reserved password characters such as `@ : / # %`. Quote values
+containing shell metacharacters. Never commit `.env`.
+
+## 7. Install and initialize Django
 
 ```bash
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py createsuperuser'
+sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install \
+  --upgrade pip setuptools wheel
+sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install \
+  -r /opt/chhabi/app/requirements.txt
+
+mariadb -h RDS_ENDPOINT -u chhabi_app -p -e 'SELECT VERSION();' chhabi
+
+sudo -u chhabi bash -c '
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py check --deploy
+  /opt/chhabi/venv/bin/python manage.py migrate --noinput
+  /opt/chhabi/venv/bin/python manage.py collectstatic --noinput
+'
 ```
 
-Do not use `entrypoint.sh` in production: it runs `makemigrations` and creates
-an admin with a known password on every start.
-
-## 6. Install systemd and Nginx configuration
+Only for a new/empty DB:
 
 ```bash
-sudo cp /opt/chhabi/app/deploy/aws/chhabi.service /etc/systemd/system/chhabi.service
-sudo sed 's/hr\.example\.com/YOUR_REAL_DOMAIN/g' \
-  /opt/chhabi/app/deploy/aws/nginx.conf | sudo tee /etc/nginx/sites-available/chhabi >/dev/null
-sudo ln -sfn /etc/nginx/sites-available/chhabi /etc/nginx/sites-enabled/chhabi
-sudo rm -f /etc/nginx/sites-enabled/default
+sudo -u chhabi bash -c '
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py createsuperuser
+'
+```
 
+Do not use the old `entrypoint.sh`: it runs `makemigrations` and creates a
+known-password admin during startup.
+
+## 8. Enable Gunicorn service
+
+```bash
+sudo cp /opt/chhabi/app/deploy/aws/chhabi.service \
+  /etc/systemd/system/chhabi.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now chhabi
-sudo nginx -t
-sudo systemctl enable --now nginx
+sudo systemctl status chhabi --no-pager
 ```
 
-The service deliberately uses one Gunicorn process with four threads. Several
-apps start APScheduler inside the Django process; using multiple workers or
-multiple EC2 instances currently duplicates payroll, attendance, leave, asset,
-and other scheduled jobs.
+The service deliberately uses one Gunicorn process with four threads. This
+project starts APScheduler inside Django; multiple processes/instances would
+duplicate leave, payroll, attendance, recruitment, asset, and employee jobs.
 
-## 7. Enable HTTPS
+## 9. Configure AL2023 Nginx
 
-Wait until DNS resolves to the Elastic IP, then run:
+AL2023 uses `/etc/nginx/conf.d/` (not Ubuntu `sites-available`).
 
 ```bash
-sudo certbot --nginx -d YOUR_REAL_DOMAIN
-sudo certbot renew --dry-run
+sudo sed 's/hr\.example\.com/YOUR_REAL_DOMAIN/g' \
+  /opt/chhabi/app/deploy/aws/nginx.conf \
+  | sudo tee /etc/nginx/conf.d/chhabi.conf >/dev/null
+
+sudo nginx -t
+sudo systemctl enable --now nginx
+sudo systemctl reload nginx
+
+curl -I http://127.0.0.1:8000/login
+curl -I http://YOUR_REAL_DOMAIN/login
 ```
 
-After HTTPS works, keep `DEBUG=False`, confirm `CSRF_TRUSTED_ORIGINS` starts
-with `https://`, and run `manage.py check --deploy` again. Increase HSTS slowly;
-do not enable preload until every subdomain is permanently HTTPS-capable.
+## 10. Enable HTTPS
 
-## 8. Move existing MySQL data and uploaded media
+After DNS resolves:
 
-Because the current development database is MySQL, export it from the current
-machine with MySQL tools (not from Django):
+```bash
+getent hosts YOUR_REAL_DOMAIN
+sudo certbot --nginx -d YOUR_REAL_DOMAIN
+sudo certbot renew --dry-run
+systemctl list-timers | grep certbot
+curl -I https://YOUR_REAL_DOMAIN/login
+```
+
+Keep HSTS conservative until every required domain/subdomain works on HTTPS.
+
+## 11. wkhtmltopdf for payroll PDFs (x86_64 only)
+
+The project calls `pdfkit`, but AL2023 has no official wkhtmltopdf package.
+Upstream publishes only an Amazon Linux 2 RPM. This compatibility install is
+optional and must be tested after OS updates:
+
+```bash
+cd /tmp
+curl -fL -o wkhtmltox.rpm \
+  https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.amazonlinux2.x86_64.rpm
+sudo dnf install -y ./wkhtmltox.rpm
+wkhtmltopdf --version
+rm -f /tmp/wkhtmltox.rpm
+```
+
+Never force-install if dependency resolution fails. The main app can run, but
+`pdfkit` PDF endpoints will fail until a compatible PDF service is provided.
+
+## 12. Import the existing MySQL DB
+
+Export on the current DB machine:
 
 ```bash
 mysqldump --single-transaction --routines --triggers \
   -h CURRENT_DB_HOST -u CURRENT_DB_USER -p CURRENT_DB_NAME > chhabi.sql
+scp -i YOUR_KEY.pem chhabi.sql ec2-user@YOUR_ELASTIC_IP:/home/ec2-user/
 ```
 
-Copy the dump to EC2, import it into RDS, then apply newer migrations:
+Take an RDS snapshot, then on EC2:
 
 ```bash
-mysql -h RDS_ENDPOINT -u chhabi_app -p chhabi < chhabi.sql
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py migrate --noinput'
+mariadb -h RDS_ENDPOINT -u chhabi_app -p chhabi \
+  < /home/ec2-user/chhabi.sql
+
+sudo -u chhabi bash -c '
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py migrate --noinput
+'
+rm -f /home/ec2-user/chhabi.sql
 ```
 
-Copy the current `media/` contents to `/opt/chhabi/shared/media/` (for example
-with `scp`/`rsync`) and then fix ownership:
+## 13. Transfer uploaded media
+
+From the current machine:
 
 ```bash
+rsync -avz -e 'ssh -i YOUR_KEY.pem' media/ \
+  ec2-user@YOUR_ELASTIC_IP:/home/ec2-user/chhabi-media/
+```
+
+On EC2:
+
+```bash
+sudo rsync -a /home/ec2-user/chhabi-media/ /opt/chhabi/shared/media/
 sudo chown -R chhabi:chhabi /opt/chhabi/shared/media
 sudo find /opt/chhabi/shared/media -type d -exec chmod 755 {} \;
 sudo find /opt/chhabi/shared/media -type f -exec chmod 644 {} \;
+rm -rf /home/ec2-user/chhabi-media
 ```
 
-Take an RDS snapshot before importing over any non-empty destination database.
-
-## 9. Verify and operate
+## 14. Verify and update
 
 ```bash
-sudo systemctl status chhabi nginx
+sudo systemctl status chhabi nginx --no-pager
 sudo journalctl -u chhabi -n 200 --no-pager
-curl -I http://127.0.0.1:8000/login
+sudo tail -n 100 /var/log/nginx/error.log
 curl -I https://YOUR_REAL_DOMAIN/login
-sudo -u chhabi bash -c 'set -a; source /opt/chhabi/shared/.env; set +a; cd /opt/chhabi/app; /opt/chhabi/venv/bin/python manage.py check --deploy'
+
+sudo -u chhabi bash -c '
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py check --deploy
+'
 ```
 
-For later releases:
+Later releases:
 
 ```bash
 sudo -u chhabi git -C /opt/chhabi/app pull --ff-only
@@ -184,23 +287,7 @@ cd /opt/chhabi/app
 sudo bash deploy/aws/deploy.sh
 ```
 
-Back up both RDS and `/opt/chhabi/shared/media`. RDS automated backups do not
-contain uploaded files. Use EBS snapshots or a scheduled, encrypted S3 sync for
-media backups. Monitor disk, memory, HTTP 5xx responses, certificate renewal,
-and the `chhabi` systemd journal with CloudWatch alarms/log shipping.
-
-## Amazon Linux 2023 package equivalent
-
-If the existing EC2 host is Amazon Linux 2023 rather than Ubuntu, replace the
-`apt` package step with the following and install Certbot according to its
-current instructions for that OS:
-
-```bash
-sudo dnf update -y
-sudo dnf install -y git nginx python3 python3-devel gcc gcc-c++ make \
-  pkgconf-pkg-config mariadb105-devel libjpeg-turbo-devel zlib-devel \
-  libffi-devel openssl-devel
-```
-
-Amazon Linux Nginx uses `/etc/nginx/conf.d/chhabi.conf` instead of the Ubuntu
-`sites-available/sites-enabled` layout; copy `deploy/aws/nginx.conf` there.
+Before major releases take RDS and EBS snapshots. Back up both RDS and
+`/opt/chhabi/shared/media`; uploaded files are not part of RDS backups. Ship
+systemd/Nginx logs to CloudWatch and use an EC2 IAM role instead of permanent
+AWS access keys.
