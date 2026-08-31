@@ -70,13 +70,14 @@
 
     <div class="footer-bottom">
       <span>© {% now 'Y' %} {{ site_settings.company_name }}. {{ site_settings.footer_text|default:'All rights reserved.' }}</span>
-      {% if footer_menu_items %}
-        <nav aria-label="Footer navigation">
+      <nav aria-label="Footer navigation">
+        {% if footer_menu_items %}
           {% for item in footer_menu_items %}
-            <a href="{{ item.get_url }}">{{ item.label }}</a>{% if not forloop.last %} · {% endif %}
+            <a href="{{ item.get_url }}">{{ item.label }}</a> ·
           {% endfor %}
-        </nav>
-      {% endif %}
+        {% endif %}
+        <a href="{% url 'login' %}">Admin Login</a>
+      </nav>
     </div>
   </div>
 </footer>
