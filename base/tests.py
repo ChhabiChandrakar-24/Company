@@ -33,7 +33,11 @@ class AuthenticatedStaticAssetTests(SimpleTestCase):
 class CompanyLogoTests(SimpleTestCase):
     @override_settings(STATIC_URL="/static/")
     def test_missing_logo_record_uses_bundled_default(self):
-        from base.company_logo import company_logo_url, open_company_logo
+        from base.company_logo import (
+            company_logo_url,
+            open_company_logo,
+            open_default_company_logo,
+        )
         from base.models import Company
 
         company = Company(company="Missing logo")
@@ -44,3 +48,5 @@ class CompanyLogoTests(SimpleTestCase):
             company_logo_url(company), "/static/chhabi/geeta-forgetech-logo.jpeg"
         )
         self.assertIsNone(open_company_logo(company))
+        with open_default_company_logo() as default_logo:
+            self.assertGreater(len(default_logo.read()), 0)

@@ -309,6 +309,38 @@ cd /opt/chhabi/app
 sudo bash deploy/aws/deploy.sh
 ```
 
+### Fix a stale company logo reference after deployment
+
+If the dashboard reports a missing file under
+`/opt/chhabi/shared/media/company_logo/`, first confirm that the server is on
+the commit containing the safe logo handling, then deploy and restart:
+
+```bash
+sudo -u chhabi git -C /opt/chhabi/app pull --ff-only
+sudo -u chhabi git -C /opt/chhabi/app log -1 --oneline
+cd /opt/chhabi/app
+sudo bash deploy/aws/deploy.sh
+sudo systemctl restart chhabi
+```
+
+Verify the configured paths and whether the database-referenced file exists:
+
+```bash
+sudo -u chhabi bash -c '
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py check --deploy
+  /opt/chhabi/venv/bin/python manage.py shell -c "from base.models import Company; [(print(c.pk, c.icon.name, c.icon.storage.exists(c.icon.name) if c.icon.name else False)) for c in Company.objects.all()]"
+'
+sudo ls -lah /opt/chhabi/shared/media/
+sudo ls -lah /opt/chhabi/shared/media/company_logo/ 2>/dev/null || true
+sudo find /opt/chhabi -type f \( -iname '*geeta*' -o -iname '*logo*' \) 2>/dev/null
+```
+
+A database value with `False` from `storage.exists()` is stale. The application
+will now use the bundled static logo and will not open that missing media path.
+Do not copy a static file into media merely to hide a stale database reference.
+
 ### If Django admin CSS is missing
 
 `staticfiles/` is generated on the server and should not be committed to Git.

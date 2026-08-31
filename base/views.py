@@ -1516,7 +1516,6 @@ def mail_server_conf(request):
 def mail_server_test_email(request):
     instance_id = request.GET.get("instance_id")
     white_labelling = getattr(chhabi_apps, "WHITE_LABELLING", False)
-    image_path = path.join(settings.STATIC_ROOT, "chhabi/geeta-forgetech-logo.jpeg")
     company = None
     company_name = "Chhabi"
 
@@ -1588,12 +1587,17 @@ def mail_server_test_email(request):
                 )
                 msg.attach_alternative(html_content, "text/html")
 
-                from base.company_logo import open_company_logo
+                from base.company_logo import (
+                    open_company_logo,
+                    open_default_company_logo,
+                )
 
-                with open_company_logo(company) or open(image_path, "rb") as img:
-                    msg_img = MIMEImage(img.read())
-                    msg_img.add_header("Content-ID", "<unique_image_id>")
-                    msg.attach(msg_img)
+                logo_file = open_company_logo(company) or open_default_company_logo()
+                if logo_file:
+                    with logo_file as img:
+                        msg_img = MIMEImage(img.read())
+                        msg_img.add_header("Content-ID", "<unique_image_id>")
+                        msg.attach(msg_img)
 
                 msg.send()
 

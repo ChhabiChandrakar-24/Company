@@ -1,5 +1,6 @@
 """Safe accessors for company logo files."""
 
+from django.contrib.staticfiles import finders
 from django.templatetags.static import static
 
 
@@ -31,3 +32,14 @@ def open_company_logo(company):
     except Exception:  # Storage backends raise backend-specific exceptions.
         pass
     return None
+
+
+def open_default_company_logo():
+    """Open the bundled logo without assuming collectstatic has already run."""
+    logo_path = finders.find(DEFAULT_COMPANY_LOGO)
+    if not logo_path:
+        return None
+    try:
+        return open(logo_path, "rb")
+    except OSError:
+        return None
