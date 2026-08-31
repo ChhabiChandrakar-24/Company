@@ -1,7 +1,7 @@
 # Chhabi deployment on Amazon Linux 2023
 
-Complete target: **Amazon Linux 2023 x86_64 EC2 + private RDS MySQL 8 +
-Nginx + Gunicorn/systemd + Elastic IP + HTTPS**. Replace every placeholder.
+Complete target: **Amazon Linux 2023 x86_64 EC2 + internal MariaDB + Nginx +
+Gunicorn/systemd + Elastic IP + HTTPS**. RDS is not used.
 
 ## 1. Create AWS resources
 
@@ -9,10 +9,9 @@ Nginx + Gunicorn/systemd + Elastic IP + HTTPS**. Replace every placeholder.
    and a 30 GiB encrypted gp3 EBS volume.
 2. EC2 inbound rules: SSH/22 from your IP only; HTTP/80 and HTTPS/443 from
    anywhere. Never expose port 8000. Associate an Elastic IP.
-3. Create RDS MySQL 8 in the same VPC/Region. Set Public access to **No**,
-   enable encryption/backups, create DB `chhabi` and user `chhabi_app`.
-4. RDS inbound TCP/3306 must allow only the EC2 security group.
-5. Point the domain's `A` record to the Elastic IP.
+3. Do not open port 3306 in the EC2 security group. MariaDB is accessible only
+   internally through `127.0.0.1`.
+4. Point the domain's `A` record to the Elastic IP.
 
 ## 2. Connect and verify AL2023
 
@@ -33,7 +32,7 @@ sudo dnf install -y \
   git nginx rsync tar gzip \
   python3.11 python3.11-devel \
   gcc gcc-c++ make redhat-rpm-config pkgconf-pkg-config \
-  mariadb105 mariadb105-devel \
+  mariadb105 mariadb105-server mariadb105-devel \
   libjpeg-turbo-devel zlib-devel libffi-devel openssl-devel \
   freetype-devel lcms2-devel openjpeg2-devel libtiff-devel \
   libxml2-devel libxslt-devel cairo-devel pango-devel \
@@ -107,7 +106,6 @@ Generate two independent secrets:
 python3.11 -c 'import secrets; print(secrets.token_urlsafe(64))'
 python3.11 -c 'import secrets; print(secrets.token_urlsafe(48))'
 ```
-
 Required values:
 
 ```dotenv
@@ -117,7 +115,7 @@ DB_INIT_PASSWORD=SECOND_RANDOM_VALUE
 ALLOWED_HOSTS=hr.example.com
 CSRF_TRUSTED_ORIGINS=https://hr.example.com
 TIME_ZONE=Asia/Kolkata
-DATABASE_URL=mysql://chhabi_app:URL_ENCODED_PASSWORD@RDS_ENDPOINT:3306/chhabi
+DATABASE_URL=mysql://chhabi_app:URL_ENCODED_PASSWORD@127.0.0.1:3306/chhabi
 STATIC_ROOT=/opt/chhabi/shared/staticfiles
 MEDIA_URL=/media/
 MEDIA_ROOT=/opt/chhabi/shared/media
@@ -126,7 +124,32 @@ MEDIA_ROOT=/opt/chhabi/shared/media
 URL-encode reserved password characters such as `@ : / # %`. Quote values
 containing shell metacharacters. Never commit `.env`.
 
-## 7. Install and initialize Django
+## 7. Configure internal MariaDB
+
+```bash
+sudo systemctl enable --now mariadb
+sudo mariadb-secure-installation
+sudo mariadb
+```
+
+Run inside the MariaDB prompt, using your own strong password:
+
+```sql
+CREATE DATABASE chhabi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'chhabi_app'@'localhost' IDENTIFIED BY 'YOUR_STRONG_DB_PASSWORD';
+GRANT ALL PRIVILEGES ON chhabi.* TO 'chhabi_app'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Test the internal database:
+
+```bash
+mariadb -h 127.0.0.1 -P 3306 -u chhabi_app -p \
+  -e 'SELECT VERSION();' chhabi
+```
+
+## 8. Install and initialize Django
 
 ```bash
 sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install \
@@ -134,9 +157,8 @@ sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install \
 sudo -u chhabi /opt/chhabi/venv/bin/python -m pip install \
   -r /opt/chhabi/app/requirements.txt
 
-mariadb -h RDS_ENDPOINT -u chhabi_app -p -e 'SELECT VERSION();' chhabi
-
 sudo -u chhabi bash -c '
+  set -e
   set -a; source /opt/chhabi/shared/.env; set +a
   cd /opt/chhabi/app
   /opt/chhabi/venv/bin/python manage.py check --deploy
@@ -231,10 +253,10 @@ mysqldump --single-transaction --routines --triggers \
 scp -i YOUR_KEY.pem chhabi.sql ec2-user@YOUR_ELASTIC_IP:/home/ec2-user/
 ```
 
-Take an RDS snapshot, then on EC2:
+Back up the internal DB first if it already has data, then import on EC2:
 
 ```bash
-mariadb -h RDS_ENDPOINT -u chhabi_app -p chhabi \
+mariadb -h 127.0.0.1 -P 3306 -u chhabi_app -p chhabi \
   < /home/ec2-user/chhabi.sql
 
 sudo -u chhabi bash -c '
@@ -287,7 +309,35 @@ cd /opt/chhabi/app
 sudo bash deploy/aws/deploy.sh
 ```
 
-Before major releases take RDS and EBS snapshots. Back up both RDS and
-`/opt/chhabi/shared/media`; uploaded files are not part of RDS backups. Ship
-systemd/Nginx logs to CloudWatch and use an EC2 IAM role instead of permanent
-AWS access keys.
+### If Django admin CSS is missing
+
+`staticfiles/` is generated on the server and should not be committed to Git.
+Rebuild it and verify that Nginx can read the generated admin CSS:
+
+```bash
+sudo -u chhabi bash -c '
+  set -e
+  set -a; source /opt/chhabi/shared/.env; set +a
+  cd /opt/chhabi/app
+  /opt/chhabi/venv/bin/python manage.py collectstatic --noinput
+'
+
+sudo test -f /opt/chhabi/shared/staticfiles/admin/css/base.css \
+  && echo 'Admin CSS exists'
+sudo chmod 755 /opt /opt/chhabi /opt/chhabi/shared \
+  /opt/chhabi/shared/staticfiles
+sudo find /opt/chhabi/shared/staticfiles -type d -exec chmod 755 {} \;
+sudo find /opt/chhabi/shared/staticfiles -type f -exec chmod 644 {} \;
+sudo nginx -t
+sudo systemctl reload nginx
+curl -I http://127.0.0.1/static/admin/css/base.css
+curl -I https://YOUR_REAL_DOMAIN/static/admin/css/base.css
+```
+
+Both `curl` checks should return `200 OK`. A `404` means the Nginx config/path
+is wrong; a `403` means permissions or SELinux policy is blocking access. Check
+`sudo nginx -T` and `sudo tail -n 100 /var/log/nginx/error.log`.
+
+Before major releases, dump internal MariaDB and take an EBS snapshot. Back up
+both the database and `/opt/chhabi/shared/media`. Ship systemd/Nginx logs to
+CloudWatch and use an EC2 IAM role instead of permanent AWS access keys.

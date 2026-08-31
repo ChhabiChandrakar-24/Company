@@ -49,7 +49,7 @@ def create_work_record():
 
 if not any(
     cmd in sys.argv
-    for cmd in ["makemigrations", "migrate", "compilemessages", "flush", "shell"]
+    for cmd in ["makemigrations", "migrate", "collectstatic", "compilemessages", "flush", "shell", "check", "test"]
 ):
     """
     Initializes and starts background tasks using APScheduler when the server is running.

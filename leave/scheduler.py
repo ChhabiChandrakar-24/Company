@@ -62,6 +62,7 @@ def start_scheduler():
     skipped_commands = {
         "makemigrations",
         "migrate",
+        "collectstatic",
         "compilemessages",
         "flush",
         "shell",

@@ -17,7 +17,7 @@ dnf install -y \
     git nginx rsync tar gzip \
     python3.11 python3.11-devel \
     gcc gcc-c++ make redhat-rpm-config pkgconf-pkg-config \
-    mariadb105 mariadb105-devel \
+    mariadb105 mariadb105-server mariadb105-devel \
     libjpeg-turbo-devel zlib-devel libffi-devel openssl-devel \
     freetype-devel lcms2-devel openjpeg2-devel libtiff-devel \
     libxml2-devel libxslt-devel cairo-devel pango-devel \
@@ -37,4 +37,5 @@ if [[ ! -x /opt/chhabi/venv/bin/python ]]; then
 fi
 
 systemctl enable nginx
+systemctl enable --now mariadb
 echo "Base setup complete. Continue at deploy/aws/README.md step 5."

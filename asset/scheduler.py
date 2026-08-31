@@ -86,7 +86,7 @@ def notify_expiring_documents():
 
 if not any(
     cmd in sys.argv
-    for cmd in ["makemigrations", "migrate", "compilemessages", "flush", "shell"]
+    for cmd in ["makemigrations", "migrate", "collectstatic", "compilemessages", "flush", "shell", "check", "test"]
 ):
     scheduler = BackgroundScheduler()
     scheduler.add_job(notify_expiring_assets, "interval", hours=4)
