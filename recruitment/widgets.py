@@ -6,9 +6,8 @@ This page is used to write custom form widget or override some functionalities.
 """
 
 from django import forms
+from django.templatetags.static import static
 from django.utils.safestring import mark_safe
-
-from chhabi import settings
 
 # your your widgets
 
@@ -21,8 +20,12 @@ class RecruitmentAjaxWidget(forms.Widget):
 
     def render(self, name, value, attrs=None, renderer=None):
         # Exclude the label from the rendered HTML
-        rendered_script = f'<link href="/{settings.STATIC_URL}recruitment/widget/recruitment_widget_style.css">\
-            </link><script src="/{settings.STATIC_URL}recruitment/widget/recruitmentAjax.js"></script>'
+        stylesheet_url = static("recruitment/widget/recruitment_widget_style.css")
+        script_url = static("recruitment/widget/recruitmentAjax.js")
+        rendered_script = (
+            f'<link rel="stylesheet" href="{stylesheet_url}">'
+            f'<script src="{script_url}"></script>'
+        )
 
         additional_script = f"""
         <script id="{name}Script">

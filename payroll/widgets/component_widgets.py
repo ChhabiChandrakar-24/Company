@@ -3,9 +3,8 @@ Custom form widgets for conditional visibility and styling.
 """
 
 from django import forms
+from django.templatetags.static import static
 from django.utils.safestring import SafeText, mark_safe
-
-from chhabi import settings
 
 
 class AllowanceConditionalVisibility(forms.Widget):
@@ -21,7 +20,7 @@ class AllowanceConditionalVisibility(forms.Widget):
     def render(self, name, value, attrs=None, renderer=None):
         # Exclude the label from the rendered HTML
         rendered_script = (
-            f'<script src="/{settings.STATIC_URL}build/js/allowanceWidget.js"></script>'
+            f'<script src="{static("build/js/allowanceWidget.js")}"></script>'
         )
         additional_script = f"""
         <script id="{name}Script">
@@ -49,7 +48,7 @@ class DeductionConditionalVisibility(forms.Widget):
     def render(self, name, value, attrs, renderer) -> SafeText:
         # Exclude the label from the rendered HTML
         rendered_script = (
-            f'<script src="/{settings.STATIC_URL}build/js/deductionWidget.js"></script>'
+            f'<script src="{static("build/js/deductionWidget.js")}"></script>'
         )
         additional_script = f"""
         <script id="{name}Script">
@@ -100,7 +99,7 @@ class StyleWidget(forms.Widget):
             str: The rendered HTML representation of the widget.
         """
         rendered_script = (
-            f'<script src="/{settings.STATIC_URL}build/js/styleWidget.js"></script>'
+            f'<script src="{static("build/js/styleWidget.js")}"></script>'
         )
         additional_script = f"""
         <script id="{name}Script">
@@ -127,7 +126,7 @@ class StyleWidget(forms.Widget):
                 toggleSelect2();
             }});
         </script>
-        <link rel="stylesheet" type="text/css" href="/{settings.STATIC_URL}build/css/styleWidget.css">
+        <link rel="stylesheet" type="text/css" href="{static("build/css/styleWidget.css")}">
         """
         attrs = attrs or {}
         attrs["required"] = False

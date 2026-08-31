@@ -75,6 +75,13 @@ docs/_build/
 .pybuilder/
 target/
 
+# collectstatic output is generated during deployment. The compiled frontend
+# source in static/build is intentionally versioned below.
+/staticfiles/
+!/static/build/
+!/static/build/**
+/static/build/vendor/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

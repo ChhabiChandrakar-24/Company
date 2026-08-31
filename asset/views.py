@@ -17,6 +17,7 @@ from django.core.paginator import Paginator
 from django.db.models import ProtectedError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -61,7 +62,6 @@ from base.methods import (
 )
 from base.models import Company
 from employee.models import Employee, EmployeeWorkInformation
-from chhabi import settings
 from chhabi.decorators import (
     hx_request_required,
     login_required,
@@ -1658,7 +1658,7 @@ def asset_available_chart(_request):
         "labels": labels,
         "dataset": dataset,
         "message": _("Oops!! No Asset found..."),
-        "emptyImageSrc": f"/{settings.STATIC_URL}images/ui/asset.png",
+        "emptyImageSrc": static("images/ui/asset.png"),
     }
     return JsonResponse(response)
 
@@ -1688,7 +1688,7 @@ def asset_category_chart(_request):
         "labels": labels,
         "dataset": dataset,
         "message": _("Oops!! No Asset found..."),
-        "emptyImageSrc": f"/{settings.STATIC_URL}images/ui/asset.png",
+        "emptyImageSrc": static("images/ui/asset.png"),
     }
     return JsonResponse(response)
 

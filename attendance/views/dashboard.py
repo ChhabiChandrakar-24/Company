@@ -10,6 +10,7 @@ from datetime import date, datetime
 from django.apps import apps
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 
 from attendance.filters import (
@@ -32,7 +33,6 @@ from attendance.views.views import strtime_seconds
 from base.methods import filtersubordinates, paginator_qry
 from base.models import Department
 from employee.models import Employee
-from chhabi import settings
 from chhabi.decorators import hx_request_required, login_required
 from chhabi.methods import get_chhabi_model_class
 
@@ -453,7 +453,7 @@ def department_overtime_chart(request):
         "labels": departments,
         "department_total": department_total,
         "message": _("No validated Overtimes were found"),
-        "emptyImageSrc": f"/{settings.STATIC_URL}images/ui/overtime-icon.png",
+        "emptyImageSrc": static("images/ui/overtime-icon.png"),
     }
 
     return JsonResponse(response)
