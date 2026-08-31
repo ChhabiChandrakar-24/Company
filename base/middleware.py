@@ -83,7 +83,7 @@ class CompanyMiddleware:
             request.session["selected_company"] = str(company_id.id)
             request.session["selected_company_instance"] = {
                 "company": company_id.company,
-                "icon": company_id.icon.url,
+                "icon": company_id.icon_url,
                 "text": text,
                 "id": company_id.id,
             }

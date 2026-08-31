@@ -98,6 +98,13 @@ class Company(ChhabiModel):
     def __str__(self) -> str:
         return str(self.company)
 
+    @property
+    def icon_url(self):
+        """Return the uploaded icon URL or the bundled default logo."""
+        from base.company_logo import company_logo_url
+
+        return company_logo_url(self)
+
 
 class Department(ChhabiModel):
     """

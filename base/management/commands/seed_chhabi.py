@@ -24,7 +24,6 @@ class Command(BaseCommand):
                 "state": "Delhi",
                 "city": "New Delhi",
                 "zip": "110001",
-                "icon": "company_logo/geeta-forgetech-logo.jpeg",
             },
         )
 

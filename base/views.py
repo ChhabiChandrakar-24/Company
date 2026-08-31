@@ -1517,6 +1517,7 @@ def mail_server_test_email(request):
     instance_id = request.GET.get("instance_id")
     white_labelling = getattr(chhabi_apps, "WHITE_LABELLING", False)
     image_path = path.join(settings.STATIC_ROOT, "chhabi/geeta-forgetech-logo.jpeg")
+    company = None
     company_name = "Chhabi"
 
     if white_labelling:
@@ -1532,7 +1533,6 @@ def mail_server_test_email(request):
 
         if company:
             company_name = company.company
-            image_path = path.join(settings.MEDIA_ROOT, company.icon.name)
 
     form = DynamicMailTestForm()
     if request.method == "POST":
@@ -1588,7 +1588,9 @@ def mail_server_test_email(request):
                 )
                 msg.attach_alternative(html_content, "text/html")
 
-                with open(image_path, "rb") as img:
+                from base.company_logo import open_company_logo
+
+                with open_company_logo(company) or open(image_path, "rb") as img:
                     msg_img = MIMEImage(img.read())
                     msg_img.add_header("Content-ID", "<unique_image_id>")
                     msg.attach(msg_img)

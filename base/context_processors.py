@@ -53,7 +53,7 @@ def get_companies(request):
     This method will return the history additional field form
     """
     companies = list(
-        [company.id, company.company, company.icon.url, False]
+        [company.id, company.company, company.icon_url, False]
         for company in Company.objects.all()
     )
     companies = [
@@ -116,7 +116,7 @@ def update_selected_company(request):
                     text = "My Company"
                 company = {
                     "company": company.company,
-                    "icon": company.icon.url,
+                    "icon": company.icon_url,
                     "text": text,
                     "id": company.id,
                 }
@@ -139,7 +139,7 @@ def update_selected_company(request):
 
     company = {
         "company": company.company,
-        "icon": company.icon.url,
+        "icon": company.icon_url,
         "text": text,
         "id": company.id,
     }
@@ -172,11 +172,13 @@ def white_labelling_company(request):
         return {
             "white_label_company_name": company.company if company else "Geeta Forgetech",
             "white_label_company": company,
+            "white_label_company_icon_url": company.icon_url if company else None,
         }
     else:
         return {
             "white_label_company_name": "Geeta Forgetech",
             "white_label_company": None,
+            "white_label_company_icon_url": None,
         }
 
 

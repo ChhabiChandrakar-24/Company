@@ -195,17 +195,10 @@ function initializeSummernote(candId,searchWords,) {
     </div>
     {% else %}
     <span class="mr-3">
-      {% if request.user.employee_get.employee_work_info.company_id.icon == None %}
       <img
-      src="https://ui-avatars.com/api/?name=C&background=random"
+      src="{{ request.user.employee_get.employee_work_info.company_id.icon_url }}"
       style="width: 34px; border-radius: 3px"
       />
-      {% else %}
-      <img
-      src="{{request.user.employee_get.employee_work_info.company_id.icon.url}}"
-      style="width: 34px; border-radius: 3px"
-      />
-      {% endif %}
     </span>
     <div class="oh-sidebar__company-details">
       <span class="oh-sidebar__company-title" style="font-size: 13px"

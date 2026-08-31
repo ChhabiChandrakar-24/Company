@@ -20,11 +20,11 @@
     <meta name="theme-color" content="orangered">
     <link rel="manifest" href="{% static 'build/manifest.json' %}">
     <link rel="apple-touch-icon" sizes="180x180"
-        href="{% if white_label_company.icon %}{{white_label_company.icon.url}} {% else %}{% static 'favicons/apple-touch-icon.png' %}{% endif %}">
+        href="{% if white_label_company_icon_url %}{{ white_label_company_icon_url }}{% else %}{% static 'favicons/apple-touch-icon.png' %}{% endif %}">
     <link rel="icon" type="image/png" sizes="32x32"
-        href="{% if white_label_company.icon %}{{white_label_company.icon.url}} {% else %}{% static 'favicons/favicon-32x32.png' %}{% endif %}">
+        href="{% if white_label_company_icon_url %}{{ white_label_company_icon_url }}{% else %}{% static 'favicons/favicon-32x32.png' %}{% endif %}">
     <link rel="icon" type="image/png" sizes="16x16"
-        href="{% if white_label_company.icon %}{{white_label_company.icon.url}} {% else %}{% static 'favicons/favicon-16x16.png' %}{% endif %}">
+        href="{% if white_label_company_icon_url %}{{ white_label_company_icon_url }}{% else %}{% static 'favicons/favicon-16x16.png' %}{% endif %}">
 
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
@@ -34,13 +34,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'chhabi/theme.css' %}">
     <link rel="stylesheet" href="{% static 'build/css/summernote-lite.min.css' %}" />
     <link rel="stylesheet" href="{% static 'build/css/orgChart.css' %}" />
-    <link rel="stylesheet" href="{% static '/jquery/jqueryui.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery/jqueryui.css' %}">
     <link rel="stylesheet" href="{% static 'build/css/pivottable.min.css' %}" />
-    <script src="{% static '/jquery/ajax.js' %}"></script>
-    <script src="{% static '/jquery/jquery.min.js' %}"></script>
-    <script src="{% static '/jquery/jqueryui.js' %}"></script>
-    <script src="{% static '/base/toggleColumn.js' %}"></script>
-    <script src="{% static '/build/js/orgChart.js' %}"></script>
+    <script src="{% static 'jquery/ajax.js' %}"></script>
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'jquery/jqueryui.js' %}"></script>
+    <script src="{% static 'base/toggleColumn.js' %}"></script>
+    <script src="{% static 'build/js/orgChart.js' %}"></script>
     <script src="{% static 'build/js/driver.js' %}"></script>
     <script src="{% static 'build/js/clearFilter.js' %}"></script>
 

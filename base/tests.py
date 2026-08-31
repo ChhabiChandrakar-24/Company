@@ -1,5 +1,6 @@
 from django.contrib.staticfiles import finders
-from django.test import SimpleTestCase
+from django.core.files.storage import FileSystemStorage
+from django.test import SimpleTestCase, override_settings
 from django.templatetags.static import static
 
 
@@ -27,3 +28,19 @@ class AuthenticatedStaticAssetTests(SimpleTestCase):
                 url = static(asset)
                 self.assertTrue(url.startswith("/static/"), url)
                 self.assertNotIn("//static/", url)
+
+
+class CompanyLogoTests(SimpleTestCase):
+    @override_settings(STATIC_URL="/static/")
+    def test_missing_logo_record_uses_bundled_default(self):
+        from base.company_logo import company_logo_url, open_company_logo
+        from base.models import Company
+
+        company = Company(company="Missing logo")
+        company.icon.name = "company_logo/missing.jpeg"
+        company.icon.storage = FileSystemStorage(location=self._testMethodName)
+
+        self.assertEqual(
+            company_logo_url(company), "/static/chhabi/geeta-forgetech-logo.jpeg"
+        )
+        self.assertIsNone(open_company_logo(company))
